@@ -8,7 +8,9 @@ public class Counter : MonoBehaviour
 {
     public Text CounterText;
 
-    private int Count = 0;
+    static int Count = 0;
+    [SerializeField]
+    private int CountMultiplier;
 
     private void Start()
     {
@@ -17,7 +19,13 @@ public class Counter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Count += 1;
+        Count += 1 * CountMultiplier;
         CounterText.text = "Count : " + Count;
+        Destroy(other.gameObject, 2f);
+    }
+    private IEnumerator DestroyBall(GameObject ball)
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(ball);
     }
 }
