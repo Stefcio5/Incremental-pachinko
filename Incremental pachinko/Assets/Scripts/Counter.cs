@@ -3,24 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Counter : MonoBehaviour
 {
-    public Text CounterText;
-
-    static int Points = 0;
+    public Text pointsText;  
+    public PlayerData playerData;
+    
     [SerializeField]
     private int CountMultiplier;
 
+    public Controller controller;
+
     private void Start()
     {
-        Points = 0;
+        playerData = GameObject.Find("Player Data").GetComponent<PlayerData>();
+        controller = GameObject.Find("Controller").GetComponent<Controller>();
+    }
+    public void Update()
+    {
+        pointsText.text = "Points : " + playerData.points.ToString("F0");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Points += 1 * CountMultiplier;
-        CounterText.text = "Points : " + Points;
+        playerData.points += controller.BallPower() * CountMultiplier;
+        //pointsText.text = "Points : " + playerData.points;
         Destroy(other.gameObject, 2f);
     }
 }
