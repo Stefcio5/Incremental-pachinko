@@ -7,11 +7,15 @@ using TMPro;
 
 public class Counter : MonoBehaviour
 {
+    [SerializeField]
+    private int CountMultiplier;
+    [SerializeField]
+    private DataScriptableObject data;
+    [SerializeField]
+    private UpgradeScriptableObject upgradeScriptableObject;
     public Text pointsText;  
     public PlayerData playerData;
     
-    [SerializeField]
-    private int CountMultiplier;
 
     public Controller controller;
 
@@ -22,13 +26,15 @@ public class Counter : MonoBehaviour
     }
     public void Update()
     {
-        pointsText.text = "Points : " + playerData.points.ToString("F0");
+        //pointsText.text = "Points : " + playerData.points.ToString("F0");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        playerData.points += controller.BallPower() * CountMultiplier;
+        //playerData.points += controller.BallPower() * CountMultiplier;
         //pointsText.text = "Points : " + playerData.points;
-        Destroy(other.gameObject, 2f);
+        
+            data.AddPoints((upgradeScriptableObject.level + 1) * CountMultiplier);
+            Destroy(other.gameObject, 2f);
     }
 }

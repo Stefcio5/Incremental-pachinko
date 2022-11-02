@@ -23,7 +23,7 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ballPowerText.text = ($"Ball power: x{BallPower()}");
+        //ballPowerText.text = ($"Ball power: x{BallPower()}");
     }
     public double BallPower() => 1 + playerData.ballUpgradeLevel;
 }
