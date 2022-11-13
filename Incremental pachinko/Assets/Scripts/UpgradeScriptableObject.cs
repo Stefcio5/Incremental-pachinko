@@ -20,6 +20,8 @@ public class UpgradeScriptableObject : ScriptableObject
 
     [System.NonSerialized]
     public UnityEvent<double> buyUpgradeEvent;
+    [SerializeField]
+    private DataScriptableObject playerData;
 
     private void OnEnable()
     {
@@ -33,10 +35,14 @@ public class UpgradeScriptableObject : ScriptableObject
 
     public void BuyUpgrade()
     {
-        level++;
-        CalculateUpgradeCost(level);
-        CalculateUpgradePower(level);
-        buyUpgradeEvent.Invoke(level);
+        if (playerData.points >= upgradeCost)
+        {
+            playerData.AddPoints(-upgradeCost);
+            level++;
+            CalculateUpgradeCost(level);
+            CalculateUpgradePower(level);
+            buyUpgradeEvent.Invoke(level);
+        }
     }
 
     public double CalculateUpgradeCost(double level)
