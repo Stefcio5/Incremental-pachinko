@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BallUpgrade
   m_EditorClassIdentifier: 
   upgradeName: +1 points
-  level: 6
-  upgradeCost: 70
+  level: 22
+  upgradeCost: 230
   baseUpgradePower: 5
-  upgradePower: 30
+  upgradePower: 110
+  playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}

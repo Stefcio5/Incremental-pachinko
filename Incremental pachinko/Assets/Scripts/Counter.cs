@@ -21,8 +21,8 @@ public class Counter : MonoBehaviour
 
     private void Start()
     {
-        playerData = GameObject.Find("Player Data").GetComponent<PlayerData>();
-        controller = GameObject.Find("Controller").GetComponent<Controller>();
+        //playerData = GameObject.Find("Player Data").GetComponent<PlayerData>();
+        //controller = GameObject.Find("Controller").GetComponent<Controller>();
     }
     public void Update()
     {
