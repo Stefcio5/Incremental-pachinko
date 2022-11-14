@@ -19,7 +19,7 @@ public class UpgradeScriptableObject : ScriptableObject
     public double upgradePower;
 
     [System.NonSerialized]
-    public UnityEvent<double> buyUpgradeEvent;
+    public UnityEvent buyUpgradeEvent;
     [SerializeField]
     private DataScriptableObject playerData;
 
@@ -27,7 +27,7 @@ public class UpgradeScriptableObject : ScriptableObject
     {
         if (buyUpgradeEvent == null)
         {
-            buyUpgradeEvent = new UnityEvent<double>();
+            buyUpgradeEvent = new UnityEvent();
         }
         CalculateUpgradeCost(level);
         CalculateUpgradePower(level);
@@ -41,7 +41,7 @@ public class UpgradeScriptableObject : ScriptableObject
             level++;
             CalculateUpgradeCost(level);
             CalculateUpgradePower(level);
-            buyUpgradeEvent.Invoke(level);
+            buyUpgradeEvent.Invoke();
         }
     }
 
