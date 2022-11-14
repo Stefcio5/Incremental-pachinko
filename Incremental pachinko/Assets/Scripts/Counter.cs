@@ -34,7 +34,7 @@ public class Counter : MonoBehaviour
         //playerData.points += controller.BallPower() * CountMultiplier;
         //pointsText.text = "Points : " + playerData.points;
         
-            data.AddPoints((upgradeScriptableObject.level + 1) * CountMultiplier);
+            data.AddPoints((upgradeScriptableObject.upgradeLevel + 1) * CountMultiplier);
             Destroy(other.gameObject, 2f);
     }
 }

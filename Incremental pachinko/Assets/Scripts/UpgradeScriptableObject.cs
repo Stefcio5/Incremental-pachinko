@@ -12,7 +12,12 @@ public class UpgradeScriptableObject : ScriptableObject
     //public TMP_Text costText;
 
     public string upgradeName;
-    public double level;
+    public double upgradeLevel;
+    [SerializeField]
+    private double baseUpgradeCost;
+    [SerializeField]
+    private double upgradeMultiplier;
+    [SerializeField]
     public double upgradeCost;
     [SerializeField]
     private double baseUpgradePower;
@@ -29,8 +34,8 @@ public class UpgradeScriptableObject : ScriptableObject
         {
             buyUpgradeEvent = new UnityEvent();
         }
-        CalculateUpgradeCost(level);
-        CalculateUpgradePower(level);
+        CalculateUpgradeCost(upgradeLevel);
+        CalculateUpgradePower(upgradeLevel);
     }
 
     public void BuyUpgrade()
@@ -38,31 +43,23 @@ public class UpgradeScriptableObject : ScriptableObject
         if (playerData.points >= upgradeCost)
         {
             playerData.AddPoints(-upgradeCost);
-            level++;
-            CalculateUpgradeCost(level);
-            CalculateUpgradePower(level);
+            upgradeLevel++;
+            CalculateUpgradeCost(upgradeLevel);
+            CalculateUpgradePower(upgradeLevel);
             buyUpgradeEvent.Invoke();
         }
     }
 
     public double CalculateUpgradeCost(double level)
     {
-        upgradeCost = 10 * (1 + level);
+        upgradeCost = baseUpgradeCost * (1 + level*level) * upgradeMultiplier;
         return upgradeCost;
     }
 
     public double CalculateUpgradePower(double level)
     {
-        if (level.Equals(0))
-        {
-            upgradePower = 1;
+            upgradePower = baseUpgradePower + (level * baseUpgradePower);
             return upgradePower;
-        }
-        else
-        {
-            upgradePower = (level * baseUpgradePower);
-            return upgradePower;
-        }
     }
 
 }
