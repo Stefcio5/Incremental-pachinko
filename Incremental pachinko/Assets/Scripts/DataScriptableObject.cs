@@ -5,7 +5,6 @@ using UnityEngine.Events;
 public class DataScriptableObject : ScriptableObject
 {
     public double points;
-
     [System.NonSerialized]
     public UnityEvent<double> pointsChangeEvent;
     private void OnEnable()

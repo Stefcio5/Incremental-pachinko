@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,13 +14,11 @@ public class UpgradeUIManager : MonoBehaviour
     [SerializeField]
     private UpgradeScriptableObject upgradeScriptableObject;
 
-    
-
     void Start()
     {
         ChangeLevelText();
         ChangeCostText();
-        ChangeUpgradeNameText();    
+        ChangeUpgradeNameText();
     }
 
     //TODO: Change buyUpgradeEvent to pointsChangeEvent
@@ -33,18 +27,13 @@ public class UpgradeUIManager : MonoBehaviour
         upgradeScriptableObject.buyUpgradeEvent.AddListener(ChangeLevelText);
         upgradeScriptableObject.buyUpgradeEvent.AddListener(ChangeCostText);
         upgradeScriptableObject.buyUpgradeEvent.AddListener(ChangeUpgradeNameText);
-
-       
     }
     private void OnDisable()
     {
         upgradeScriptableObject.buyUpgradeEvent.RemoveListener(ChangeLevelText);
         upgradeScriptableObject.buyUpgradeEvent.RemoveListener(ChangeCostText);
         upgradeScriptableObject.buyUpgradeEvent.RemoveListener(ChangeUpgradeNameText);
-
-       
     }
-
     private void ChangeLevelText() => levelText.text = upgradeScriptableObject.upgradeLevel.ToString();
 
     private void ChangeCostText() => costText.text = $"Cost: {upgradeScriptableObject.upgradeCost}";

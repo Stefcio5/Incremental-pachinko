@@ -1,16 +1,9 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "UpgradeScriptableObject", menuName = "ScriptableObjects/Upgrade")]
 public class UpgradeScriptableObject : ScriptableObject
 {
-    //public Image upgradeButton;
-    //public TMP_Text levelText;
-    //public TMP_Text nameText;
-    //public TMP_Text costText;
-
     public string upgradeName;
     public double upgradeLevel;
     [SerializeField]
@@ -52,14 +45,14 @@ public class UpgradeScriptableObject : ScriptableObject
 
     public double CalculateUpgradeCost(double level)
     {
-        upgradeCost = baseUpgradeCost * (1 + level*level) * upgradeMultiplier;
+        upgradeCost = baseUpgradeCost * (1 + level * level) * upgradeMultiplier;
         return upgradeCost;
     }
 
     public double CalculateUpgradePower(double level)
     {
-            upgradePower = baseUpgradePower + (level * baseUpgradePower);
-            return upgradePower;
+        upgradePower = baseUpgradePower + (level * baseUpgradePower);
+        return upgradePower;
     }
 
 }

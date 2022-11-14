@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+﻿using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
@@ -16,10 +11,7 @@ public class Counter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //playerData.points += controller.BallPower() * CountMultiplier;
-        //pointsText.text = "Points : " + playerData.points;
-        
-            data.AddPoints((upgradeScriptableObject.upgradeLevel + 1) * boxUpgradeScriptableObject.upgradePower);
-            Destroy(other.gameObject, 2f);
+        data.AddPoints((upgradeScriptableObject.upgradePower) * boxUpgradeScriptableObject.upgradePower);
+        Destroy(other.gameObject, 2f);
     }
 }
