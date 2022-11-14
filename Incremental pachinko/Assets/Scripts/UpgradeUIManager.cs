@@ -10,24 +10,21 @@ public class UpgradeUIManager : MonoBehaviour
     [SerializeField]
     private Image upgradeButton;
     [SerializeField]
-    private TMP_Text nameText;
+    private Text nameText;
     [SerializeField]
-    private TMP_Text levelText;
+    private Text levelText;
     [SerializeField]
-    private TMP_Text costText;
+    private Text costText;
     [SerializeField]
     private UpgradeScriptableObject upgradeScriptableObject;
 
-    [SerializeField]
-    private Text ballPowerText;
     
 
     void Start()
     {
-        ChangeLevelText(upgradeScriptableObject.level);
-        ChangeCostText(upgradeScriptableObject.upgradeCost);
-        ChangeBallPowerText(upgradeScriptableObject.upgradePower);
-        
+        ChangeLevelText();
+        ChangeCostText();
+        ChangeUpgradeNameText();    
     }
 
     //TODO: Change buyUpgradeEvent to pointsChangeEvent
@@ -35,7 +32,7 @@ public class UpgradeUIManager : MonoBehaviour
     {
         upgradeScriptableObject.buyUpgradeEvent.AddListener(ChangeLevelText);
         upgradeScriptableObject.buyUpgradeEvent.AddListener(ChangeCostText);
-        upgradeScriptableObject.buyUpgradeEvent.AddListener(ChangeBallPowerText);
+        upgradeScriptableObject.buyUpgradeEvent.AddListener(ChangeUpgradeNameText);
 
        
     }
@@ -43,23 +40,14 @@ public class UpgradeUIManager : MonoBehaviour
     {
         upgradeScriptableObject.buyUpgradeEvent.RemoveListener(ChangeLevelText);
         upgradeScriptableObject.buyUpgradeEvent.RemoveListener(ChangeCostText);
-        upgradeScriptableObject.buyUpgradeEvent.RemoveListener(ChangeBallPowerText);
+        upgradeScriptableObject.buyUpgradeEvent.RemoveListener(ChangeUpgradeNameText);
 
        
     }
 
-    private void ChangeLevelText(double level)
-    {
-        levelText.text = level.ToString();
-    }
+    private void ChangeLevelText() => levelText.text = upgradeScriptableObject.upgradeLevel.ToString();
 
-    private void ChangeCostText(double level)
-    {
-        costText.text = $"Cost: {upgradeScriptableObject.upgradeCost}";
-    }
-    
-    private void ChangeBallPowerText(double level)
-    {
-        ballPowerText.text = $"Ball multi: x{upgradeScriptableObject.upgradePower}";
-    }
+    private void ChangeCostText() => costText.text = $"Cost: {upgradeScriptableObject.upgradeCost}";
+
+    private void ChangeUpgradeNameText() => nameText.text = $"{upgradeScriptableObject.upgradeName}{upgradeScriptableObject.upgradePower}";
 }
