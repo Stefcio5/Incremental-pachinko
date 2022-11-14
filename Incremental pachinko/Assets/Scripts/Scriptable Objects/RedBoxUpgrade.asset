@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ae992e54419ee428c4f86636cd7be6, type: 3}
+  m_Name: RedBoxUpgrade
+  m_EditorClassIdentifier: 
+  upgradeName: 'Red Box: x'
+  upgradeLevel: 0
+  baseUpgradeCost: 100
+  upgradeMultiplier: 4
+  upgradeCost: 400
+  baseUpgradePower: 10
+  upgradePower: 10
+  playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
