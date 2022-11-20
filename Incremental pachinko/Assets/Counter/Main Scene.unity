@@ -5361,6 +5361,10 @@ PrefabInstance:
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextPrefab
+      value: 
+      objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: 02b3df1a5a5fad14998533b6d1ec85da, type: 2}
@@ -5424,6 +5428,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c72561f9210d149419d57a54bca6d6cf, type: 2}
+    - target: {fileID: 8066926057257092101, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
 --- !u!1 &549767728
@@ -10519,6 +10527,10 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextPrefab
+      value: 
+      objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: 02b3df1a5a5fad14998533b6d1ec85da, type: 2}
@@ -11047,6 +11059,10 @@ PrefabInstance:
       propertyPath: CountMultiplier
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextPrefab
+      value: 
+      objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -14425,6 +14441,10 @@ PrefabInstance:
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextPrefab
+      value: 
+      objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: 02b3df1a5a5fad14998533b6d1ec85da, type: 2}
@@ -15603,6 +15623,10 @@ PrefabInstance:
       propertyPath: CountMultiplier
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextPrefab
+      value: 
+      objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -17988,6 +18012,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextPrefab
+      value: 
+      objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: 02b3df1a5a5fad14998533b6d1ec85da, type: 2}
@@ -18051,6 +18079,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0db7e65ac74958642ab08ed14c7d82ab, type: 2}
+    - target: {fileID: 8066926057110939936, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8066926057257092101, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.01
@@ -23103,7 +23135,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 50
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
@@ -23844,7 +23876,7 @@ GameObject:
   - component: {fileID: 7403093180565970976}
   - component: {fileID: 7403093180565971423}
   m_Layer: 5
-  m_Name: Shop
+  m_Name: Upgrade UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24629,6 +24661,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextPrefab
+      value: 
+      objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: 02b3df1a5a5fad14998533b6d1ec85da, type: 2}
@@ -24698,7 +24734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8066926057257092101, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.01
+      value: 0.02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}

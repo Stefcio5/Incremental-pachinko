@@ -4,7 +4,7 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject ballPrefab;
-    
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))

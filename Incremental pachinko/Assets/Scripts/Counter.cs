@@ -3,6 +3,8 @@
 public class Counter : MonoBehaviour
 {
     [SerializeField]
+    private GameObject floatingTextPrefab;
+    [SerializeField]
     private DataScriptableObject data;
     [SerializeField]
     private UpgradeScriptableObject upgradeScriptableObject;
@@ -11,7 +13,19 @@ public class Counter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        data.AddPoints((upgradeScriptableObject.upgradePower) * boxUpgradeScriptableObject.upgradePower);
+        data.AddPoints(GetAddedPoints());
+        ShowFloatingText(other);
         Destroy(other.gameObject, 2f);
+    }
+
+    private double GetAddedPoints()
+    {
+        return upgradeScriptableObject.upgradePower * boxUpgradeScriptableObject.upgradePower;
+    }
+
+    private void ShowFloatingText(Collider other)
+    {
+        var floatingText = Instantiate(floatingTextPrefab, other.transform.position, floatingTextPrefab.transform.rotation);
+        floatingText.GetComponent<TextMesh>().text = GetAddedPoints().ToString();
     }
 }
