@@ -9,17 +9,30 @@ public class UpgradeScriptableObject : ScriptableObject
     [SerializeField]
     private double baseUpgradeCost;
     [SerializeField]
-    private double upgradeMultiplier;
-    [SerializeField]
-    public double upgradeCost;
+    private double upgradeCostMultiplier;
     [SerializeField]
     private double baseUpgradePower;
-    public double upgradePower;
+    [SerializeField]
+    private double upgradePowerMultiplier;
+
+    [SerializeField]
+    private bool hasMaxLevel;
+    [SerializeField]
+    private double maxLevel;
 
     [System.NonSerialized]
     public UnityEvent buyUpgradeEvent;
     [SerializeField]
     private DataScriptableObject playerData;
+
+    [Header("ReadOnly Values")]
+    [SerializeField]
+    public double upgradeCost;
+    [SerializeField]
+    private double upgradePower;
+
+    public double MaxLevel { get => maxLevel; private set => maxLevel = value; }
+    public double UpgradePower { get => upgradePower; private set => upgradePower = value; }
 
     private void OnEnable()
     {
@@ -33,7 +46,7 @@ public class UpgradeScriptableObject : ScriptableObject
 
     public void BuyUpgrade()
     {
-        if (playerData.points >= upgradeCost)
+        if (HasMaxLevel() && IsUpgradeLevelLowerThanMax() && CanBuyUpgrade() || !hasMaxLevel && CanBuyUpgrade())
         {
             playerData.AddPoints(-upgradeCost);
             upgradeLevel++;
@@ -43,15 +56,30 @@ public class UpgradeScriptableObject : ScriptableObject
         }
     }
 
+    private bool CanBuyUpgrade()
+    {
+        return playerData.points >= upgradeCost;
+    }
+
+    private bool IsUpgradeLevelLowerThanMax()
+    {
+        return upgradeLevel < maxLevel;
+    }
+
+    public bool HasMaxLevel()
+    {
+        return hasMaxLevel;
+    }
+
     public double CalculateUpgradeCost(double level)
     {
-        upgradeCost = baseUpgradeCost * (1 + level * level) * upgradeMultiplier;
+        upgradeCost = baseUpgradeCost * (1 + level * level) * upgradeCostMultiplier;
         return upgradeCost;
     }
 
     public double CalculateUpgradePower(double level)
     {
-        upgradePower = baseUpgradePower + (level * baseUpgradePower);
+        upgradePower = baseUpgradePower + (level * upgradePowerMultiplier);
         return upgradePower;
     }
 

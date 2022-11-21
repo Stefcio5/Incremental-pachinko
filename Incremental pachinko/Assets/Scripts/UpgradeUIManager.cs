@@ -34,9 +34,19 @@ public class UpgradeUIManager : MonoBehaviour
         upgradeScriptableObject.buyUpgradeEvent.RemoveListener(ChangeCostText);
         upgradeScriptableObject.buyUpgradeEvent.RemoveListener(ChangeUpgradeNameText);
     }
-    private void ChangeLevelText() => levelText.text = upgradeScriptableObject.upgradeLevel.ToString();
+    private void ChangeLevelText()
+    {
+        if (upgradeScriptableObject.HasMaxLevel())
+        {
+            levelText.text = $"{upgradeScriptableObject.upgradeLevel.ToString()}/{upgradeScriptableObject.MaxLevel}";
+        }
+        else
+        {
+            levelText.text = upgradeScriptableObject.upgradeLevel.ToString();
+        }
+    }
 
     private void ChangeCostText() => costText.text = $"Cost: {upgradeScriptableObject.upgradeCost}";
 
-    private void ChangeUpgradeNameText() => nameText.text = $"{upgradeScriptableObject.upgradeName}{upgradeScriptableObject.upgradePower}";
+    private void ChangeUpgradeNameText() => nameText.text = $"{upgradeScriptableObject.upgradeName}{upgradeScriptableObject.UpgradePower}";
 }

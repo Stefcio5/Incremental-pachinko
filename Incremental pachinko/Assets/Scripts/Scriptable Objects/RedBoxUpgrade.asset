@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: RedBoxUpgrade
   m_EditorClassIdentifier: 
   upgradeName: 'Red Box: x'
-  upgradeLevel: 0
+  upgradeLevel: 9
   baseUpgradeCost: 100
-  upgradeMultiplier: 4
-  upgradeCost: 400
+  upgradeCostMultiplier: 1
   baseUpgradePower: 10
-  upgradePower: 10
+  upgradePowerMultiplier: 10
+  hasMaxLevel: 0
+  maxLevel: 0
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
+  upgradeCost: 8200
+  upgradePower: 100

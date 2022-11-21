@@ -20,12 +20,12 @@ public class Counter : MonoBehaviour
 
     private double GetAddedPoints()
     {
-        return upgradeScriptableObject.upgradePower * boxUpgradeScriptableObject.upgradePower;
+        return upgradeScriptableObject.UpgradePower * boxUpgradeScriptableObject.UpgradePower;
     }
 
     private void ShowFloatingText(Collider other)
     {
         var floatingText = Instantiate(floatingTextPrefab, other.transform.position, floatingTextPrefab.transform.rotation);
-        floatingText.GetComponent<TextMesh>().text = GetAddedPoints().ToString();
+        floatingText.GetComponent<TextMesh>().text = $"+{GetAddedPoints().ToString()}";
     }
 }
