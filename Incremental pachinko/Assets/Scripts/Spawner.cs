@@ -6,6 +6,8 @@ public class Spawner : MonoBehaviour
     private GameObject ballPrefab;
     [SerializeField]
     private UpgradeScriptableObject autoSpawnBallUpgrade;
+    [SerializeField]
+    private UpgradeScriptableObject spawnRangeUpgrade;
 
     private void Start()
     {
@@ -22,6 +24,6 @@ public class Spawner : MonoBehaviour
 
     private void SpawnBall()
     {
-        Instantiate(ballPrefab, new Vector3(0f, 35f, Random.Range(-1f, 1f)), Quaternion.identity);
+        Instantiate(ballPrefab, new Vector3(0f, 35f, Random.Range((float)-spawnRangeUpgrade.UpgradePower, (float)spawnRangeUpgrade.UpgradePower)), Quaternion.identity);
     }
 }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ae992e54419ee428c4f86636cd7be6, type: 3}
+  m_Name: SpawnRangeUpgrade
+  m_EditorClassIdentifier: 
+  upgradeName: 
+  upgradeLevel: 0
+  baseUpgradeCost: 0
+  upgradeCostMultiplier: 0
+  baseUpgradePower: 0
+  upgradePowerMultiplier: 0
+  hasMaxLevel: 0
+  maxLevel: 0
+  playerData: {fileID: 0}
+  upgradeCost: 0
+  upgradePower: 0
