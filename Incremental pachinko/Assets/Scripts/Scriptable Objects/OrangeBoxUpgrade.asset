@@ -13,13 +13,29 @@ MonoBehaviour:
   m_Name: OrangeBoxUpgrade
   m_EditorClassIdentifier: 
   upgradeName: 'Orange Box: x'
-  upgradeLevel: 13
-  baseUpgradeCost: 50
-  upgradeCostMultiplier: 1
-  baseUpgradePower: 5
-  upgradePowerMultiplier: 5
+  upgradeLevel:
+    mantissa: 0
+    exponent: 0
+  baseUpgradeCost:
+    mantissa: 1
+    exponent: 1
+  upgradeCostMultiplier:
+    mantissa: 1
+    exponent: 0
+  baseUpgradePower:
+    mantissa: 1
+    exponent: 1
+  upgradePowerMultiplier:
+    mantissa: 1
+    exponent: 1
   hasMaxLevel: 0
-  maxLevel: 0
+  maxLevel:
+    mantissa: 0
+    exponent: 0
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
-  upgradeCost: 8500
-  upgradePower: 70
+  upgradeCost:
+    mantissa: 1
+    exponent: 1
+  upgradePower:
+    mantissa: 1
+    exponent: 1

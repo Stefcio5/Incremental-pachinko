@@ -1,3 +1,4 @@
+using BreakInfinity;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,20 +6,20 @@ using UnityEngine.Events;
 public class UpgradeScriptableObject : ScriptableObject
 {
     public string upgradeName;
-    public double upgradeLevel;
+    public BigDouble upgradeLevel;
     [SerializeField]
-    private double baseUpgradeCost;
+    private BigDouble baseUpgradeCost;
     [SerializeField]
-    private double upgradeCostMultiplier;
+    private BigDouble upgradeCostMultiplier;
     [SerializeField]
-    private double baseUpgradePower;
+    private BigDouble baseUpgradePower;
     [SerializeField]
-    private double upgradePowerMultiplier;
+    private BigDouble upgradePowerMultiplier;
 
     [SerializeField]
     private bool hasMaxLevel;
     [SerializeField]
-    private double maxLevel;
+    private BigDouble maxLevel;
 
     [System.NonSerialized]
     public UnityEvent buyUpgradeEvent;
@@ -27,12 +28,12 @@ public class UpgradeScriptableObject : ScriptableObject
 
     [Header("ReadOnly Values")]
     [SerializeField]
-    public double upgradeCost;
+    public BigDouble upgradeCost;
     [SerializeField]
-    private double upgradePower;
+    private BigDouble upgradePower;
 
-    public double MaxLevel { get => maxLevel; private set => maxLevel = value; }
-    public double UpgradePower { get => upgradePower; private set => upgradePower = value; }
+    public BigDouble MaxLevel { get => maxLevel; private set => maxLevel = value; }
+    public BigDouble UpgradePower { get => upgradePower; private set => upgradePower = value; }
 
     private void OnEnable()
     {
@@ -55,6 +56,13 @@ public class UpgradeScriptableObject : ScriptableObject
             buyUpgradeEvent.Invoke();
         }
     }
+    public void ResetUpgrade()
+    {
+        upgradeLevel = 0;
+        CalculateUpgradeCost(upgradeLevel);
+        CalculateUpgradePower(upgradeLevel);
+        buyUpgradeEvent.Invoke();
+    }
 
     private bool CanBuyUpgrade()
     {
@@ -71,16 +79,18 @@ public class UpgradeScriptableObject : ScriptableObject
         return hasMaxLevel;
     }
 
-    public double CalculateUpgradeCost(double level)
+    public BigDouble CalculateUpgradeCost(BigDouble level)
     {
-        upgradeCost = baseUpgradeCost * (1 + level * level) * upgradeCostMultiplier;
+        upgradeCost = baseUpgradeCost * BigDouble.Pow(upgradeCostMultiplier, level);
         return upgradeCost;
     }
 
-    public double CalculateUpgradePower(double level)
+    public BigDouble CalculateUpgradePower(BigDouble level)
     {
-        upgradePower = baseUpgradePower + (level * upgradePowerMultiplier);
+        
+        upgradePower = baseUpgradePower + (upgradePowerMultiplier * level);
         return upgradePower;
+
     }
 
 }

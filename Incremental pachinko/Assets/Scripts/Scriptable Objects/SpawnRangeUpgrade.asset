@@ -12,14 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ae992e54419ee428c4f86636cd7be6, type: 3}
   m_Name: SpawnRangeUpgrade
   m_EditorClassIdentifier: 
-  upgradeName: 
-  upgradeLevel: 0
-  baseUpgradeCost: 0
-  upgradeCostMultiplier: 0
-  baseUpgradePower: 0
-  upgradePowerMultiplier: 0
-  hasMaxLevel: 0
-  maxLevel: 0
-  playerData: {fileID: 0}
-  upgradeCost: 0
-  upgradePower: 0
+  upgradeName: Spawn range x
+  upgradeLevel:
+    mantissa: 0
+    exponent: 0
+  baseUpgradeCost:
+    mantissa: 1
+    exponent: 1
+  upgradeCostMultiplier:
+    mantissa: 1.15
+    exponent: 0
+  baseUpgradePower:
+    mantissa: 1
+    exponent: 0
+  upgradePowerMultiplier:
+    mantissa: 1.1
+    exponent: 0
+  hasMaxLevel: 1
+  maxLevel:
+    mantissa: 3
+    exponent: 1
+  playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
+  upgradeCost:
+    mantissa: 1
+    exponent: 1
+  upgradePower:
+    mantissa: 1
+    exponent: 0

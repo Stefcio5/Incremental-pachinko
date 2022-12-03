@@ -13,13 +13,29 @@ MonoBehaviour:
   m_Name: AutoSpawnBallUpgrade
   m_EditorClassIdentifier: 
   upgradeName: 'Spawn ball every '
-  upgradeLevel: 92
-  baseUpgradeCost: 200
-  upgradeCostMultiplier: 1
-  baseUpgradePower: 10
-  upgradePowerMultiplier: -0.1
+  upgradeLevel:
+    mantissa: 9.9
+    exponent: 1
+  baseUpgradeCost:
+    mantissa: 1
+    exponent: 1
+  upgradeCostMultiplier:
+    mantissa: 2
+    exponent: 0
+  baseUpgradePower:
+    mantissa: 1
+    exponent: 1
+  upgradePowerMultiplier:
+    mantissa: -1
+    exponent: -1
   hasMaxLevel: 1
-  maxLevel: 99
+  maxLevel:
+    mantissa: 9.9
+    exponent: 1
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
-  upgradeCost: 1693000
-  upgradePower: 0.7999999999999989
+  upgradeCost:
+    mantissa: 6.3382530011411475
+    exponent: 30
+  upgradePower:
+    mantissa: 1
+    exponent: -1

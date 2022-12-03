@@ -13,13 +13,29 @@ MonoBehaviour:
   m_Name: RedBoxUpgrade
   m_EditorClassIdentifier: 
   upgradeName: 'Red Box: x'
-  upgradeLevel: 9
-  baseUpgradeCost: 100
-  upgradeCostMultiplier: 1
-  baseUpgradePower: 10
-  upgradePowerMultiplier: 10
+  upgradeLevel:
+    mantissa: 0
+    exponent: 0
+  baseUpgradeCost:
+    mantissa: 1
+    exponent: 4
+  upgradeCostMultiplier:
+    mantissa: 1
+    exponent: 0
+  baseUpgradePower:
+    mantissa: 2.5
+    exponent: 1
+  upgradePowerMultiplier:
+    mantissa: 2.5
+    exponent: 1
   hasMaxLevel: 0
-  maxLevel: 0
+  maxLevel:
+    mantissa: 0
+    exponent: 0
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
-  upgradeCost: 8200
-  upgradePower: 100
+  upgradeCost:
+    mantissa: 1
+    exponent: 4
+  upgradePower:
+    mantissa: 2.5
+    exponent: 1

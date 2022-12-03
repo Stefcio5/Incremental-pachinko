@@ -1,23 +1,29 @@
+using BreakInfinity;
 using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "DataScriptableObject", menuName = "ScriptableObjects/Data")]
 public class DataScriptableObject : ScriptableObject
 {
-    public double points;
+    public BigDouble points;
     [System.NonSerialized]
-    public UnityEvent<double> pointsChangeEvent;
+    public UnityEvent<BigDouble> pointsChangeEvent;
     private void OnEnable()
     {
         if (pointsChangeEvent == null)
         {
-            pointsChangeEvent = new UnityEvent<double>();
+            pointsChangeEvent = new UnityEvent<BigDouble>();
         }
     }
 
-    public void AddPoints(double amount)
+    public void AddPoints(BigDouble amount)
     {
         points += amount;
+        pointsChangeEvent.Invoke(points);
+    }
+    public void ResetPoints()
+    {
+        points = 0;
         pointsChangeEvent.Invoke(points);
     }
 }

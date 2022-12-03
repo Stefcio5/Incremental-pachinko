@@ -1,3 +1,4 @@
+using BreakInfinity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,7 @@ public class UIManager : MonoBehaviour
         dataScriptableObject.pointsChangeEvent.RemoveListener(ChangePointsText);
     }
 
-    private void ChangePointsText(double points)
+    private void ChangePointsText(BigDouble points)
     {
         pointsText.text = $"Points: {points}";
     }

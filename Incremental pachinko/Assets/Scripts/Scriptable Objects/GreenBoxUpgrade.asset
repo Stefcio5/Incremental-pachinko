@@ -13,13 +13,29 @@ MonoBehaviour:
   m_Name: GreenBoxUpgrade
   m_EditorClassIdentifier: 
   upgradeName: 'Green Box: x'
-  upgradeLevel: 14
-  baseUpgradeCost: 10
-  upgradeCostMultiplier: 1
-  baseUpgradePower: 1
-  upgradePowerMultiplier: 1
+  upgradeLevel:
+    mantissa: 7
+    exponent: 0
+  baseUpgradeCost:
+    mantissa: 1
+    exponent: 1
+  upgradeCostMultiplier:
+    mantissa: 3
+    exponent: 0
+  baseUpgradePower:
+    mantissa: 2
+    exponent: 0
+  upgradePowerMultiplier:
+    mantissa: 2
+    exponent: 0
   hasMaxLevel: 0
-  maxLevel: 0
+  maxLevel:
+    mantissa: 0
+    exponent: 0
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
-  upgradeCost: 1970
-  upgradePower: 15
+  upgradeCost:
+    mantissa: 2.187
+    exponent: 4
+  upgradePower:
+    mantissa: 1.6
+    exponent: 1

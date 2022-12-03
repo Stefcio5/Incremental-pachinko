@@ -8,14 +8,21 @@ public class Spawner : MonoBehaviour
     private UpgradeScriptableObject autoSpawnBallUpgrade;
     [SerializeField]
     private UpgradeScriptableObject spawnRangeUpgrade;
+    private float timer;
 
     private void Start()
     {
-        InvokeRepeating("SpawnBall", (float)autoSpawnBallUpgrade.UpgradePower, (float)autoSpawnBallUpgrade.UpgradePower);
+        //InvokeRepeating("SpawnBall", (float)autoSpawnBallUpgrade.UpgradePower, (float)autoSpawnBallUpgrade.UpgradePower);
     }
 
     void Update()
     {
+        timer += Time.deltaTime;
+        if (timer >= autoSpawnBallUpgrade.UpgradePower)
+        {
+            SpawnBall();
+            timer = 0f;
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SpawnBall();

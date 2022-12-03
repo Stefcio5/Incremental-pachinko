@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f0bcfa10d9933247bc481ad012d9745, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  points: 1752
+  points:
+    mantissa: 1.7606
+    exponent: 4

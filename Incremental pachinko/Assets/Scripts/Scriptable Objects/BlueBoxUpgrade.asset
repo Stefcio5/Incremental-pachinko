@@ -13,13 +13,29 @@ MonoBehaviour:
   m_Name: BlueBoxUpgrade
   m_EditorClassIdentifier: 
   upgradeName: 'Blue Box: x'
-  upgradeLevel: 18
-  baseUpgradeCost: 20
-  upgradeCostMultiplier: 1
-  baseUpgradePower: 2
-  upgradePowerMultiplier: 2
+  upgradeLevel:
+    mantissa: 6
+    exponent: 0
+  baseUpgradeCost:
+    mantissa: 1
+    exponent: 1
+  upgradeCostMultiplier:
+    mantissa: 1
+    exponent: 0
+  baseUpgradePower:
+    mantissa: 5
+    exponent: 0
+  upgradePowerMultiplier:
+    mantissa: 5
+    exponent: 0
   hasMaxLevel: 0
-  maxLevel: 0
+  maxLevel:
+    mantissa: 0
+    exponent: 0
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
-  upgradeCost: 6500
-  upgradePower: 38
+  upgradeCost:
+    mantissa: 1
+    exponent: 1
+  upgradePower:
+    mantissa: 1.7
+    exponent: 1

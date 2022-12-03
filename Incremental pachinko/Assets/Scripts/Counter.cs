@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BreakInfinity;
+using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class Counter : MonoBehaviour
         Destroy(other.gameObject, 2f);
     }
 
-    private double GetAddedPoints()
+    private BigDouble GetAddedPoints()
     {
         return upgradeScriptableObject.UpgradePower * boxUpgradeScriptableObject.UpgradePower;
     }
