@@ -18,9 +18,9 @@ MonoBehaviour:
     exponent: 1
   baseUpgradeCost:
     mantissa: 1
-    exponent: 1
+    exponent: 2
   upgradeCostMultiplier:
-    mantissa: 2
+    mantissa: 1.07
     exponent: 0
   baseUpgradePower:
     mantissa: 1
@@ -34,8 +34,8 @@ MonoBehaviour:
     exponent: 1
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
   upgradeCost:
-    mantissa: 6.3382530011411475
-    exponent: 30
+    mantissa: 8.109498369779597
+    exponent: 4
   upgradePower:
     mantissa: 1
     exponent: -1

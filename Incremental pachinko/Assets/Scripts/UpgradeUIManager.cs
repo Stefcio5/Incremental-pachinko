@@ -46,7 +46,7 @@ public class UpgradeUIManager : MonoBehaviour
         }
     }
 
-    private void ChangeCostText() => costText.text = $"Cost: {upgradeScriptableObject.upgradeCost}";
+    private void ChangeCostText() => costText.text = $"Cost: {upgradeScriptableObject.upgradeCost.Notate()}";
 
     private void ChangeUpgradeNameText() => nameText.text = $"{upgradeScriptableObject.upgradeName}{upgradeScriptableObject.UpgradePower}";
 }

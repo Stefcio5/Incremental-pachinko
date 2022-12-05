@@ -25,6 +25,6 @@ public class UIManager : MonoBehaviour
 
     private void ChangePointsText(BigDouble points)
     {
-        pointsText.text = $"Points: {points}";
+        pointsText.text = $"Points: {points.Notate()}";
     }
 }
