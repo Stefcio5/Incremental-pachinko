@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: 'Spawn ball every '
   upgradeLevel:
-    mantissa: 9.9
+    mantissa: 2.3
     exponent: 1
   baseUpgradeCost:
-    mantissa: 1
-    exponent: 2
+    mantissa: 5
+    exponent: 4
   upgradeCostMultiplier:
-    mantissa: 1.07
+    mantissa: 1.12
     exponent: 0
   baseUpgradePower:
     mantissa: 1
@@ -34,8 +34,8 @@ MonoBehaviour:
     exponent: 1
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
   upgradeCost:
-    mantissa: 8.109498369779597
-    exponent: 4
+    mantissa: 6.776173631474299
+    exponent: 5
   upgradePower:
-    mantissa: 1
-    exponent: -1
+    mantissa: 7.7
+    exponent: 0

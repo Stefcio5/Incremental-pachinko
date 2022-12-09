@@ -7,23 +7,23 @@ public class DataScriptableObject : ScriptableObject
 {
     public BigDouble points;
     [System.NonSerialized]
-    public UnityEvent<BigDouble> pointsChangeEvent;
+    public UnityEvent pointsChangeEvent;
     private void OnEnable()
     {
         if (pointsChangeEvent == null)
         {
-            pointsChangeEvent = new UnityEvent<BigDouble>();
+            pointsChangeEvent = new UnityEvent();
         }
     }
 
     public void AddPoints(BigDouble amount)
     {
         points += amount;
-        pointsChangeEvent.Invoke(points);
+        pointsChangeEvent.Invoke();
     }
     public void ResetPoints()
     {
         points = 0;
-        pointsChangeEvent.Invoke(points);
+        pointsChangeEvent.Invoke();
     }
 }

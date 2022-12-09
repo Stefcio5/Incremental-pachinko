@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ChangePointsText(dataScriptableObject.points);
+        ChangePointsText();
     }
     private void OnEnable()
     {
@@ -23,8 +23,8 @@ public class UIManager : MonoBehaviour
         dataScriptableObject.pointsChangeEvent.RemoveListener(ChangePointsText);
     }
 
-    private void ChangePointsText(BigDouble points)
+    private void ChangePointsText()
     {
-        pointsText.text = $"Points: {points.Notate()}";
+        pointsText.text = $"Points: {dataScriptableObject.points.Notate()}";
     }
 }

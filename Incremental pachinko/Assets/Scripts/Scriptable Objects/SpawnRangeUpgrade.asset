@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: Spawn range x
   upgradeLevel:
-    mantissa: 7.4
-    exponent: 1
+    mantissa: 0
+    exponent: 0
   baseUpgradeCost:
     mantissa: 1
-    exponent: 1
+    exponent: 5
   upgradeCostMultiplier:
-    mantissa: 1.15
+    mantissa: 1.1
     exponent: 0
   baseUpgradePower:
     mantissa: 1
@@ -34,8 +34,8 @@ MonoBehaviour:
     exponent: 1
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
   upgradeCost:
-    mantissa: 3.101988519616052
+    mantissa: 1
     exponent: 5
   upgradePower:
-    mantissa: 1.58
-    exponent: 1
+    mantissa: 1
+    exponent: 0

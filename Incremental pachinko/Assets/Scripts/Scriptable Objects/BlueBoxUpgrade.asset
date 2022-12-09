@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: 'Blue Box: x'
   upgradeLevel:
-    mantissa: 6
-    exponent: 0
-  baseUpgradeCost:
-    mantissa: 1
+    mantissa: 8.6
     exponent: 1
+  baseUpgradeCost:
+    mantissa: 5
+    exponent: 4
   upgradeCostMultiplier:
-    mantissa: 1
+    mantissa: 1.08
     exponent: 0
   baseUpgradePower:
     mantissa: 5
@@ -34,8 +34,8 @@ MonoBehaviour:
     exponent: 0
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
   upgradeCost:
-    mantissa: 1
-    exponent: 1
+    mantissa: 3.7446650404214727
+    exponent: 7
   upgradePower:
-    mantissa: 1.7
-    exponent: 1
+    mantissa: 4.35
+    exponent: 2

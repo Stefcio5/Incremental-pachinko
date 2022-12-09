@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   points:
-    mantissa: 2.01758132025592
-    exponent: 6
+    mantissa: 1.82827391343974
+    exponent: 5

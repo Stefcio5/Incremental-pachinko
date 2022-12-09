@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: 'Points per ball: '
   upgradeLevel:
-    mantissa: 1.1
-    exponent: 1
+    mantissa: 1.03
+    exponent: 2
   baseUpgradeCost:
     mantissa: 1
-    exponent: 1
+    exponent: 2
   upgradeCostMultiplier:
-    mantissa: 2
+    mantissa: 1.07
     exponent: 0
   baseUpgradePower:
     mantissa: 1
@@ -34,8 +34,8 @@ MonoBehaviour:
     exponent: 0
   playerData: {fileID: 11400000, guid: ecfa53f34d3783942afa8a00f54fec7b, type: 2}
   upgradeCost:
-    mantissa: 2.048
-    exponent: 4
+    mantissa: 1.0629898106208604
+    exponent: 5
   upgradePower:
-    mantissa: 1.2
-    exponent: 1
+    mantissa: 1.04
+    exponent: 2

@@ -47,7 +47,7 @@ public class UpgradeScriptableObject : ScriptableObject
 
     public void BuyUpgrade()
     {
-        if (HasMaxLevel() && IsUpgradeLevelLowerThanMax() && CanBuyUpgrade() || !hasMaxLevel && CanBuyUpgrade())
+        if (CanBuyUpgrade())
         {
             playerData.AddPoints(-upgradeCost);
             upgradeLevel++;
@@ -56,6 +56,8 @@ public class UpgradeScriptableObject : ScriptableObject
             buyUpgradeEvent.Invoke();
         }
     }
+
+
     public void ResetUpgrade()
     {
         upgradeLevel = 0;
@@ -63,8 +65,12 @@ public class UpgradeScriptableObject : ScriptableObject
         CalculateUpgradePower(upgradeLevel);
         buyUpgradeEvent.Invoke();
     }
+    public bool CanBuyUpgrade()
+    {
+        return HasMaxLevel() && IsUpgradeLevelLowerThanMax() && HaveEnoughPoints() || !hasMaxLevel && HaveEnoughPoints();
+    }
 
-    private bool CanBuyUpgrade()
+    private bool HaveEnoughPoints()
     {
         return playerData.points >= upgradeCost;
     }
