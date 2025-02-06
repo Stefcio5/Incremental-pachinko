@@ -36,20 +36,20 @@ public static class SaveSystem
     }
 }
 
-[System.Serializable]
-public class GameData
-{
-    public PlayerData player;
-    public LevelData level;
-    public InventoryData inventory;
+// [System.Serializable]
+// public class GameData
+// {
+//     public PlayerData player;
+//     public LevelData level;
+//     public InventoryData inventory;
 
-    public GameData(PlayerData player, LevelData level, InventoryData inventory)
-    {
-        this.player = player;
-        this.level = level;
-        this.inventory = inventory;
-    }
-}
+//     public GameData(PlayerData player, LevelData level, InventoryData inventory)
+//     {
+//         this.player = player;
+//         this.level = level;
+//         this.inventory = inventory;
+//     }
+// }
 
 [System.Serializable]
 public class PlayerData

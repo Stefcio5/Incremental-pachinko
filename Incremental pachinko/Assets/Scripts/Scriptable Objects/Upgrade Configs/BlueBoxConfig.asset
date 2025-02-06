@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 788d3a2f4c0b20d41ae5fc88b75009a8, type: 3}
+  m_Name: BlueBoxConfig
+  m_EditorClassIdentifier: 
+  upgradeName: Blue Box
+  upgradeDescription: Increases Green Box multi
+  upgradeType: 0
+  baseCost:
+    mantissa: 1
+    exponent: 1
+  costFormula: {fileID: 11400000, guid: 552f95d2c210af0449bfdf4b16b39758, type: 2}
+  basePower:
+    mantissa: 5
+    exponent: 0
+  powerFormula: {fileID: 11400000, guid: d1c82c9371c8eb0469fd7406acd440a6, type: 2}
+  hasMaxLevel: 0
+  maxLevel:
+    mantissa: 0
+    exponent: 0
