@@ -24,6 +24,10 @@ public class Counter : MonoBehaviour
             DataController.Instance.AddPoints(value);
             ShowFloatingText(collider, value);
         }
+        if (collider.gameObject.TryGetComponent<Flyweight>(out var flyweight))
+        {
+            flyweight.Despawn();
+        }
     }
 
     private void ShowFloatingText(Collider collider, BigDouble value)

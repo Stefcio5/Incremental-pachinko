@@ -111,9 +111,6 @@ public class DataController : PersistentSingleton<DataController>
     {
         // Unsubscribe from events
         OnDataChanged = null;
-
-        // Clear singleton instance
-        //Instance = null;
     }
     private void Update()
     {

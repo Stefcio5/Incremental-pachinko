@@ -18,6 +18,11 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
     protected override void Awake()
     {
         base.Awake();
+        //StartCoroutine(InitializeWhenReady());
+    }
+
+    private void Start()
+    {
         StartCoroutine(InitializeWhenReady());
     }
 
@@ -92,6 +97,7 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
 
     private void OnDestroy()
     {
+        Debug.Log("Destoyed Upgrade manager");
         if (DataController.Instance != null)
         {
             DataController.Instance.OnDataChanged -= HandleDataChanged;
