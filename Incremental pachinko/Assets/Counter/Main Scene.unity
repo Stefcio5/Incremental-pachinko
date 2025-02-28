@@ -7627,6 +7627,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: 02b3df1a5a5fad14998533b6d1ec85da, type: 2}
@@ -13377,7 +13381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -537, y: 619.46027}
+  m_AnchoredPosition: {x: -537, y: 619.4602}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &930465522
@@ -15010,6 +15014,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: 02b3df1a5a5fad14998533b6d1ec85da, type: 2}
@@ -15726,6 +15734,10 @@ PrefabInstance:
       propertyPath: floatingTextPrefab
       value: 
       objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -20062,6 +20074,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: 02b3df1a5a5fad14998533b6d1ec85da, type: 2}
@@ -21798,7 +21814,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 137353968}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.9999936
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -21873,6 +21889,10 @@ PrefabInstance:
       propertyPath: floatingTextPrefab
       value: 
       objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -26122,6 +26142,10 @@ PrefabInstance:
       propertyPath: floatingTextPrefab
       value: 
       objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -33490,6 +33514,10 @@ PrefabInstance:
       propertyPath: floatingTextPrefab
       value: 
       objectReference: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 

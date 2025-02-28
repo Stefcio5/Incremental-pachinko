@@ -95,16 +95,16 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
         OnUpgradesChanged?.Invoke();
     }
 
-    private void OnDestroy()
-    {
-        Debug.Log("Destoyed Upgrade manager");
-        if (DataController.Instance != null)
-        {
-            DataController.Instance.OnDataChanged -= HandleDataChanged;
-        }
+    // private void OnDestroy()
+    // {
+    //     Debug.Log("Destoyed Upgrade manager");
+    //     if (DataController.Instance != null)
+    //     {
+    //         DataController.Instance.OnDataChanged -= HandleDataChanged;
+    //     }
 
-        _upgrades.Clear();
-        upgradeMap.Clear();
-        OnUpgradesChanged = null;
-    }
+    //     _upgrades.Clear();
+    //     upgradeMap.Clear();
+    //     OnUpgradesChanged = null;
+    // }
 }

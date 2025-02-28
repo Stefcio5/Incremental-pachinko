@@ -7,7 +7,7 @@ public class Counter : MonoBehaviour
 {
     [SerializeField] private UpgradeConfig holeUpgrade;
     [SerializeField] private GameObject floatingTextPrefab;
-
+    [SerializeField] private FlyweightSettings floatingTextSettings;
 
 
 
@@ -32,7 +32,10 @@ public class Counter : MonoBehaviour
 
     private void ShowFloatingText(Collider collider, BigDouble value)
     {
-        var floatingText = Instantiate(floatingTextPrefab, collider.transform.position, floatingTextPrefab.transform.rotation);
+        //var floatingText = Instantiate(floatingTextPrefab, collider.transform.position, floatingTextPrefab.transform.rotation);
+        var floatingText = FlyweightFactory.Spawn(floatingTextSettings);
+        //floatingText.transform.SetParent(transform);
+        floatingText.transform.SetPositionAndRotation(collider.transform.position, floatingText.transform.rotation);
         floatingText.GetComponent<TextMesh>().text = $"+{value.Notate()}";
     }
 

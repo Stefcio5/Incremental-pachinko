@@ -33,6 +33,6 @@ public class FlyweightSettings : ScriptableObject
 
 public enum FlyweightType
 {
-    Normal,
-    Magic
+    Ball,
+    FloatingUI
 }

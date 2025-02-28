@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class FloatingText : MonoBehaviour
 {
-    [SerializeField]
-    private float destroyTime = 0.5f;
+    private Flyweight flyweight;
 
-    void Start()
+    void Awake()
     {
-        Destroy(gameObject, destroyTime);    
-    }  
+        flyweight = GetComponent<Flyweight>();
+    }
+
+    void OnEnable()
+    {
+        flyweight.Despawn();
+    }
 }
