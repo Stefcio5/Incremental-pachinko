@@ -46,7 +46,9 @@ public class UpgradeUI : MonoBehaviour
     {
         _upgradeNameText.text = $"{_upgrade.config.upgradeName} x{_upgrade.CurrentPower}";
         _upgradeDescriptionText.text = _upgrade.config.upgradeDescription;
-        _upgradeLevelText.text = $"{_upgrade.CurrentLevel}";
+        _upgradeLevelText.text = _upgrade.config.hasMaxLevel
+            ? $"{_upgrade.CurrentLevel}/{_upgrade.config.maxLevel}"
+            : $"{_upgrade.CurrentLevel}";
         _upgradeCostText.text = $"Cost: {_upgrade.CurrentCost.Notate()}";
 
         _buyButton.interactable = DataController.Instance.CurrentGameData.points >= _upgrade.CurrentCost;

@@ -107,17 +107,10 @@ public class DataController : PersistentSingleton<DataController>
         OnDataChanged?.Invoke();
     }
 
-    private void OnDestroy()
-    {
-        // Unsubscribe from events
-        OnDataChanged = null;
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            AddPoints(100);
-            Debug.Log("Added 100 points");
-        }
-    }
+    // private void OnDestroy()
+    // {
+    //     // Unsubscribe from events
+    //     OnDataChanged = null;
+    // }
+
 }

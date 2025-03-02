@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 788d3a2f4c0b20d41ae5fc88b75009a8, type: 3}
+  m_Name: SpawnRangeConfig
+  m_EditorClassIdentifier: 
+  upgradeName: Spawn Range
+  upgradeDescription: Increases ball spawn range
+  upgradeType: 0
+  baseCost:
+    mantissa: 1
+    exponent: 0
+  costFormula: {fileID: 11400000, guid: 552f95d2c210af0449bfdf4b16b39758, type: 2}
+  basePower:
+    mantissa: 1
+    exponent: 0
+  powerFormula: {fileID: 11400000, guid: 06deff0ad47f76747948e4224562d515, type: 2}
+  hasMaxLevel: 1
+  maxLevel:
+    mantissa: 7.5
+    exponent: 1

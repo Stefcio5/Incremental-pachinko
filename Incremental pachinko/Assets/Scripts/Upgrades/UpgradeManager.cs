@@ -86,11 +86,15 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
     public IEnumerable<Upgrade> GetUpgrades(UpgradeType type) =>
         _upgrades.TryGetValue(type, out var upgrades) ? upgrades : Enumerable.Empty<Upgrade>();
 
+    public Upgrade GetUpgrade(string upgradeName) =>
+        upgradeMap.TryGetValue(upgradeName, out var upgrade) ? upgrade : null;
+
     public void HandleDataChanged()
     {
         foreach (var upgrade in upgradeMap.Values)
         {
             upgrade.UpdateLevel(DataController.Instance.CurrentGameData.upgradeLevels.GetValueOrDefault(upgrade.config.upgradeName, 0));
+            Debug.Log("Upgrade level updated: " + upgrade.config.upgradeName + " to " + upgrade.CurrentLevel);
         }
         OnUpgradesChanged?.Invoke();
     }
