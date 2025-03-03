@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.UI;
 
 public class UpgradeSystemUI : MonoBehaviour
@@ -21,13 +21,12 @@ public class UpgradeSystemUI : MonoBehaviour
 
     private IEnumerator InitializeWhenReady()
     {
-        // Wait for UpgradeManager and DataController to be ready
+        // Wait for UpgradeManager and DataController to be ready.
         yield return new WaitUntil(() => UpgradeManager.Instance != null && DataController.Instance != null);
-
-        // Wait one more frame to ensure everything is initialized
+        // Wait another frame to ensure everything is fully initialized.
         yield return null;
 
-        UpgradeManager.Instance.OnUpgradesChanged += UpdateUI;
+        //UpgradeManager.Instance.OnUpgradesChanged += UpdateUI;
         _initialized = true;
         UpdateUI();
 
@@ -38,7 +37,7 @@ public class UpgradeSystemUI : MonoBehaviour
     {
         if (UpgradeManager.Instance != null)
         {
-            UpgradeManager.Instance.OnUpgradesChanged -= UpdateUI;
+            //UpgradeManager.Instance.OnUpgradesChanged -= UpdateUI;
         }
     }
 
@@ -50,44 +49,49 @@ public class UpgradeSystemUI : MonoBehaviour
             return;
         }
 
-        var upgrades = UpgradeManager.Instance.GetUpgrades(_upgradeType);
+        // Get the upgrades once and cache the count.
+        var upgrades = UpgradeManager.Instance.GetUpgrades(_upgradeType).ToList();
+        int upgradeCount = upgrades.Count;
 
-        Debug.Log($"Updating UI for {_upgradeType}, found {upgrades.Count()} upgrades");
+        Debug.Log($"Updating UI for {_upgradeType}, found {upgradeCount} upgrades");
 
-        // Deactivate all existing UpgradeUIs
-        foreach (var upgradeUI in _upgradeUIs)
+        // Ensure we have exactly as many UpgradeUI objects as upgrades.
+        // If there are fewer UI elements than upgrades, instantiate the missing ones.
+        for (int i = 0; i < upgradeCount; i++)
         {
-            if (upgradeUI != null)
-                upgradeUI.gameObject.SetActive(false);
-        }
+            UpgradeUI ui;
 
-        // Clean up null references
-        _upgradeUIs.RemoveAll(ui => ui == null);
-
-        // Activate and update only the required UpgradeUIs
-        int i = 0;
-        foreach (var upgrade in upgrades)
-        {
             if (i < _upgradeUIs.Count)
             {
-                _upgradeUIs[i].gameObject.SetActive(true);
-                _upgradeUIs[i].SetUpgrade(upgrade);
+                ui = _upgradeUIs[i];
             }
             else
             {
-                var upgradeUIObject = Instantiate(_upgradeUIPrefab, _upgradeListContainer);
-                var upgradeUI = upgradeUIObject.GetComponent<UpgradeUI>();
-                if (upgradeUI != null)
+                // Instantiate a new UI element and add it to the list.
+                var uiObject = Instantiate(_upgradeUIPrefab, _upgradeListContainer);
+                ui = uiObject.GetComponent<UpgradeUI>();
+                if (ui == null)
                 {
-                    upgradeUI.SetUpgrade(upgrade);
-                    _upgradeUIs.Add(upgradeUI);
+                    Debug.LogError("UpgradeUI component not found on prefab");
+                    continue;
                 }
-                else
-                {
-                    Debug.LogError($"UpgradeUI component not found on prefab");
-                }
+                _upgradeUIs.Add(ui);
             }
-            i++;
+            // Activate and update the UI.
+            if (ui != null)
+            {
+                ui.gameObject.SetActive(true);
+                ui.SetUpgrade(upgrades[i]);
+            }
+        }
+
+        // Deactivate any extra UpgradeUIs not needed.
+        for (int i = upgradeCount; i < _upgradeUIs.Count; i++)
+        {
+            if (_upgradeUIs[i] != null)
+            {
+                _upgradeUIs[i].gameObject.SetActive(false);
+            }
         }
     }
 }
