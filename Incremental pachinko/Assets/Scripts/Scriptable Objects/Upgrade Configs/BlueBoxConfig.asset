@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BlueBoxConfig
   m_EditorClassIdentifier: 
   upgradeName: Blue Box
-  upgradeDescription: Increases Green Box multi
+  upgradeDescription: Increases Blue Box multi
   upgradeType: 0
   baseCost:
     mantissa: 1

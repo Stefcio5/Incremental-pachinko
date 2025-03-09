@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8859816ea8e9fa743a965889de010929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballUpgrade: {fileID: 11400000, guid: b272370bac060d344b210c57b2f0263d, type: 2}
+  upgradeConfig: {fileID: 11400000, guid: b272370bac060d344b210c57b2f0263d, type: 2}
 --- !u!114 &-5161793224897610607
 MonoBehaviour:
   m_ObjectHideFlags: 0

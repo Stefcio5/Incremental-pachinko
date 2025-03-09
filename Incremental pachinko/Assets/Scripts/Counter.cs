@@ -6,7 +6,6 @@ using UnityEngine;
 public class Counter : MonoBehaviour
 {
     [SerializeField] private UpgradeConfig holeUpgrade;
-    [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private FlyweightSettings floatingTextSettings;
 
 
@@ -15,7 +14,7 @@ public class Counter : MonoBehaviour
     {
         if (collider.gameObject.TryGetComponent<Ball>(out var ball))
         {
-            var value = ball.GetValue() * UpgradeManager.Instance.GetUpgrade(holeUpgrade.upgradeName).CurrentPower;
+            var value = ball.GetCurrentValue() * UpgradeManager.Instance.GetUpgrade(holeUpgrade.upgradeName).CurrentPower;
 
             DataController.Instance.AddPoints(value);
             ShowFloatingText(collider, value);

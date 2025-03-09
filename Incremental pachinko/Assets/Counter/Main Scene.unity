@@ -7736,6 +7736,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 18b5b92c09d5f66418db69b3029a513d, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradeConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 18b5b92c09d5f66418db69b3029a513d, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: CountMultiplier
       value: 200
       objectReference: {fileID: 0}
@@ -13502,7 +13506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -537, y: 654.85004}
+  m_AnchoredPosition: {x: -537, y: 654.85}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &930465522
@@ -15237,6 +15241,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8dc8972a748b49c43b245d4906ebd706, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradeConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 8dc8972a748b49c43b245d4906ebd706, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: CountMultiplier
       value: 25
       objectReference: {fileID: 0}
@@ -16065,6 +16073,10 @@ PrefabInstance:
       objectReference: {fileID: 598753586}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: holeUpgrade
+      value: 
+      objectReference: {fileID: 11400000, guid: cc4defbff55c430419f31472a4817f52, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: cc4defbff55c430419f31472a4817f52, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
@@ -20636,6 +20648,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 18b5b92c09d5f66418db69b3029a513d, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradeConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 18b5b92c09d5f66418db69b3029a513d, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: CountMultiplier
       value: 200
       objectReference: {fileID: 0}
@@ -22497,7 +22513,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 137353969}
   m_HandleRect: {fileID: 137353968}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -22563,6 +22579,10 @@ PrefabInstance:
       objectReference: {fileID: 598753586}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: holeUpgrade
+      value: 
+      objectReference: {fileID: 11400000, guid: 8dc8972a748b49c43b245d4906ebd706, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: 8dc8972a748b49c43b245d4906ebd706, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
@@ -27036,6 +27056,10 @@ PrefabInstance:
       objectReference: {fileID: 598753586}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: holeUpgrade
+      value: 
+      objectReference: {fileID: 11400000, guid: cc4defbff55c430419f31472a4817f52, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: cc4defbff55c430419f31472a4817f52, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
@@ -34408,6 +34432,10 @@ PrefabInstance:
       objectReference: {fileID: 598753586}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: holeUpgrade
+      value: 
+      objectReference: {fileID: 11400000, guid: 1377ef7bda5a7b94886aef2ecd514309, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: 1377ef7bda5a7b94886aef2ecd514309, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}

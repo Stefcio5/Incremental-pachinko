@@ -1,11 +1,24 @@
+using System;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using BreakInfinity;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class Ball : UpgradeReceiver
 {
-    [SerializeField] private UpgradeConfig ballUpgrade;
+    private BigDouble ballValue;
 
-    public BigDouble GetValue() =>
-        UpgradeManager.Instance.GetUpgrade(ballUpgrade.upgradeName).CurrentPower;
+    protected override void Start()
+    {
+        base.Start();
+        Debug.Log($"Ball value: {ballValue}");
+    }
+
+    protected override void HandlePowerChanged()
+    {
+        ballValue = upgrade.CurrentPower;
+    }
+
+    public override BigDouble GetCurrentValue() => ballValue;
+
 }
