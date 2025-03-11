@@ -106,11 +106,4 @@ public class DataController : PersistentSingleton<DataController>
         SaveData();
         OnDataChanged?.Invoke();
     }
-
-    // private void OnDestroy()
-    // {
-    //     // Unsubscribe from events
-    //     OnDataChanged = null;
-    // }
-
 }

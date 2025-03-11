@@ -3,21 +3,35 @@ using System.Linq;
 using BreakInfinity;
 using UnityEngine;
 
-public class Counter : MonoBehaviour
+public class Counter : UpgradeReceiver
 {
     [SerializeField] private UpgradeConfig holeUpgrade;
     [SerializeField] private FlyweightSettings floatingTextSettings;
+    private BigDouble currentValue;
 
+    protected override void Start()
+    {
+        base.Start();
+    }
 
+    public override BigDouble GetCurrentValue()
+    {
+        return currentValue;
+    }
+
+    protected override void HandlePowerChanged()
+    {
+        currentValue = upgrade.CurrentPower;
+    }
 
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.TryGetComponent<Ball>(out var ball))
         {
-            var value = ball.GetCurrentValue() * UpgradeManager.Instance.GetUpgrade(holeUpgrade.upgradeName).CurrentPower;
+            var finalValue = ball.GetCurrentValue() * GetCurrentValue();
 
-            DataController.Instance.AddPoints(value);
-            ShowFloatingText(collider, value);
+            DataController.Instance.AddPoints(finalValue);
+            ShowFloatingText(collider, finalValue);
         }
         if (collider.gameObject.TryGetComponent<Flyweight>(out var flyweight))
         {
@@ -33,32 +47,4 @@ public class Counter : MonoBehaviour
         floatingText.transform.SetPositionAndRotation(collider.transform.position, floatingText.transform.rotation);
         floatingText.GetComponent<TextMesh>().text = $"+{value.Notate()}";
     }
-
-
-    // [SerializeField]
-    // private GameObject floatingTextPrefab;
-    // [SerializeField]
-    // private DataScriptableObject data;
-    // [SerializeField]
-    // private UpgradeScriptableObject upgradeScriptableObject;
-    // [SerializeField]
-    // private UpgradeScriptableObject boxUpgradeScriptableObject;
-
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     data.AddPoints(GetAddedPoints());
-    //     ShowFloatingText(other);
-    //     Destroy(other.gameObject, 2f);
-    // }
-
-    // private BigDouble GetAddedPoints()
-    // {
-    //     return upgradeScriptableObject.UpgradePower * boxUpgradeScriptableObject.UpgradePower;
-    // }
-
-    // private void ShowFloatingText(Collider other)
-    // {
-    //     var floatingText = Instantiate(floatingTextPrefab, other.transform.position, floatingTextPrefab.transform.rotation);
-    //     floatingText.GetComponent<TextMesh>().text = $"+{GetAddedPoints().Notate()}";
-    // }
 }

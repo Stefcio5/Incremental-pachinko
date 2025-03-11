@@ -12,6 +12,7 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
     public Dictionary<string, Upgrade> upgradeMap = new();
 
     public event Action OnUpgradesChanged;
+    public event Action OnInitialized;
 
     private bool _initialized;
 
@@ -39,6 +40,7 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
                 DataController.Instance.OnDataChanged += HandleDataChanged;
                 Initialize(_upgradeConfigs, DataController.Instance);
                 _initialized = true;
+                OnInitialized?.Invoke();
                 OnUpgradesChanged?.Invoke();
                 Debug.Log("UpgradeManager initialized successfully");
             }
@@ -98,17 +100,4 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
         }
         OnUpgradesChanged?.Invoke();
     }
-
-    // private void OnDestroy()
-    // {
-    //     Debug.Log("Destoyed Upgrade manager");
-    //     if (DataController.Instance != null)
-    //     {
-    //         DataController.Instance.OnDataChanged -= HandleDataChanged;
-    //     }
-
-    //     _upgrades.Clear();
-    //     upgradeMap.Clear();
-    //     OnUpgradesChanged = null;
-    // }
 }

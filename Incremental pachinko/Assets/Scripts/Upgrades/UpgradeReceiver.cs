@@ -1,3 +1,4 @@
+using System;
 using BreakInfinity;
 using UnityEngine;
 
@@ -8,11 +9,21 @@ public abstract class UpgradeReceiver : MonoBehaviour
 
     protected virtual void Start()
     {
+        Initialize();
+        if (upgrade == null)
+        {
+            UpgradeManager.Instance.OnInitialized += Initialize;
+        }
+    }
+
+    protected void Initialize()
+    {
         upgrade = UpgradeManager.Instance.GetUpgrade(upgradeConfig.upgradeName);
         if (upgrade != null)
         {
             upgrade.OnLevelChanged += (u) => HandlePowerChanged();
             HandlePowerChanged();
+            Debug.Log($"UpgradeReceiver initialized with upgrade: {upgradeConfig.upgradeName}");
         }
     }
 
@@ -22,5 +33,6 @@ public abstract class UpgradeReceiver : MonoBehaviour
     protected virtual void OnDestroy()
     {
         upgrade.OnLevelChanged -= (u) => HandlePowerChanged();
+        UpgradeManager.Instance.OnInitialized -= Initialize;
     }
 }
