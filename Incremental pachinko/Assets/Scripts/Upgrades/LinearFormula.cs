@@ -2,10 +2,10 @@ using BreakInfinity;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LinearFormula", menuName = "Upgrades/Formulas/LinearFormula")]
-public class LinearFormula : ScriptableObject, IUpgradeFormula
+public class LinearFormula : UpgradeFormula
 {
     [SerializeField] private BigDouble multiplier = 1;
-    public BigDouble Calculate(BigDouble baseValue, BigDouble level) => baseValue + (level * multiplier);
+    public override BigDouble Calculate(BigDouble baseValue, BigDouble level) => baseValue + (level * multiplier);
 }
 
 
