@@ -29,8 +29,11 @@ public class Upgrade
 
     public void LevelUp()
     {
-        CurrentLevel++;
-        OnLevelChanged?.Invoke(this);
+        if (CanBuy(CurrentCost))
+        {
+            CurrentLevel++;
+            OnLevelChanged?.Invoke(this);
+        }
     }
 
     private bool IsMaxLevelReached => config.hasMaxLevel && CurrentLevel >= config.maxLevel;

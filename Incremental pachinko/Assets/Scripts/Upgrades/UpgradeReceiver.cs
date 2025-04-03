@@ -6,33 +6,36 @@ public abstract class UpgradeReceiver : MonoBehaviour
 {
     [SerializeField] private UpgradeConfig upgradeConfig;
     protected Upgrade upgrade;
+    protected BigDouble Value => upgrade != null ? upgrade.CurrentPower : 0;
+    protected event Action OnInitialized;
 
     protected virtual void Start()
     {
         Initialize();
-        if (upgrade == null)
-        {
-            UpgradeManager.Instance.OnInitialized += Initialize;
-        }
     }
 
     protected void Initialize()
     {
         upgrade = UpgradeManager.Instance.GetUpgrade(upgradeConfig.upgradeName);
-        if (upgrade != null)
+        if (upgrade == null)
         {
-            upgrade.OnLevelChanged += (u) => HandlePowerChanged();
-            HandlePowerChanged();
-            Debug.Log($"UpgradeReceiver initialized with upgrade: {upgradeConfig.upgradeName}");
+            UpgradeManager.Instance.OnInitialized += Initialize;
         }
+        Debug.Log($"UpgradeReceiver initialized with upgrade: {upgradeConfig.upgradeName}");
+        OnInitialized?.Invoke();
     }
 
-    protected abstract void HandlePowerChanged();
-    public abstract BigDouble GetCurrentValue();
+
+    public virtual BigDouble GetValue()
+    {
+        return Value;
+    }
 
     protected virtual void OnDestroy()
     {
-        upgrade.OnLevelChanged -= (u) => HandlePowerChanged();
-        UpgradeManager.Instance.OnInitialized -= Initialize;
+        if (UpgradeManager.Instance != null)
+        {
+            UpgradeManager.Instance.OnInitialized -= Initialize;
+        }
     }
 }

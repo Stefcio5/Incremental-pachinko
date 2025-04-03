@@ -15,6 +15,7 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
     public event Action OnInitialized;
 
     private bool _initialized;
+    public bool Initialized => _initialized;
 
     protected override void Awake()
     {

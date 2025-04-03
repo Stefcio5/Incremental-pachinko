@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: RedBoxConfig
   m_EditorClassIdentifier: 
   upgradeName: Red Box
-  upgradeDescription: Increases Red Box multi
+  upgradeDescription: 'Increases multiplier by '
+  descriptionSuffix: 
   upgradeType: 0
   baseCost:
     mantissa: 1
     exponent: 1
-  costFormula: {fileID: 11400000, guid: 552f95d2c210af0449bfdf4b16b39758, type: 2}
+  costFormula: {fileID: 11400000, guid: c7397cbac81ee164cbffac5695547f2d, type: 2}
   basePower:
     mantissa: 5
     exponent: 1
@@ -27,3 +28,4 @@ MonoBehaviour:
   maxLevel:
     mantissa: 0
     exponent: 0
+  notationPrecision: 0

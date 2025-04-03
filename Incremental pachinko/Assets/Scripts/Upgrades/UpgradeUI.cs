@@ -1,4 +1,6 @@
 using System;
+using BreakInfinity;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,14 +46,14 @@ public class UpgradeUI : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        _upgradeNameText.text = $"{_upgrade.config.upgradeName} x{_upgrade.CurrentPower}";
-        _upgradeDescriptionText.text = _upgrade.config.upgradeDescription;
+        _upgradeNameText.text = $"{_upgrade.config.upgradeName}";
+        _upgradeDescriptionText.text = $"{_upgrade.config.upgradeDescription}{Notate(_upgrade.CurrentPower)}{_upgrade.config.descriptionSuffix}";
         _upgradeLevelText.text = _upgrade.config.hasMaxLevel
             ? $"{_upgrade.CurrentLevel}/{_upgrade.config.maxLevel}"
             : $"{_upgrade.CurrentLevel}";
         _upgradeCostText.text = $"Cost: {_upgrade.CurrentCost.Notate()}";
 
-        _buyButton.interactable = DataController.Instance.CurrentGameData.points >= _upgrade.CurrentCost;
+        _buyButton.interactable = _upgrade.CanBuy(DataController.Instance.CurrentGameData.points);
         _buyButtonImage.color = _buyButton.interactable ? _defaultColor : _unavailableColor;
     }
 
@@ -63,5 +65,9 @@ public class UpgradeUI : MonoBehaviour
             _upgrade.LevelUp();
             UpdateVisuals();
         }
+    }
+    private string Notate(BigDouble value)
+    {
+        return value.Notate(_upgrade.config.notationPrecision);
     }
 }
