@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Linq;
 using BreakInfinity;
 
-public class Spawner : MonoBehaviour
+public class Spawner : UpgradeReceiver
 {
     public List<FlyweightSettings> flyweightSettings;
     [SerializeField]
@@ -14,10 +14,13 @@ public class Spawner : MonoBehaviour
     private UpgradeScriptableObject spawnRangeUpgrade;
     [SerializeField]
     private UpgradeConfig spawnRangeConfig;
+    [SerializeField]
+    private SpawnRange spawnRangeGO;
     private float timer;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         //TODO: Fix after bootstrap scene
         // if (UpgradeManager.Instance != null)
         // {
@@ -36,28 +39,32 @@ public class Spawner : MonoBehaviour
         //         Debug.LogWarning("Spawn range upgrade not found!");
         //     }
         // }
+        spawnRangeGO = FindFirstObjectByType<SpawnRange>();
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= autoSpawnBallUpgrade.UpgradePower)
+        if (UpgradeManager.Instance.Initialized)
         {
-            //SpawnBall();
-            timer = 0f;
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //SpawnBall();
-            var flyweight = FlyweightFactory.Spawn(flyweightSettings[0]);
-            var spawnRange = UpgradeManager.Instance.GetUpgrade(spawnRangeConfig.upgradeName).CurrentPower;
-            flyweight.transform.position = new Vector3(0f, 35f, Random.Range((float)-spawnRange, (float)spawnRange));
-            flyweight.transform.rotation = Quaternion.identity;
+            timer += Time.deltaTime;
+            if (timer >= Value)
+            {
+                SpawnBall(spawnRangeGO.GetValue());
+                timer = 0f;
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SpawnBall(spawnRangeGO.GetValue());
+            }
         }
     }
 
-    private void SpawnBall()
+    private void SpawnBall(BigDouble position)
     {
-        Instantiate(ballPrefab, new Vector3(0f, 35f, Random.Range((float)-spawnRangeUpgrade.UpgradePower, (float)spawnRangeUpgrade.UpgradePower)), Quaternion.identity);
+        var flyweight = FlyweightFactory.Spawn(flyweightSettings[0]);
+        flyweight.transform.position = new Vector3(0f, 35f, Random.Range((float)-position, (float)position));
+        flyweight.transform.rotation = Quaternion.identity;
+        // set parent to the spawner
+        flyweight.transform.SetParent(transform);
     }
 }

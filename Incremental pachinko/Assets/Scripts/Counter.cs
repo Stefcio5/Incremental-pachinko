@@ -7,28 +7,17 @@ public class Counter : UpgradeReceiver
 {
     [SerializeField] private UpgradeConfig holeUpgrade;
     [SerializeField] private FlyweightSettings floatingTextSettings;
-    private BigDouble currentValue;
 
     protected override void Start()
     {
         base.Start();
     }
 
-    public override BigDouble GetCurrentValue()
-    {
-        return currentValue;
-    }
-
-    protected override void HandlePowerChanged()
-    {
-        currentValue = upgrade.CurrentPower;
-    }
-
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.TryGetComponent<Ball>(out var ball))
         {
-            var finalValue = ball.GetCurrentValue() * GetCurrentValue();
+            var finalValue = ball.GetValue() * Value;
 
             DataController.Instance.AddPoints(finalValue);
             ShowFloatingText(collider, finalValue);
