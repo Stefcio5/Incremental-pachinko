@@ -6,15 +6,6 @@ using BreakInfinity;
 public class Spawner : UpgradeReceiver
 {
     public List<FlyweightSettings> flyweightSettings;
-    [SerializeField]
-    private GameObject ballPrefab;
-    [SerializeField]
-    private UpgradeScriptableObject autoSpawnBallUpgrade;
-    [SerializeField]
-    private UpgradeScriptableObject spawnRangeUpgrade;
-    [SerializeField]
-    private UpgradeConfig spawnRangeConfig;
-    [SerializeField]
     private SpawnRange spawnRangeGO;
     private float timer;
 

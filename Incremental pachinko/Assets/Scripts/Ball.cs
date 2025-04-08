@@ -17,10 +17,20 @@ public class Ball : UpgradeReceiver
         rb.angularDamping = 0;
     }
 
+    private void OnEnable()
+    {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+            Debug.Log("Got rigidbody component");
+        }
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+    }
+
     private void FixedUpdate()
     {
         Vector3 gravity = (Physics.gravity * gravityScale) - Physics.gravity;
         rb.AddForce(gravity, ForceMode.Acceleration);
-        Debug.Log(rb.linearVelocity);
     }
 }

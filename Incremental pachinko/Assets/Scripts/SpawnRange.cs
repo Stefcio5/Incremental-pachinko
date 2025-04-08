@@ -9,8 +9,8 @@ public class SpawnRange : UpgradeReceiver
     {
         base.Start();
         spawnRangeObject = gameObject;
-        OnInitialized += SetObjectScale;
-        OnInitialized += OnSpawnRangeUpgradeLevelChanged;
+        SetObjectScale();
+        OnSpawnRangeUpgradeLevelChanged();
         Debug.Log(spawnRangeObject.name);
         Debug.Log(spawnRangeObject.transform.localScale);
     }
@@ -24,13 +24,5 @@ public class SpawnRange : UpgradeReceiver
         var scale = Value * 2;
         //set the scale of the GameObject to the new scale on z axis
         spawnRangeObject.transform.localScale = new Vector3(spawnRangeObject.transform.localScale.x, spawnRangeObject.transform.localScale.y, (float)scale);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SetObjectScale();
-        }
     }
 }

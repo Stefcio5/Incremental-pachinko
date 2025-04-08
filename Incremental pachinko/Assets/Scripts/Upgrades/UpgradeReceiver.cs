@@ -7,7 +7,6 @@ public abstract class UpgradeReceiver : MonoBehaviour
     [SerializeField] private UpgradeConfig upgradeConfig;
     protected Upgrade upgrade;
     protected BigDouble Value => upgrade != null ? upgrade.CurrentPower : 0;
-    protected event Action OnInitialized;
 
     protected virtual void Start()
     {
@@ -17,12 +16,7 @@ public abstract class UpgradeReceiver : MonoBehaviour
     protected void Initialize()
     {
         upgrade = UpgradeManager.Instance.GetUpgrade(upgradeConfig.upgradeName);
-        if (upgrade == null)
-        {
-            UpgradeManager.Instance.OnInitialized += Initialize;
-        }
         Debug.Log($"UpgradeReceiver initialized with upgrade: {upgradeConfig.upgradeName}");
-        OnInitialized?.Invoke();
     }
 
 

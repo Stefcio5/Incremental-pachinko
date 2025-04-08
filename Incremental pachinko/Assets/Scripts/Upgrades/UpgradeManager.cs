@@ -25,10 +25,11 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
 
     private void Start()
     {
-        StartCoroutine(InitializeWhenReady());
+        //StartCoroutine(InitializeWhenReady());
+        Initialize(_upgradeConfigs, DataController.Instance);
     }
 
-
+    // Obsolete
     private IEnumerator InitializeWhenReady()
     {
         Debug.Log("UpgradeManager waiting for DataController...");
@@ -78,6 +79,9 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
             _upgrades[config.upgradeType].Add(upgrade);
             upgradeMap[config.upgradeName] = upgrade;
         }
+        OnUpgradesChanged?.Invoke();
+        _initialized = true;
+        Debug.Log("Upgrade Manager Initialized");
     }
 
     private void SaveUpgrade(string id, BigDouble level, DataController data)

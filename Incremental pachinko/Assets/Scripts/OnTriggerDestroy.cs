@@ -4,6 +4,9 @@ public class OnTriggerDestroy : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject, 2f);
+        if (other.gameObject.TryGetComponent<Flyweight>(out var flyweight))
+        {
+            flyweight.Despawn();
+        }
     }
 }
