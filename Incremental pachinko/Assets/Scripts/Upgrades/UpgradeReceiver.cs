@@ -8,6 +8,10 @@ public abstract class UpgradeReceiver : MonoBehaviour
     protected Upgrade upgrade;
     protected BigDouble Value => upgrade != null ? upgrade.CurrentPower : 0;
 
+    protected virtual void Awake()
+    {
+        Debug.Log($"UpgradeReceiver awake with upgrade: {upgradeConfig.upgradeName}");
+    }
     protected virtual void Start()
     {
         Initialize();
@@ -23,13 +27,5 @@ public abstract class UpgradeReceiver : MonoBehaviour
     public virtual BigDouble GetValue()
     {
         return Value;
-    }
-
-    protected virtual void OnDestroy()
-    {
-        if (UpgradeManager.Instance != null)
-        {
-            UpgradeManager.Instance.OnInitialized -= Initialize;
-        }
     }
 }

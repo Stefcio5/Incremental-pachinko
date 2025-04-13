@@ -82,6 +82,7 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
         OnUpgradesChanged?.Invoke();
         _initialized = true;
         Debug.Log("Upgrade Manager Initialized");
+        OnInitialized?.Invoke();
     }
 
     private void SaveUpgrade(string id, BigDouble level, DataController data)

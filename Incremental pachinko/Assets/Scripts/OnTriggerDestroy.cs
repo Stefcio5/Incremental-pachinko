@@ -6,7 +6,7 @@ public class OnTriggerDestroy : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<Flyweight>(out var flyweight))
         {
-            flyweight.Despawn();
+            FlyweightFactory.ReturnToPool(flyweight);
         }
     }
 }

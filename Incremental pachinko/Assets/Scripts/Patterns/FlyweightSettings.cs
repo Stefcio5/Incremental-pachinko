@@ -8,7 +8,7 @@ public class FlyweightSettings : ScriptableObject
     public float despawnTime = 2f;
 
 
-    public Flyweight Create()
+    public virtual Flyweight Create()
     {
         var flyweight = Instantiate(prefab).AddComponent<Flyweight>();
         flyweight.settings = this;
@@ -17,22 +17,16 @@ public class FlyweightSettings : ScriptableObject
         return flyweight;
     }
 
-    public void OnGet(Flyweight flyweight)
+    public virtual void OnGet(Flyweight flyweight)
     {
         flyweight.gameObject.SetActive(true);
     }
-    public void OnRelease(Flyweight flyweight)
+    public virtual void OnRelease(Flyweight flyweight)
     {
         flyweight.gameObject.SetActive(false);
     }
-    public void OnDestroyPoolObject(Flyweight flyweight)
+    public virtual void OnDestroyPoolObject(Flyweight flyweight)
     {
         Destroy(flyweight.gameObject);
     }
-}
-
-public enum FlyweightType
-{
-    Ball,
-    FloatingUI
 }

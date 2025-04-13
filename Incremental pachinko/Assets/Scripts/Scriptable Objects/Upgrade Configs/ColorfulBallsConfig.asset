@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 788d3a2f4c0b20d41ae5fc88b75009a8, type: 3}
-  m_Name: BallConfig
+  m_Name: ColorfulBallsConfig
   m_EditorClassIdentifier: 
-  upgradeName: Ball
-  upgradeDescription: Increases points per ball x
+  upgradeName: Colorful Balls
+  upgradeDescription: 
   descriptionSuffix: 
   upgradeType: 0
   baseCost:
@@ -29,5 +29,5 @@ MonoBehaviour:
     mantissa: 0
     exponent: 0
   notationPrecision: 0
-  hasTooltip: 0
-  tooltipText: {fileID: 0}
+  hasTooltip: 1
+  tooltipText: {fileID: 11400000, guid: 261ef943828f9d2499d0b4be368e4f60, type: 2}

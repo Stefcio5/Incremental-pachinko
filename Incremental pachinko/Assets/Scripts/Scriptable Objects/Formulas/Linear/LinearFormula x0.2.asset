@@ -15,3 +15,4 @@ MonoBehaviour:
   multiplier:
     mantissa: 2
     exponent: -1
+  isAdditive: 1

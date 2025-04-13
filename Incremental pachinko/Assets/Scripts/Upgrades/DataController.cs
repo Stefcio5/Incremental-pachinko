@@ -43,6 +43,14 @@ public class DataController : PersistentSingleton<DataController>
         return true;
     }
 
+    public bool SpendPrestigePoints(BigDouble amount)
+    {
+        if (CurrentGameData.prestigePoints < amount) return false;
+        CurrentGameData.prestigePoints -= amount;
+        SaveDataAndNotify();
+        return true;
+    }
+
     public void PrestigeGame()
     {
         CurrentGameData.prestigePoints += CalculatePrestige();

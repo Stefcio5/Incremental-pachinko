@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 337dd311fae32fd44bf73b8971efa371, type: 3}
-  m_Name: Floating Text
+  m_Script: {fileID: 11500000, guid: 94c1f75d9f2aa3049bd82592338896e2, type: 3}
+  m_Name: ColorfulBallTooltip
   m_EditorClassIdentifier: 
-  type: {fileID: 11400000, guid: da31d6a324a8e484994d44cfa382284f, type: 2}
-  prefab: {fileID: 786773107387146726, guid: dd450aa0f900c574495de7e894e599b2, type: 3}
-  despawnTime: 0.5
+  tooltipText: 
