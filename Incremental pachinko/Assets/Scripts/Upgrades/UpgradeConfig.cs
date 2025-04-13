@@ -25,4 +25,7 @@ public class UpgradeConfig : ScriptableObject
 
     [Tooltip("Number of decimals to show for values less than 1")]
     public int notationPrecision = 0;
+
+    public bool hasTooltip;
+    public TooltipText tooltipText;
 }

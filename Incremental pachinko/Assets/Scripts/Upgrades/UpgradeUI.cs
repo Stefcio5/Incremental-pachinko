@@ -18,7 +18,7 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField] private Color _unavailableColor;
 
     private Upgrade _upgrade;
-
+    private TooltipTrigger _tooltipTrigger;
     private void OnEnable()
     {
         _buyButton.onClick.AddListener(OnBuyClicked);
@@ -32,6 +32,10 @@ public class UpgradeUI : MonoBehaviour
     public void SetUpgrade(Upgrade upgrade)
     {
         _upgrade = upgrade;
+        if (_upgrade.config.hasTooltip)
+        {
+            _tooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
+        }
         UpdateVisuals();
         _upgrade.OnLevelChanged += (u) => UpdateVisuals();
         DataController.Instance.OnDataChanged += UpdateVisuals;
@@ -55,13 +59,30 @@ public class UpgradeUI : MonoBehaviour
 
         _buyButton.interactable = _upgrade.CanBuy(DataController.Instance.CurrentGameData.points);
         _buyButtonImage.color = _buyButton.interactable ? _defaultColor : _unavailableColor;
+
+        if (_tooltipTrigger != null)
+        {
+            _tooltipTrigger.content = _upgrade.config.tooltipText.tooltipText;
+        }
     }
 
     private void OnBuyClicked()
     {
-        if (DataController.Instance.SpendPoints(_upgrade.CurrentCost))
+        bool purchaseSuccessful = false;
+
+        // Check the upgrade type and spend the appropriate currency
+        if (_upgrade.config.upgradeType == UpgradeType.Basic)
         {
-            // Buy the upgrade
+            purchaseSuccessful = DataController.Instance.SpendPoints(_upgrade.CurrentCost);
+        }
+        else if (_upgrade.config.upgradeType == UpgradeType.Prestige)
+        {
+            purchaseSuccessful = DataController.Instance.SpendPrestigePoints(_upgrade.CurrentCost);
+        }
+
+        // If the purchase was successful, level up the upgrade and update visuals
+        if (purchaseSuccessful)
+        {
             _upgrade.LevelUp();
             UpdateVisuals();
         }
