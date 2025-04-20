@@ -10,7 +10,12 @@ public class LoadScene : MonoBehaviour
     }
     private void LoadMainScene()
     {
-        // load the main scene here
+        // load the main scene here if scene is not already loaded
+        if (UnityEngine.SceneManagement.SceneManager.GetSceneByName("Main Scene").isLoaded)
+        {
+            Debug.Log("Main scene already loaded");
+            return;
+        }
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main Scene", UnityEngine.SceneManagement.LoadSceneMode.Additive);
         Debug.Log("Main scene loaded");
     }

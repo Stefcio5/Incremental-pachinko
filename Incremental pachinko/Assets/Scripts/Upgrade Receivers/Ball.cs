@@ -34,7 +34,7 @@ public class Ball : UpgradeReceiver
         rb.angularVelocity = Vector3.zero;
     }
 
-    public override BigDouble GetValue()
+    public override BigDouble GetUpgradeValue()
     {
         return ballMultiplier * Value;
     }

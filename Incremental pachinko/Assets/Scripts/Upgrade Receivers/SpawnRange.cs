@@ -17,7 +17,7 @@ public class SpawnRange : UpgradeReceiver
 
     private void OnSpawnRangeUpgradeLevelChanged()
     {
-        upgrade.OnLevelChanged += (u) => SetObjectScale();
+        Upgrade.OnLevelChanged += (u) => SetObjectScale();
     }
     private void SetObjectScale()
     {

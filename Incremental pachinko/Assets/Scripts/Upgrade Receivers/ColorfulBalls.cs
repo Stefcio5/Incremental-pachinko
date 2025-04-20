@@ -9,35 +9,30 @@ public class ColorfulBalls : UpgradeReceiver
     [SerializeField] private BallFlyweightSettings defaultBallFlyweightSettings;
     public TooltipText tooltipText;
 
-    protected override void Start()
+    protected override void OnUpgradeInitialized()
     {
-        base.Start();
-        Init();
-        upgrade.OnLevelChanged += (u) => ApplyUpgrade(upgrade.CurrentLevel);
-        upgrade.OnLevelChanged += (u) => CheckDebug();
+        base.OnUpgradeInitialized();
+        ApplyUpgrade(Upgrade.CurrentLevel);
+        Upgrade.OnLevelChanged += (u) => ApplyUpgrade(u.CurrentLevel);
     }
 
-    void OnEnable()
-    {
-    }
-
-    private void Init()
-    {
-        ApplyUpgrade(upgrade.CurrentLevel);
-    }
-    public void CheckDebug()
-    {
-        Debug.Log("Received upgrade event");
-    }
-
-    public void ApplyUpgrade(BigDouble level)
+    private void ApplyUpgrade(BigDouble level)
     {
         foreach (var ballFlyweightSetting in ballFlyweightSettings)
         {
             ballFlyweightSetting.spawnChance = ballFlyweightSetting.spawnChanceincrement * (float)level;
         }
-        CalculateSpawnChance();
-        SetSpawnChanceText();
+        UpdateTooltip();
+    }
+
+    private void UpdateTooltip()
+    {
+        string result = "Spawn Chances:\n";
+        foreach (var ballFlyweightSetting in ballFlyweightSettings)
+        {
+            result += $"{ballFlyweightSetting.name}: {ballFlyweightSetting.spawnChance:F2}% (+{ballFlyweightSetting.spawnChanceincrement:F2})\n";
+        }
+        tooltipText.SetTooltipText(result);
     }
 
 
@@ -63,27 +58,9 @@ public class ColorfulBalls : UpgradeReceiver
         }
     }
 
-    public void SetSpawnChanceText()
-    {
-        string result = "Spawn Chances:\n";
-        foreach (var ballFlyweightSetting in ballFlyweightSettings)
-        {
-            result += $"{ballFlyweightSetting.name}: {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement})\n";
-        }
-        tooltipText.SetTooltipText(result);
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SetSpawnChanceText();
-            CalculateSpawnChance();
-        }
-    }
-
     private void OnDisable()
     {
-        if (upgrade == null) return;
-        upgrade.OnLevelChanged -= (u) => ApplyUpgrade(upgrade.CurrentLevel);
+        if (Upgrade == null) return;
+        Upgrade.OnLevelChanged -= (u) => ApplyUpgrade(Upgrade.CurrentLevel);
     }
 }

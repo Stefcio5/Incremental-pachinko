@@ -5,20 +5,19 @@ using BreakInfinity;
 
 public class Spawner : UpgradeReceiver
 {
-    public List<BallFlyweightSettings> ballFlyweightSettings;
     public Transform holder;
     private SpawnRange spawnRangeGO;
     private float timer;
     private ColorfulBalls colorfulBalls;
 
-    private void Awake()
+    protected override void Awake()
     {
         colorfulBalls = GetComponent<ColorfulBalls>();
     }
 
-    protected override void Start()
+    protected override void OnUpgradeInitialized()
     {
-        base.Start();
+        base.OnUpgradeInitialized();
         spawnRangeGO = FindFirstObjectByType<SpawnRange>();
     }
 
@@ -27,14 +26,14 @@ public class Spawner : UpgradeReceiver
         if (UpgradeManager.Instance.Initialized)
         {
             timer += Time.deltaTime;
-            if (timer >= Value)
+            if (timer >= GetUpgradeValue())
             {
-                SpawnBall(spawnRangeGO.GetValue());
+                SpawnBall(spawnRangeGO.GetUpgradeValue());
                 timer = 0f;
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                SpawnBall(spawnRangeGO.GetValue());
+                SpawnBall(spawnRangeGO.GetUpgradeValue());
             }
         }
     }
@@ -47,13 +46,5 @@ public class Spawner : UpgradeReceiver
         flyweight.transform.rotation = Quaternion.identity;
         // set parent to the spawner
         flyweight.transform.SetParent(holder);
-    }
-
-    private BallFlyweightSettings GetRandomBall()
-    {
-        // Get a random index from the list of ball flyweight settings
-        int randomIndex = Random.Range(0, ballFlyweightSettings.Count);
-        // Return the ball flyweight settings at that index
-        return ballFlyweightSettings[randomIndex];
     }
 }
