@@ -17,9 +17,9 @@ MonoBehaviour:
   descriptionSuffix: 
   upgradeType: 0
   baseCost:
-    mantissa: 1
-    exponent: 1
-  costFormula: {fileID: 11400000, guid: c7397cbac81ee164cbffac5695547f2d, type: 2}
+    mantissa: 6.25
+    exponent: 2
+  costFormula: {fileID: 11400000, guid: 44ec2e979973df74481560ff4b5a4229, type: 2}
   basePower:
     mantissa: 5
     exponent: 0
@@ -29,3 +29,5 @@ MonoBehaviour:
     mantissa: 0
     exponent: 0
   notationPrecision: 0
+  hasTooltip: 0
+  tooltipText: {fileID: 0}

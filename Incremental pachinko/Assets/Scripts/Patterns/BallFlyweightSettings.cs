@@ -9,6 +9,7 @@ public class BallFlyweightSettings : FlyweightSettings
     public float spawnChanceincrement;
     public Material material;
     private Ball ball;
+    public int ID;
 
 
     public override Flyweight Create()

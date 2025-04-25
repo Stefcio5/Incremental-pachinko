@@ -18,10 +18,10 @@ MonoBehaviour:
   upgradeType: 0
   baseCost:
     mantissa: 1
-    exponent: 1
-  costFormula: {fileID: 11400000, guid: c7397cbac81ee164cbffac5695547f2d, type: 2}
+    exponent: 2
+  costFormula: {fileID: 11400000, guid: 2428e0a1fb364024bbff32bf02917244, type: 2}
   basePower:
-    mantissa: 1
+    mantissa: 2
     exponent: 0
   powerFormula: {fileID: 11400000, guid: 19bffeddd545e644ea75395b1e751487, type: 2}
   hasMaxLevel: 0
@@ -29,3 +29,5 @@ MonoBehaviour:
     mantissa: 0
     exponent: 0
   notationPrecision: 0
+  hasTooltip: 0
+  tooltipText: {fileID: 0}

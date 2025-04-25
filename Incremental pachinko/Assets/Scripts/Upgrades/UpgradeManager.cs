@@ -106,4 +106,15 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
         }
         OnUpgradesChanged?.Invoke();
     }
+
+    //reset upgrade list to level 0
+    public void ResetUpgrades()
+    {
+        foreach (var upgrade in upgradeMap.Values)
+        {
+            upgrade.UpdateLevel(0);
+            Debug.Log("Upgrade level reset: " + upgrade.config.upgradeName + " to 0");
+        }
+        OnUpgradesChanged?.Invoke();
+    }
 }

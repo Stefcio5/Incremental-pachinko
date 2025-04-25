@@ -18,6 +18,8 @@ public class DataController : PersistentSingleton<DataController>
 
     private bool _isSaving;
 
+    public BigDouble PrestigePoints;
+
     protected override void Awake()
     {
         base.Awake();
@@ -55,18 +57,21 @@ public class DataController : PersistentSingleton<DataController>
     {
         CurrentGameData.prestigePoints += CalculatePrestige();
         CurrentGameData.points = 0;
-        ResetUpgrades();
-        SaveDataAndNotify();
+        ResetGameData();
     }
 
     private BigDouble CalculatePrestige() => BigDouble.Sqrt(CurrentGameData.points) / 2;
 
-    private void ResetUpgrades()
+    [ContextMenu("Reset Game Data")]
+    private void ResetGameData()
     {
         foreach (var key in CurrentGameData.upgradeLevels.Keys.ToList())
         {
             CurrentGameData.upgradeLevels[key] = 0;
         }
+        CurrentGameData.points = 0;
+        UpgradeManager.Instance.ResetUpgrades();
+        SaveDataAndNotify();
     }
 
     private void LoadData()

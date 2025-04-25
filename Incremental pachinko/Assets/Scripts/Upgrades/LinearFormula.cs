@@ -10,11 +10,9 @@ public class LinearFormula : UpgradeFormula
     {
         if (isAdditive)
             return baseValue + (level * multiplier);
-        else
-            return baseValue + (baseValue * (level * multiplier));
-
+        else          
+            return baseValue * (1 + (level * multiplier));
     }
-
 }
 
 

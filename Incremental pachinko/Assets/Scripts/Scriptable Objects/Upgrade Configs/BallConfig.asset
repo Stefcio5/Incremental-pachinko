@@ -19,7 +19,7 @@ MonoBehaviour:
   baseCost:
     mantissa: 1
     exponent: 1
-  costFormula: {fileID: 11400000, guid: c7397cbac81ee164cbffac5695547f2d, type: 2}
+  costFormula: {fileID: 11400000, guid: cd264eebfde5c9744885a4e2c420b6e2, type: 2}
   basePower:
     mantissa: 1
     exponent: 0

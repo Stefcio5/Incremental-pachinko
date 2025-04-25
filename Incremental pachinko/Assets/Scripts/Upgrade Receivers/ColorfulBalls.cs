@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using BreakInfinity;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,10 +28,13 @@ public class ColorfulBalls : UpgradeReceiver
 
     private void UpdateTooltip()
     {
+        // Sort the list by ID before displaying it in the tooltip
+
+        var orderedBallFlyweightSettings = ballFlyweightSettings.OrderBy(x => x.ID).ToList();
         string result = "Spawn Chances:\n";
-        foreach (var ballFlyweightSetting in ballFlyweightSettings)
+        foreach (var ballFlyweightSetting in orderedBallFlyweightSettings)
         {
-            result += $"{ballFlyweightSetting.name}: {ballFlyweightSetting.spawnChance:F2}% (+{ballFlyweightSetting.spawnChanceincrement:F2})\n";
+            result += $"{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement})\n";
         }
         tooltipText.SetTooltipText(result);
     }
