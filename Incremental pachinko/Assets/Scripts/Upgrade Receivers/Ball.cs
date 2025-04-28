@@ -12,7 +12,7 @@ public class Ball : UpgradeReceiver
     protected override void Start()
     {
         base.Start();
-        Debug.Log($"Ball value: {Value}");
+        Debug.Log($"Ball value: {upgradePower.FinalValue}");
         rb = GetComponent<Rigidbody>();
         rb.linearDamping = 0;
         rb.angularDamping = 0;
@@ -36,7 +36,7 @@ public class Ball : UpgradeReceiver
 
     public override BigDouble GetUpgradeValue()
     {
-        return ballMultiplier * Value;
+        return ballMultiplier * upgradePower.FinalValue;
     }
 
     private void FixedUpdate()

@@ -29,7 +29,7 @@ public class Counter : UpgradeReceiver
 
     private BigDouble GetFinalValue(Ball ball)
     {
-        return ball.GetUpgradeValue() * Value;
+        return ball.GetUpgradeValue() * upgradePower.FinalValue;
     }
 
     private void ShowFloatingText(Collider collider, BigDouble value)

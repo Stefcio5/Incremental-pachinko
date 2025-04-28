@@ -17,6 +17,7 @@ public class UpgradeConfig : ScriptableObject
 
     [Header("Upgrade Effects")]
     public BigDouble basePower;
+    public BigDoubleSO upgradePower;
     public UpgradeFormula powerFormula;
 
     [Header("Upgrade Limitations")]

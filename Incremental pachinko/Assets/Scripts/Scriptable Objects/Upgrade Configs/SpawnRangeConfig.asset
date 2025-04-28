@@ -23,11 +23,12 @@ MonoBehaviour:
   basePower:
     mantissa: 1
     exponent: 0
+  upgradePower: {fileID: 11400000, guid: e52c13c4e522a18438b30892d4bb68cb, type: 2}
   powerFormula: {fileID: 11400000, guid: 06deff0ad47f76747948e4224562d515, type: 2}
   hasMaxLevel: 1
   maxLevel:
     mantissa: 7.5
     exponent: 1
-  notationPrecision: 0
+  notationPrecision: 1
   hasTooltip: 0
   tooltipText: {fileID: 0}

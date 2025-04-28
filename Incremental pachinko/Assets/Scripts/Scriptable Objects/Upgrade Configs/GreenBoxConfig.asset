@@ -23,6 +23,7 @@ MonoBehaviour:
   basePower:
     mantissa: 2
     exponent: 0
+  upgradePower: {fileID: 11400000, guid: 28fe2797405307642978dafea13dba45, type: 2}
   powerFormula: {fileID: 11400000, guid: 19bffeddd545e644ea75395b1e751487, type: 2}
   hasMaxLevel: 0
   maxLevel:

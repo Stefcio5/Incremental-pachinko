@@ -51,7 +51,7 @@ public class UpgradeUI : MonoBehaviour
     private void UpdateVisuals()
     {
         _upgradeNameText.text = $"{_upgrade.config.upgradeName}";
-        _upgradeDescriptionText.text = $"{_upgrade.config.upgradeDescription}{Notate(_upgrade.CurrentPower)}{_upgrade.config.descriptionSuffix}";
+        _upgradeDescriptionText.text = $"{_upgrade.config.upgradeDescription}{Notate(_upgrade.CurrentPower.FinalValue)}{_upgrade.config.descriptionSuffix}";
         _upgradeLevelText.text = _upgrade.config.hasMaxLevel
             ? $"{_upgrade.CurrentLevel}/{_upgrade.config.maxLevel}"
             : $"{_upgrade.CurrentLevel}";

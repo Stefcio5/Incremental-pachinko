@@ -13,15 +13,15 @@ public class ColorfulBalls : UpgradeReceiver
     protected override void OnUpgradeInitialized()
     {
         base.OnUpgradeInitialized();
-        ApplyUpgrade(Upgrade.CurrentLevel);
-        Upgrade.OnLevelChanged += (u) => ApplyUpgrade(u.CurrentLevel);
+        ApplyUpgrade();
+        upgradePower.onValueChanged += ApplyUpgrade;
     }
 
-    private void ApplyUpgrade(BigDouble level)
+    private void ApplyUpgrade()
     {
         foreach (var ballFlyweightSetting in ballFlyweightSettings)
         {
-            ballFlyweightSetting.spawnChance = ballFlyweightSetting.spawnChanceincrement * (float)level;
+            ballFlyweightSetting.spawnChance = ballFlyweightSetting.spawnChanceincrement * (float)upgradePower.FinalValue;
         }
         UpdateTooltip();
     }
@@ -64,7 +64,6 @@ public class ColorfulBalls : UpgradeReceiver
 
     private void OnDisable()
     {
-        if (Upgrade == null) return;
-        Upgrade.OnLevelChanged -= (u) => ApplyUpgrade(Upgrade.CurrentLevel);
+        upgradePower.onValueChanged -= ApplyUpgrade;
     }
 }

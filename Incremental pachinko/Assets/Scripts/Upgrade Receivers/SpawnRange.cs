@@ -17,11 +17,11 @@ public class SpawnRange : UpgradeReceiver
 
     private void OnSpawnRangeUpgradeLevelChanged()
     {
-        Upgrade.OnLevelChanged += (u) => SetObjectScale();
+        upgradePower.onValueChanged += SetObjectScale;
     }
     private void SetObjectScale()
     {
-        var scale = Value * 2;
+        var scale = upgradePower.FinalValue * 2;
         //set the scale of the GameObject to the new scale on z axis
         spawnRangeObject.transform.localScale = new Vector3(spawnRangeObject.transform.localScale.x, spawnRangeObject.transform.localScale.y, (float)scale);
     }

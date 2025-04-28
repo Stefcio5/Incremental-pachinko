@@ -7,13 +7,16 @@ public class Upgrade
     public readonly UpgradeConfig config;
     public BigDouble CurrentLevel { get; set; }
     public BigDouble CurrentCost => config.costFormula.Calculate(config.baseCost, CurrentLevel);
-    public BigDouble CurrentPower => config.powerFormula.Calculate(config.basePower, CurrentLevel);
+    private BigDouble _currentPower => config.powerFormula.Calculate(config.basePower, CurrentLevel);
+    public BigDoubleSO CurrentPower;
     public event Action<Upgrade> OnLevelChanged;
 
     public Upgrade(UpgradeConfig config, BigDouble initialLevel)
     {
         this.config = config;
         CurrentLevel = initialLevel;
+        CalculateBaseValue();
+        CurrentPower = config.upgradePower;
     }
 
     public bool CanBuy(BigDouble availablePoints)
@@ -25,6 +28,16 @@ public class Upgrade
     {
         CurrentLevel = newlevel;
         OnLevelChanged?.Invoke(this);
+        CalculateBaseValue();
+    }
+
+    public void CalculateBaseValue()
+    {
+        if (config.upgradePower != null)
+        {
+            config.upgradePower.BaseValue = _currentPower;
+            Debug.Log($"Upgrade {config.upgradeName} base value {config.upgradePower.BaseValue} final value {config.upgradePower.FinalValue}");
+        }
     }
 
     public void LevelUp()
@@ -33,6 +46,7 @@ public class Upgrade
         {
             CurrentLevel++;
             OnLevelChanged?.Invoke(this);
+            CalculateBaseValue();
         }
     }
 

@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8859816ea8e9fa743a965889de010929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeConfig: {fileID: 11400000, guid: b272370bac060d344b210c57b2f0263d, type: 2}
+  upgradePower: {fileID: 11400000, guid: 6cb1ad2909e0cbf4e9e96965f3214544, type: 2}
   gravityScale: 3
   ballMultiplier:
     mantissa: 0
