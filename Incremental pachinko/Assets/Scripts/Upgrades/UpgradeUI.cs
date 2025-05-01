@@ -37,14 +37,14 @@ public class UpgradeUI : MonoBehaviour
             _tooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
         }
         UpdateVisuals();
-        _upgrade.OnLevelChanged += (u) => UpdateVisuals();
+        _upgrade.CurrentPower.onValueChanged += UpdateVisuals;
         DataController.Instance.OnDataChanged += UpdateVisuals;
     }
 
     private void OnDestroy()
     {
         _buyButton.onClick.RemoveListener(OnBuyClicked);
-        //_upgrade.OnLevelChanged -= (u) => UpdateVisuals();
+        _upgrade.CurrentPower.onValueChanged -= UpdateVisuals;
         DataController.Instance.OnDataChanged -= UpdateVisuals;
     }
 
@@ -57,7 +57,7 @@ public class UpgradeUI : MonoBehaviour
             : $"{_upgrade.CurrentLevel}";
         _upgradeCostText.text = $"Cost: {_upgrade.CurrentCost.Notate()}";
 
-        _buyButton.interactable = _upgrade.CanBuy(DataController.Instance.CurrentGameData.points);
+        _buyButton.interactable = _upgrade.CanPurchase();
         _buyButtonImage.color = _buyButton.interactable ? _defaultColor : _unavailableColor;
 
         if (_tooltipTrigger != null)
@@ -68,24 +68,8 @@ public class UpgradeUI : MonoBehaviour
 
     private void OnBuyClicked()
     {
-        bool purchaseSuccessful = false;
-
-        // Check the upgrade type and spend the appropriate currency
-        if (_upgrade.config.upgradeType == UpgradeType.Basic)
-        {
-            purchaseSuccessful = DataController.Instance.SpendPoints(_upgrade.CurrentCost);
-        }
-        else if (_upgrade.config.upgradeType == UpgradeType.Prestige)
-        {
-            purchaseSuccessful = DataController.Instance.SpendPrestigePoints(_upgrade.CurrentCost);
-        }
-
-        // If the purchase was successful, level up the upgrade and update visuals
-        if (purchaseSuccessful)
-        {
-            _upgrade.LevelUp();
-            UpdateVisuals();
-        }
+        _upgrade.Purchase();
+        UpdateVisuals();
     }
     private string Notate(BigDouble value)
     {

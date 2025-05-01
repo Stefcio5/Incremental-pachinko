@@ -7,10 +7,8 @@ using UnityEngine;
 public class BigDoubleSO : ScriptableObject
 {
     [SerializeField] private BigDouble baseValue;
-    [SerializeField] private BigDouble cachedFinalValue;
-    [SerializeField, HideInInspector] private bool isDirty = true;
-
-    [SerializeField] private List<BigDoubleSO> modifiers = new List<BigDoubleSO>();
+    [SerializeField] private BigDouble finalValue;
+    [SerializeField] private List<BigDoubleSO> modifiers;
     [SerializeField] public event Action onValueChanged;
 
     public BigDouble BaseValue
@@ -19,61 +17,86 @@ public class BigDoubleSO : ScriptableObject
         set
         {
             baseValue = value;
-            MarkDirty();
+            RecalculateFinalValue();
         }
     }
-    public BigDouble FinalValue
+    public BigDouble FinalValue => finalValue;
+
+
+    void OnEnable()
     {
-        get
-        {
-            if (isDirty)
-            {
-                RecalculateFinalValue();
-            }
-            return cachedFinalValue;
-        }
+        SubscribeToModifiers();
+        RecalculateFinalValue();
     }
+
+
     public void AddModifier(BigDoubleSO modifier)
     {
-        if (!modifiers.Contains(modifier) && modifier != this)
+        if (modifier == null || modifier == this || modifiers.Contains(modifier))
         {
-            modifiers.Add(modifier);
-            MarkDirty();
+            return;
         }
+
+        modifiers.Add(modifier);
+        modifier.onValueChanged += RecalculateFinalValue;
+        RecalculateFinalValue();
+
     }
     public void RemoveModifier(BigDoubleSO modifier)
     {
-        if (modifiers.Contains(modifier))
+        if (modifier == null || !modifiers.Contains(modifier))
         {
-            modifiers.Remove(modifier);
-            MarkDirty();
+            return;
         }
+
+        modifiers.Remove(modifier);
+        modifier.onValueChanged -= RecalculateFinalValue;
+        RecalculateFinalValue();
     }
 
     public void ClearModifiers()
     {
+        UnsubscribeFromModifiers();
         modifiers.Clear();
-        MarkDirty();
-    }
-
-    private void MarkDirty()
-    {
-        isDirty = true;
-        onValueChanged?.Invoke();
+        RecalculateFinalValue();
     }
 
     private void RecalculateFinalValue()
     {
-        cachedFinalValue = baseValue;
-        if (modifiers.Count == 0)
-        {
-            isDirty = false;
-            return;
-        }
+        finalValue = baseValue;
+        onValueChanged?.Invoke();
+        if (modifiers.Count == 0) return;
+
         foreach (var modifier in modifiers)
         {
-            cachedFinalValue *= modifier.FinalValue;
+            finalValue *= modifier.FinalValue;
         }
-        isDirty = false;
+        onValueChanged?.Invoke();
+    }
+
+    void OnDisable()
+    {
+        UnsubscribeFromModifiers();
+    }
+    private void SubscribeToModifiers()
+    {
+        foreach (var modifier in modifiers)
+        {
+            if (modifier != null)
+            {
+                modifier.onValueChanged += RecalculateFinalValue;
+            }
+        }
+    }
+
+    private void UnsubscribeFromModifiers()
+    {
+        foreach (var modifier in modifiers)
+        {
+            if (modifier != null)
+            {
+                modifier.onValueChanged -= RecalculateFinalValue;
+            }
+        }
     }
 }

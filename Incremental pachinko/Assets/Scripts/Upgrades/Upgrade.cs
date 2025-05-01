@@ -10,6 +10,7 @@ public class Upgrade
     private BigDouble _currentPower => config.powerFormula.Calculate(config.basePower, CurrentLevel);
     public BigDoubleSO CurrentPower;
     public event Action<Upgrade> OnLevelChanged;
+    private IUpgradePurchaseStrategy _purchaseStrategy;
 
     public Upgrade(UpgradeConfig config, BigDouble initialLevel)
     {
@@ -17,11 +18,12 @@ public class Upgrade
         CurrentLevel = initialLevel;
         CalculateBaseValue();
         CurrentPower = config.upgradePower;
+        _purchaseStrategy = UpgradePurchaseStrategyFactory.Create(config.upgradeType);
     }
 
-    public bool CanBuy(BigDouble availablePoints)
+    public bool CanPurchase()
     {
-        return !IsMaxLevelReached && availablePoints >= CurrentCost;
+        return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(CurrentCost);
     }
 
     public void UpdateLevel(BigDouble newlevel)
@@ -33,21 +35,21 @@ public class Upgrade
 
     public void CalculateBaseValue()
     {
-        if (config.upgradePower != null)
+        if (CurrentPower != null)
         {
-            config.upgradePower.BaseValue = _currentPower;
+            CurrentPower.BaseValue = _currentPower;
             Debug.Log($"Upgrade {config.upgradeName} base value {config.upgradePower.BaseValue} final value {config.upgradePower.FinalValue}");
         }
     }
 
-    public void LevelUp()
+    public void Purchase()
     {
-        if (CanBuy(CurrentCost))
-        {
-            CurrentLevel++;
-            OnLevelChanged?.Invoke(this);
-            CalculateBaseValue();
-        }
+        if (!CanPurchase()) return;
+
+        _purchaseStrategy.PurchaseUpgrade(CurrentCost);
+        CurrentLevel++;
+        OnLevelChanged?.Invoke(this);
+        CalculateBaseValue();
     }
 
     private bool IsMaxLevelReached => config.hasMaxLevel && CurrentLevel >= config.maxLevel;

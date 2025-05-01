@@ -7528,7 +7528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff47ca26628b7f48b3a171c0293bb66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeConfig: {fileID: 11400000, guid: e2d5ee05477f1b3459ed8cb15dfabd13, type: 2}
+  upgradePower: {fileID: 11400000, guid: ca2949efe9c02364c985b7fe2b408133, type: 2}
   holder: {fileID: 2055493377}
 --- !u!4 &237142070
 Transform:
@@ -7559,7 +7559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1f92ab20d9ba44fa80dee4161eac51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeConfig: {fileID: 11400000, guid: aafc677bd2f024e4e967b182eb750209, type: 2}
+  upgradePower: {fileID: 11400000, guid: 5b66576cb362d784abed9b4edeb3dfbb, type: 2}
   ballFlyweightSettings:
   - {fileID: 11400000, guid: ec184426cb7969e4a910152a6f2cd09b, type: 2}
   - {fileID: 11400000, guid: 7ad1d129ae260da4a8ee6a4c08723296, type: 2}
@@ -17642,6 +17642,14 @@ PrefabInstance:
       propertyPath: holeUpgrade
       value: 
       objectReference: {fileID: 11400000, guid: 18b5b92c09d5f66418db69b3029a513d, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: CounterValue
+      value: 
+      objectReference: {fileID: 11400000, guid: fad70c1f7e9f1c94397afa2d5a7023cd, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradePower
+      value: 
+      objectReference: {fileID: 11400000, guid: fad70c1f7e9f1c94397afa2d5a7023cd, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
@@ -36588,6 +36596,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8dc8972a748b49c43b245d4906ebd706, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: CounterValue
+      value: 
+      objectReference: {fileID: 11400000, guid: cb0b8eece19c5604998288174462a698, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradePower
+      value: 
+      objectReference: {fileID: 11400000, guid: cb0b8eece19c5604998288174462a698, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: 8dc8972a748b49c43b245d4906ebd706, type: 2}
@@ -39923,6 +39939,14 @@ PrefabInstance:
       propertyPath: holeUpgrade
       value: 
       objectReference: {fileID: 11400000, guid: cc4defbff55c430419f31472a4817f52, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: CounterValue
+      value: 
+      objectReference: {fileID: 11400000, guid: 948089ea146097d458f74abb5a86d370, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradePower
+      value: 
+      objectReference: {fileID: 11400000, guid: 948089ea146097d458f74abb5a86d370, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
@@ -50328,6 +50352,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 18b5b92c09d5f66418db69b3029a513d, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: CounterValue
+      value: 
+      objectReference: {fileID: 11400000, guid: fad70c1f7e9f1c94397afa2d5a7023cd, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradePower
+      value: 
+      objectReference: {fileID: 11400000, guid: fad70c1f7e9f1c94397afa2d5a7023cd, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: 18b5b92c09d5f66418db69b3029a513d, type: 2}
@@ -54448,7 +54480,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 137353969}
   m_HandleRect: {fileID: 137353968}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -54610,6 +54642,14 @@ PrefabInstance:
       propertyPath: holeUpgrade
       value: 
       objectReference: {fileID: 11400000, guid: 8dc8972a748b49c43b245d4906ebd706, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: CounterValue
+      value: 
+      objectReference: {fileID: 11400000, guid: cb0b8eece19c5604998288174462a698, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradePower
+      value: 
+      objectReference: {fileID: 11400000, guid: cb0b8eece19c5604998288174462a698, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
@@ -58914,7 +58954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f89449b9069ca4ea4965a85a574fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeConfig: {fileID: 11400000, guid: fb97935828c23be49b9169cb10695cc8, type: 2}
+  upgradePower: {fileID: 11400000, guid: e52c13c4e522a18438b30892d4bb68cb, type: 2}
 --- !u!65 &1709808256
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -63600,6 +63640,14 @@ PrefabInstance:
       propertyPath: holeUpgrade
       value: 
       objectReference: {fileID: 11400000, guid: cc4defbff55c430419f31472a4817f52, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: CounterValue
+      value: 
+      objectReference: {fileID: 11400000, guid: 948089ea146097d458f74abb5a86d370, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradePower
+      value: 
+      objectReference: {fileID: 11400000, guid: 948089ea146097d458f74abb5a86d370, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
@@ -77105,6 +77153,14 @@ PrefabInstance:
       propertyPath: holeUpgrade
       value: 
       objectReference: {fileID: 11400000, guid: 1377ef7bda5a7b94886aef2ecd514309, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: CounterValue
+      value: 
+      objectReference: {fileID: 11400000, guid: 28fe2797405307642978dafea13dba45, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: upgradePower
+      value: 
+      objectReference: {fileID: 11400000, guid: 28fe2797405307642978dafea13dba45, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c13ffed52c15bfa4b929b708e804ed71, type: 3}
-  m_Name: BallValue
+  m_Name: P_PointsMultiplierValue
   m_EditorClassIdentifier: 
   baseValue:
-    mantissa: 4
+    mantissa: 9
     exponent: 0
-  finalValue:
-    mantissa: 5.6
-    exponent: 1
-  modifiers:
-  - {fileID: 11400000, guid: de9e2e2965921e444a7bdaef098aeb26, type: 2}
+  cachedFinalValue:
+    mantissa: 9
+    exponent: 0
+  isDirty: 0
+  modifiers: []
