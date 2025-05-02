@@ -16,8 +16,8 @@ public class Upgrade
     {
         this.config = config;
         CurrentLevel = initialLevel;
-        CalculateBaseValue();
         CurrentPower = config.upgradePower;
+        CalculateBaseValue();
         _purchaseStrategy = UpgradePurchaseStrategyFactory.Create(config.upgradeType);
     }
 

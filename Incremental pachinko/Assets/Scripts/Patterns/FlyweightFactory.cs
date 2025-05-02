@@ -35,8 +35,6 @@ public class FlyweightFactory : PersistentSingleton<FlyweightFactory>
         _pools.Add(settings.type, pool);
         return pool;
     }
-
-    // clear pool of type and destroy all objects in it
     public static void ClearPool(FlyweightType type)
     {
         if (Instance._pools.TryGetValue(type, out var pool))
