@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5d4735d23c8bd64bbe302199eba1110, type: 3}
-  m_Name: LinearFormula x25
+  m_Name: AdditiveLinearFormula x1
   m_EditorClassIdentifier: 
   multiplier:
-    mantissa: 2.5
-    exponent: 1
+    mantissa: 1
+    exponent: 0
+  isAdditive: 1

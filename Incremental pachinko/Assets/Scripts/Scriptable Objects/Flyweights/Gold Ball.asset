@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 387d5634c1cf36b42bbe1d9d6a111b97, type: 3}
-  m_Name: GoldBall
+  m_Name: Gold Ball
   m_EditorClassIdentifier: 
   type: {fileID: 11400000, guid: 6b7ef6d2c8d4bf945b19343a3eae9fd7, type: 2}
   prefab: {fileID: 1689499637878987991, guid: 82fb103869848464493b08dbfac29fbd, type: 3}

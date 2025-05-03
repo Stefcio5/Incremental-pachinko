@@ -17,6 +17,7 @@ public class GameHeaderUI : MonoBehaviour
 
     private void OnPrestigeButtonClicked()
     {
+        //FlyweightFactory.ClearAllPools();
         DataController.Instance.PrestigeGame();
     }
 

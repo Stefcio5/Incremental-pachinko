@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 786773107387146725}
   - component: {fileID: 349850564}
   - component: {fileID: 211288465857632712}
-  - component: {fileID: 2338552292339328279}
+  - component: {fileID: -8332202557976982725}
   m_Layer: 5
   m_Name: Floating Text
   m_TagString: Untagged
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: accc8c0df1831754290a5d90858800c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2338552292339328279
+--- !u!114 &-8332202557976982725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

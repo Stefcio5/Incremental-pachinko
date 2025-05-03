@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class BallFlyweight : Flyweight
 {
-    new BallFlyweightSettings settings => (BallFlyweightSettings)base.settings;
+    //new BallFlyweightSettings settings => (BallFlyweightSettings)base.settings;
 }

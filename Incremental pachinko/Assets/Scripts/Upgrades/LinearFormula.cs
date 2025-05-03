@@ -5,12 +5,16 @@ using UnityEngine;
 public class LinearFormula : UpgradeFormula
 {
     [SerializeField] private BigDouble multiplier = 1;
+    [SerializeField] private bool isLinear;
     [SerializeField] private bool isAdditive;
     public override BigDouble Calculate(BigDouble baseValue, BigDouble level)
     {
-        if (isAdditive)
+        if (isLinear)
+            return baseValue * level;
+
+        else if (isAdditive)
             return baseValue + (level * multiplier);
-        else          
+        else
             return baseValue * (1 + (level * multiplier));
     }
 }

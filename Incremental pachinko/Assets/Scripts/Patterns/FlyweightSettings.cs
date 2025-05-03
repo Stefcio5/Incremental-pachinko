@@ -7,10 +7,9 @@ public class FlyweightSettings : ScriptableObject
     public GameObject prefab;
     public float despawnTime = 2f;
 
-
     public virtual Flyweight Create()
     {
-        var flyweight = Instantiate(prefab).AddComponent<Flyweight>();
+        var flyweight = Instantiate(prefab).GetComponent<Flyweight>();
         flyweight.settings = this;
         flyweight.gameObject.SetActive(false);
         flyweight.gameObject.name = prefab.name;
