@@ -34,7 +34,7 @@ public class ColorfulBalls : UpgradeReceiver
         string result = "Spawn Chances:\n";
         foreach (var ballFlyweightSetting in orderedBallFlyweightSettings)
         {
-            result += $"{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement})\n";
+            result += $"{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement}%)\n";
         }
         tooltipText.SetTooltipText(result);
     }

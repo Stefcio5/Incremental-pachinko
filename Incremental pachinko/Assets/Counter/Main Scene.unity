@@ -32189,7 +32189,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -537, y: 654.84937}
+  m_AnchoredPosition: {x: -537, y: 654.8492}
   m_SizeDelta: {x: 1070.853, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &930465522
@@ -48786,6 +48786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45bcbf85845f564ea63d9ed5450ec5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradePower: {fileID: 0}
   upgradeType: 0
   purchaseInterval: 1
 --- !u!1 &1414229005
@@ -54829,7 +54830,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 137353968}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.9987601
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -72706,11 +72707,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2100320100}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f45bcbf85845f564ea63d9ed5450ec5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upgradePower: {fileID: 11400000, guid: 589f09419344d3041a5e1716212084ba, type: 2}
   upgradeType: 0
   purchaseInterval: 1
 --- !u!1 &2106497455

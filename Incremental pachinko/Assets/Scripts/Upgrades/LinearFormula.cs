@@ -10,7 +10,7 @@ public class LinearFormula : UpgradeFormula
     public override BigDouble Calculate(BigDouble baseValue, BigDouble level)
     {
         if (isLinear)
-            return baseValue * level;
+            return baseValue * level * multiplier;
 
         else if (isAdditive)
             return baseValue + (level * multiplier);
