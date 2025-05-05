@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387d5634c1cf36b42bbe1d9d6a111b97, type: 3}
   m_Name: Orange Ball
   m_EditorClassIdentifier: 
-  type: {fileID: 11400000, guid: 233936b4a8404b74a94cb347d064fe43, type: 2}
+  type: {fileID: 11400000, guid: e905dbf43758d664a9751c9a8b773da6, type: 2}
   prefab: {fileID: 1689499637878987991, guid: 82fb103869848464493b08dbfac29fbd, type: 3}
   despawnTime: 2
   multiplier:
     mantissa: 1.5
     exponent: 1
-  spawnChance: 4.3
+  spawnChance: 5
   spawnChanceincrement: 0.1
   material: {fileID: 2100000, guid: b0fa552b57ffe804c8d5bac24eacc29c, type: 2}
   ID: 3

@@ -69,6 +69,7 @@ public class BigDoubleSO : ScriptableObject
 
         foreach (var modifier in modifiers)
         {
+            if (modifier.FinalValue == 0) continue;
             finalValue *= modifier.FinalValue;
         }
         onValueChanged?.Invoke();

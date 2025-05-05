@@ -51,10 +51,10 @@ public class UpgradeUI : MonoBehaviour
     private void UpdateVisuals()
     {
         _upgradeNameText.text = $"{_upgrade.config.upgradeName}";
-        _upgradeDescriptionText.text = $"{_upgrade.config.upgradeDescription}{Notate(_upgrade.CurrentPower.FinalValue)}{_upgrade.config.descriptionSuffix}";
+        _upgradeDescriptionText.text = $"{_upgrade.config.upgradeDescription}{_upgrade.CurrentPower.FinalValue.Notate(_upgrade.config.notationPrecision)}{_upgrade.config.descriptionSuffix}";
         _upgradeLevelText.text = _upgrade.config.hasMaxLevel
             ? $"{_upgrade.CurrentLevel}/{_upgrade.config.maxLevel}"
-            : $"{_upgrade.CurrentLevel}";
+            : $"{_upgrade.CurrentLevel.Notate()}";
         _upgradeCostText.text = $"Cost: {_upgrade.CurrentCost.Notate()}";
 
         _buyButton.interactable = _upgrade.CanPurchase();
@@ -71,8 +71,8 @@ public class UpgradeUI : MonoBehaviour
         _upgrade.Purchase();
         UpdateVisuals();
     }
-    private string Notate(BigDouble value)
-    {
-        return value.Notate(_upgrade.config.notationPrecision);
-    }
+    // private string Notate(BigDouble value)
+    // {
+    //     return value.Notate(_upgrade.config.notationPrecision);
+    // }
 }

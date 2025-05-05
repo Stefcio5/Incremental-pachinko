@@ -52,5 +52,14 @@ public class Upgrade
         CalculateBaseValue();
     }
 
+    public void PurchaseWithoutCost()
+    {
+        if (!CanPurchase()) return;
+
+        CurrentLevel++;
+        OnLevelChanged?.Invoke(this);
+        CalculateBaseValue();
+    }
+
     private bool IsMaxLevelReached => config.hasMaxLevel && CurrentLevel >= config.maxLevel;
 }

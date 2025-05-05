@@ -2,10 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Attach to Unity Editor",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        },
+        {
             "name": "Attach to Unity",
             "type": "vstuc",
-            "request": "attach",
-            "endPoint": "127.0.0.1:565656"
+            "request": "attach"
         }
     ]
 }

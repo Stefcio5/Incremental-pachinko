@@ -9,13 +9,18 @@ public class Flyweight : MonoBehaviour
     private FlyweightRuntimeSetSO runtimeSet;
 
 
-    protected void Start()
+    protected virtual void Start()
     {
         runtimeSet = Resources.Load<FlyweightRuntimeSetSO>("FlyweightRuntimeSet");
         if (runtimeSet != null)
         {
             runtimeSet.Add(this);
         }
+    }
+
+    public virtual void Init()
+    {
+
     }
     public void Despawn()
     {

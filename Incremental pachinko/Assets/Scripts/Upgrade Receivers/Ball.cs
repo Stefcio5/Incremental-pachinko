@@ -12,7 +12,6 @@ public class Ball : UpgradeReceiver
     protected override void Start()
     {
         base.Start();
-        Debug.Log($"Ball value: {upgradePower.FinalValue}");
         rb = GetComponent<Rigidbody>();
         rb.linearDamping = 0;
         rb.angularDamping = 0;

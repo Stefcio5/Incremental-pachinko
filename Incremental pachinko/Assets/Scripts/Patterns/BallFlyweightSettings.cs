@@ -8,25 +8,22 @@ public class BallFlyweightSettings : FlyweightSettings
     public float spawnChance;
     public float spawnChanceincrement;
     public Material material;
-    private Ball ball;
     public int ID;
 
 
     public override Flyweight Create()
     {
-        var flyweight = Instantiate(prefab).AddComponent<BallFlyweight>();
+        var go = Instantiate(prefab);
+        go.name = prefab.name;
+        go.SetActive(false);
+
+        var flyweight = go.AddComponent<BallFlyweight>();
         flyweight.settings = this;
-        flyweight.gameObject.name = name;
-        flyweight.GetComponent<Renderer>().material = material;
-        ball = flyweight.GetComponent<Ball>();
-        flyweight.gameObject.SetActive(false);
-        Debug.Log($"Created {flyweight.name} with multiplier {multiplier}");
         return flyweight;
     }
 
     public override void OnGet(Flyweight flyweight)
     {
         base.OnGet(flyweight);
-        ball.Init(this);
     }
 }

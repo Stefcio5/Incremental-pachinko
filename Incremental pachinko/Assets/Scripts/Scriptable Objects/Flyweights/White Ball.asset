@@ -21,3 +21,4 @@ MonoBehaviour:
   spawnChance: 0
   spawnChanceincrement: 0
   material: {fileID: 2100000, guid: 1fdf50903aa07e14cb239dbf63016228, type: 2}
+  ID: 0

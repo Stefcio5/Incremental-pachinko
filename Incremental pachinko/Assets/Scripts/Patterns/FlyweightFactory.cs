@@ -14,7 +14,13 @@ public class FlyweightFactory : PersistentSingleton<FlyweightFactory>
         base.Awake();
     }
 
-    public static Flyweight Spawn(FlyweightSettings settings) => Instance.GetPoolFor(settings)?.Get();
+    public static Flyweight Spawn(FlyweightSettings settings)
+    {
+        var flyweight = Instance.GetPoolFor(settings)?.Get();
+        flyweight.settings = settings;
+        return flyweight;
+    }
+
     public static void ReturnToPool(Flyweight flyweight) => Instance.GetPoolFor(flyweight.settings)?.Release(flyweight);
 
     IObjectPool<Flyweight> GetPoolFor(FlyweightSettings settings)

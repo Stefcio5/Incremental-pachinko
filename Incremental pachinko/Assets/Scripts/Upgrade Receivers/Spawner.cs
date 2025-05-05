@@ -42,6 +42,7 @@ public class Spawner : UpgradeReceiver
     {
         BallFlyweightSettings ballFlyweightSettings = colorfulBalls.GetRandomBallFlyweightSettings();
         var flyweight = FlyweightFactory.Spawn(ballFlyweightSettings);
+        flyweight.Init();
         flyweight.transform.position = new Vector3(0f, 35f, Random.Range((float)-position, (float)position));
         flyweight.transform.rotation = Quaternion.identity;
         // set parent to the spawner
