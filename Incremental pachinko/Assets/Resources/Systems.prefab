@@ -88,6 +88,7 @@ MonoBehaviour:
   PrestigePoints:
     mantissa: 0
     exponent: 0
+  flyweightRuntimeSet: {fileID: 11400000, guid: 99bc91064d7eae84e96320c55738a7c4, type: 2}
 --- !u!1 &8661934027330104211
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class GameHeaderUI : MonoBehaviour
     {
         _pointsText.text = $"Points: {DataController.Instance.CurrentGameData.points.Notate()}";
         _prestigePointsText.text = $"Prestige Points: {DataController.Instance.CurrentGameData.prestigePoints.Notate()} (+{DataController.Instance.CalculatePrestige().Notate()})";
-        _prestigeButton.interactable = DataController.Instance.CalculatePrestige() > 0;
+        _prestigeButton.interactable = DataController.Instance.CalculatePrestige() >= 1;
     }
     private void OnDestroy()
     {
