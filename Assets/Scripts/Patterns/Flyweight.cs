@@ -1,6 +1,4 @@
 using System.Collections;
-using Mono.Cecil;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Flyweight : MonoBehaviour
