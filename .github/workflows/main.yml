@@ -2,7 +2,6 @@ name: Actions 😎
 
 on:
   push:
-  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -43,9 +42,10 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
+	  allowDirtyBuild: true
 
       # Output
       - uses: actions/upload-artifact@v4
         with:
-          name: Build
-          path: build
+          name: build-WebGL
+          path: build/WebGL
