@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: Colorful Balls
   upgradeDescription: 'Chance to spawn better balls: '
   descriptionSuffix: '%'
-  upgradeType: 0
+  upgradeType: 1
   baseCost:
     mantissa: 1
     exponent: 3

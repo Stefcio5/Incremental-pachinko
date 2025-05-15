@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: Basic AutoBuyer
   upgradeDescription: 'Buys Basic Upgrades every '
   descriptionSuffix: s
-  upgradeType: 1
+  upgradeType: 2
   baseCost:
     mantissa: 1
     exponent: 1

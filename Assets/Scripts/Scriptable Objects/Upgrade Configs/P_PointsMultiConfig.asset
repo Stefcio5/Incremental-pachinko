@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: Points Multiplier
   upgradeDescription: Increases ball multiplier x
   descriptionSuffix: 
-  upgradeType: 1
+  upgradeType: 2
   baseCost:
     mantissa: 1
     exponent: 0
