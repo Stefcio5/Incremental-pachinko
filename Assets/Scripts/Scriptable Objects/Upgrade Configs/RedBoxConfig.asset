@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RedBoxConfig
   m_EditorClassIdentifier: 
   upgradeName: Red Box
-  upgradeDescription: 'Increases multiplier by '
+  upgradeDescription: Increases multiplier by x
   descriptionSuffix: 
   upgradeType: 0
   baseCost:

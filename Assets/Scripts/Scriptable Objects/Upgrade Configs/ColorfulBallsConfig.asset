@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ColorfulBallsConfig
   m_EditorClassIdentifier: 
   upgradeName: Colorful Balls
-  upgradeDescription: Increases chance to spawn colorful balls
-  descriptionSuffix: 
+  upgradeDescription: 'Chance to spawn better balls: '
+  descriptionSuffix: '%'
   upgradeType: 0
   baseCost:
     mantissa: 1
