@@ -7,7 +7,6 @@ public class PinGenerator : MonoBehaviour
     public Transform pinParent;
 
     [Header("Settings")]
-    [Header("Pozycja w osi X")]
     public float pinX = 0.0f;
     public float minZ = -20f;
     public float maxZ = 20f;
@@ -16,7 +15,7 @@ public class PinGenerator : MonoBehaviour
 
     [Header("Spacing")]
     public float spacingY = 2.0f;
-    public float spacingZ = 2.85f;
+    public float spacingZ = 2.85711f;
 
     private List<GameObject> spawnedPins = new List<GameObject>();
 
