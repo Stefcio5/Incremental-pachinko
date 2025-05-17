@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: Spawn Range
   upgradeDescription: 'Increases spawn range by '
   descriptionSuffix: 
-  upgradeType: 0
+  upgradeType: 1
   baseCost:
     mantissa: 5
     exponent: 3

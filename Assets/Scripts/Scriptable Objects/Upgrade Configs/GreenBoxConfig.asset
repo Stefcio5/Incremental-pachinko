@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GreenBoxConfig
   m_EditorClassIdentifier: 
   upgradeName: Green Box
-  upgradeDescription: 'Increases multiplier by '
+  upgradeDescription: Increases multiplier by x
   descriptionSuffix: 
   upgradeType: 0
   baseCost:

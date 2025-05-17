@@ -36,7 +36,8 @@ public class Counter : UpgradeReceiver
     {
         //var floatingText = Instantiate(floatingTextPrefab, collider.transform.position, floatingTextPrefab.transform.rotation);
         var floatingText = FlyweightFactory.Spawn(floatingTextSettings);
-        floatingText.transform.SetPositionAndRotation(collider.transform.position, floatingText.transform.rotation);
+        var spawnLocation = collider.transform.position + Vector3.right * 3f;
+        floatingText.transform.SetPositionAndRotation(spawnLocation, floatingText.transform.rotation);
         floatingText.GetComponent<TextMesh>().text = $"+{value.Notate()}";
     }
 }

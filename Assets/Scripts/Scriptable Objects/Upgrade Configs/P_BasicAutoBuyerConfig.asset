@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: P_BasicAutoBuyerConfig
   m_EditorClassIdentifier: 
   upgradeName: Basic AutoBuyer
-  upgradeDescription: Buys Basic Upgrades
-  descriptionSuffix: 
-  upgradeType: 1
+  upgradeDescription: 'Buys Basic Upgrades every '
+  descriptionSuffix: s
+  upgradeType: 2
   baseCost:
     mantissa: 1
     exponent: 1

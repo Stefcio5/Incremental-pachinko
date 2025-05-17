@@ -2,5 +2,5 @@ using UnityEngine;
 
 public enum UpgradeType
 {
-    Basic, Prestige
+    Basic, Spawner, Prestige
 }

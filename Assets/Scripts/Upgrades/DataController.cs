@@ -61,7 +61,13 @@ public class DataController : PersistentSingleton<DataController>
         ResetGameData();
     }
 
-    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.points) / 2);
+    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.points / 1000000000));
+    public BigDouble PointsToNextPrestige()
+    {
+        BigDouble prestigePointsToAdd = CalculatePrestige();
+        return BigDouble.Pow(prestigePointsToAdd + 1, 2) * 1000000000 - CurrentGameData.points;
+    }
+
 
     [ContextMenu("Reset Game Data")]
     private void ResetGameData()

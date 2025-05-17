@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: P_SpawnerAutoBuyerConfig
   m_EditorClassIdentifier: 
   upgradeName: Spawner AutoBuyer
-  upgradeDescription: Buys Spawner Upgrades
-  descriptionSuffix: 
-  upgradeType: 1
+  upgradeDescription: 'Buys Spawner Upgrades every '
+  descriptionSuffix: s
+  upgradeType: 2
   baseCost:
     mantissa: 1
     exponent: 2
