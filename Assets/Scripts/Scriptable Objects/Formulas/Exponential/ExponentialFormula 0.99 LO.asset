@@ -10,8 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48a3cfaa25d83e44e812b10875eefa9e, type: 3}
-  m_Name: ExponentialFormula 0.99
+  m_Name: ExponentialFormula 0.99 LO
   m_EditorClassIdentifier: 
   exponent:
     mantissa: 9.9
     exponent: -1
+  useLevelOffset: 1
+  levelOffset:
+    mantissa: -1
+    exponent: 0

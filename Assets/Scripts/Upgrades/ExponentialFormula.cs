@@ -5,8 +5,25 @@ using UnityEngine;
 public class ExponentialFormula : UpgradeFormula
 {
     [SerializeField] private BigDouble exponent = 1.15;
+    [SerializeField] private bool useLevelOffset = false;
+    [SerializeField] private BigDouble levelOffset = 0;
 
-    public override BigDouble Calculate(BigDouble baseValue, BigDouble level) => baseValue * BigDouble.Pow(exponent, level);
+    public override BigDouble Calculate(BigDouble baseValue, BigDouble level)
+    {
+        if (useLevelOffset)
+        {
+            if (level == 0)
+            {
+                return baseValue * BigDouble.Pow(exponent, level);
+            }
+            else
+            {
+                return baseValue * BigDouble.Pow(exponent, level + levelOffset);
+            }
+
+        }
+        else return baseValue * BigDouble.Pow(exponent, level);
+    }
 }
 
 
