@@ -17,7 +17,7 @@ MonoBehaviour:
   descriptionSuffix: s
   upgradeType: 1
   baseCost:
-    mantissa: 1
+    mantissa: 5
     exponent: 2
   costFormula: {fileID: 11400000, guid: e8595ad0cfe0bdc449946f9d1a8cbde7, type: 2}
   basePower:
