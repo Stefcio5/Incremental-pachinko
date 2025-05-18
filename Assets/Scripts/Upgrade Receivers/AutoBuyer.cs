@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BreakInfinity;
 using UnityEngine;
 
 public class AutoBuyer : UpgradeReceiver
 {
+    [SerializeField] private UpgradeConfig upgradeConfig;
     [SerializeField] private UpgradeType upgradeType;
-    [SerializeField] private float purchaseInterval = 1f; // Time in seconds between purchases
     private List<Upgrade> upgrades;
     private float timer;
 
@@ -22,7 +23,7 @@ public class AutoBuyer : UpgradeReceiver
 
     private void Update()
     {
-        if (!(upgradePower.FinalValue >= 1f))
+        if (GetUpgradeLevel(upgradeConfig) > 0)
         {
 
             timer += Time.deltaTime;
@@ -51,5 +52,24 @@ public class AutoBuyer : UpgradeReceiver
         upgrade.PurchaseWithoutCost();
     }
 
+    private BigDouble GetUpgradeLevel(UpgradeConfig config)
+    {
+        if (upgradeConfig == null)
+        {
+            Debug.LogWarning($"AutoBuyer: UpgradeConfig is null");
+            return 0;
+        }
+
+        var upgrade = UpgradeManager.Instance.GetUpgrade(config);
+        if (upgrade != null)
+        {
+            return upgrade.CurrentLevel;
+        }
+        else
+        {
+            Debug.LogWarning($"AutoBuyer: Upgrade {config.upgradeName} not found");
+            return 0;
+        }
+    }
 
 }
