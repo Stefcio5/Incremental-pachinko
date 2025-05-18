@@ -12,9 +12,6 @@ public class Ball : UpgradeReceiver
     protected override void Start()
     {
         base.Start();
-        rb = GetComponent<Rigidbody>();
-        rb.linearDamping = 0;
-        rb.angularDamping = 0;
     }
 
     public void Init(BallFlyweightSettings settings)
@@ -28,6 +25,8 @@ public class Ball : UpgradeReceiver
         {
             rb = GetComponent<Rigidbody>();
             Debug.Log("Got rigidbody component");
+            rb.linearDamping = 0;
+            rb.angularDamping = 0;
         }
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
