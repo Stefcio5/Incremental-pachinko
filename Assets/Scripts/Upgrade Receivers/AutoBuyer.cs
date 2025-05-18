@@ -54,22 +54,7 @@ public class AutoBuyer : UpgradeReceiver
 
     private BigDouble GetUpgradeLevel(UpgradeConfig config)
     {
-        if (upgradeConfig == null)
-        {
-            Debug.LogWarning($"AutoBuyer: UpgradeConfig is null");
-            return 0;
-        }
-
-        var upgrade = UpgradeManager.Instance.GetUpgrade(config);
-        if (upgrade != null)
-        {
-            return upgrade.CurrentLevel;
-        }
-        else
-        {
-            Debug.LogWarning($"AutoBuyer: Upgrade {config.upgradeName} not found");
-            return 0;
-        }
+        return UpgradeManager.Instance.GetUpgradeLevel(config);
     }
 
 }

@@ -97,6 +97,18 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
     public Upgrade GetUpgrade(UpgradeConfig upgradeConfig) =>
         upgradeMap.TryGetValue(upgradeConfig.upgradeName, out var upgrade) ? upgrade : null;
 
+    public BigDouble GetUpgradeLevel(UpgradeConfig upgradeConfig)
+    {
+        if (upgradeConfig == null)
+        {
+            Debug.LogWarning("UpgradeConfig is null");
+            return BigDouble.Zero;
+        }
+        return upgradeMap.TryGetValue(upgradeConfig.upgradeName, out var upgrade)
+            ? upgrade.CurrentLevel
+            : BigDouble.Zero;
+    }
+
     public void HandleDataChanged()
     {
         foreach (var upgrade in upgradeMap.Values)
