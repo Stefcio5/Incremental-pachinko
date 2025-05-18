@@ -47058,9 +47058,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45bcbf85845f564ea63d9ed5450ec5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradePower: {fileID: 0}
-  upgradeType: 0
-  purchaseInterval: 1
+  upgradePower: {fileID: 11400000, guid: bfb13b2824990114d877d9d2a5aefb51, type: 2}
+  upgradeConfig: {fileID: 11400000, guid: 3e3097bfc0c68cd468e28ae830da6fe0, type: 2}
+  upgradeType: 1
 --- !u!1 &1414229005
 GameObject:
   m_ObjectHideFlags: 0
@@ -68466,8 +68466,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradePower: {fileID: 11400000, guid: 589f09419344d3041a5e1716212084ba, type: 2}
+  upgradeConfig: {fileID: 11400000, guid: 397971e3ffa47f348a2f5dbc04c756f5, type: 2}
   upgradeType: 0
-  purchaseInterval: 1
 --- !u!1 &2106497455
 GameObject:
   m_ObjectHideFlags: 0

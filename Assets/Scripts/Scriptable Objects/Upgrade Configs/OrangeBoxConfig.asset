@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OrangeBoxConfig
   m_EditorClassIdentifier: 
   upgradeName: Orange Box
-  upgradeDescription: Increases multiplier by x
+  upgradeDescription: Increases multiplier x
   descriptionSuffix: 
   upgradeType: 0
   baseCost:
