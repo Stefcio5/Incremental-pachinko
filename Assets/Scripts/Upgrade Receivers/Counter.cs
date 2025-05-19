@@ -34,10 +34,13 @@ public class Counter : UpgradeReceiver
 
     private void ShowFloatingText(Collider collider, BigDouble value)
     {
-        //var floatingText = Instantiate(floatingTextPrefab, collider.transform.position, floatingTextPrefab.transform.rotation);
         var floatingText = FlyweightFactory.Spawn(floatingTextSettings);
         var spawnLocation = collider.transform.position + Vector3.right * 3f;
         floatingText.transform.SetPositionAndRotation(spawnLocation, floatingText.transform.rotation);
-        floatingText.GetComponent<TextMesh>().text = $"+{value.Notate()}";
+
+        if (floatingText.TryGetComponent<TextMesh>(out var textMesh))
+        {
+            textMesh.text = "+" + value.Notate();
+        }
     }
 }

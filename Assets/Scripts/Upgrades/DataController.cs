@@ -18,7 +18,6 @@ public class DataController : PersistentSingleton<DataController>
 
     private bool _isSaving;
 
-    public BigDouble PrestigePoints;
     [SerializeField] private FlyweightRuntimeSetSO flyweightRuntimeSet;
 
     protected override void Awake()
@@ -56,11 +55,13 @@ public class DataController : PersistentSingleton<DataController>
 
     public void PrestigeGame()
     {
+        flyweightRuntimeSet.ReturnAllFlyweightsToPool();
         CurrentGameData.prestigePoints += CalculatePrestige();
         CurrentGameData.points = 0;
         ResetGameData();
     }
 
+    //TODO: Change magic numbers
     public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.points / 1000000000));
     public BigDouble PointsToNextPrestige()
     {
