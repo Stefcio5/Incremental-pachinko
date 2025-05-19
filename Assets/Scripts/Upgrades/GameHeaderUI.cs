@@ -1,12 +1,13 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameHeaderUI : MonoBehaviour
 {
-    [SerializeField] private Text _pointsText;
-    [SerializeField] private Text _prestigePointsText;
-    [SerializeField] private Text _pointsToPrestigeText;
+    [SerializeField] private TextMeshProUGUI _pointsText;
+    [SerializeField] private TextMeshProUGUI _prestigePointsText;
+    [SerializeField] private TextMeshProUGUI _pointsToPrestigeText;
     [SerializeField] private Button _prestigeButton;
 
     private void Start()

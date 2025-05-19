@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public class UpgradeUI : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] private Text _upgradeNameText;
-    [SerializeField] private Text _upgradeDescriptionText;
-    [SerializeField] private Text _upgradeLevelText;
-    [SerializeField] private Text _upgradeCostText;
+    [SerializeField] private TextMeshProUGUI _upgradeNameText;
+    [SerializeField] private TextMeshProUGUI _upgradeDescriptionText;
+    [SerializeField] private TextMeshProUGUI _upgradeLevelText;
+    [SerializeField] private TextMeshProUGUI _upgradeCostText;
     [SerializeField] private Button _buyButton;
     [SerializeField] private Image _buyButtonImage;
     [SerializeField] private Color _defaultColor;
