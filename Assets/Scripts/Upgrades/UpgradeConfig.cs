@@ -14,6 +14,7 @@ public class UpgradeConfig : ScriptableObject
     [Header("Upgrade Settings")]
     public BigDouble baseCost;
     public UpgradeFormula costFormula;
+    public BuyAmountStrategy buyAmountStrategy;
 
     [Header("Upgrade Effects")]
     public BigDouble basePower;

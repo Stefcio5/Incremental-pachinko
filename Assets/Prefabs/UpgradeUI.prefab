@@ -1165,6 +1165,7 @@ MonoBehaviour:
   _upgradeLevelText: {fileID: 2486479733175402294}
   _upgradeCostText: {fileID: 6233264750861384857}
   _buyButton: {fileID: 3016040223537025502}
+  _buyButtonText: {fileID: 3696779741657529438}
   _buyButtonImage: {fileID: 7323240330412093990}
   _defaultColor: {r: 0, g: 1, b: 0, a: 1}
   _unavailableColor: {r: 0.38823533, g: 0.38823533, b: 0.38823533, a: 1}

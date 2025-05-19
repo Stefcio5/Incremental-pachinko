@@ -31,7 +31,6 @@ public class AutoBuyer : UpgradeReceiver
             {
                 timer = 0f;
                 TryPurchaseUpgrades();
-                Debug.Log($"AutoBuyer: Attempting to purchase upgrades of type {upgradeType}");
             }
         }
     }

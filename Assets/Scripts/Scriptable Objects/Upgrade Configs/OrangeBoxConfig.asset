@@ -20,6 +20,7 @@ MonoBehaviour:
     mantissa: 7
     exponent: 3
   costFormula: {fileID: 11400000, guid: b44c2973ce8273e44bee4e5ed5984cc4, type: 2}
+  buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
   basePower:
     mantissa: 1.5
     exponent: 1

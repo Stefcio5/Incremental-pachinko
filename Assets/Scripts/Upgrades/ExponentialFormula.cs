@@ -5,6 +5,7 @@ using UnityEngine;
 public class ExponentialFormula : UpgradeFormula
 {
     [SerializeField] private BigDouble exponent = 1.15;
+    [SerializeField] public BigDouble Exponent { get => exponent; private set => exponent = value; }
     [SerializeField] private bool useLevelOffset = false;
     [SerializeField] private BigDouble levelOffset = 0;
 

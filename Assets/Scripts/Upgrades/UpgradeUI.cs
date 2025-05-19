@@ -13,6 +13,7 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _upgradeLevelText;
     [SerializeField] private TextMeshProUGUI _upgradeCostText;
     [SerializeField] private Button _buyButton;
+    [SerializeField] private TextMeshProUGUI _buyButtonText;
     [SerializeField] private Image _buyButtonImage;
     [SerializeField] private Color _defaultColor;
     [SerializeField] private Color _unavailableColor;
@@ -39,13 +40,14 @@ public class UpgradeUI : MonoBehaviour
         UpdateVisuals();
         _upgrade.CurrentPower.onValueChanged += UpdateVisuals;
         DataController.Instance.OnDataChanged += UpdateVisuals;
+        BuyAmountController.OnBuyAmountStrategyChanged += UpdateVisualsOnBuyAmountChanged;
     }
 
     private void OnDestroy()
     {
-        _buyButton.onClick.RemoveListener(OnBuyClicked);
         _upgrade.CurrentPower.onValueChanged -= UpdateVisuals;
         DataController.Instance.OnDataChanged -= UpdateVisuals;
+        BuyAmountController.OnBuyAmountStrategyChanged -= UpdateVisualsOnBuyAmountChanged;
     }
 
     private void UpdateVisuals()
@@ -57,6 +59,7 @@ public class UpgradeUI : MonoBehaviour
             : $"{_upgrade.CurrentLevel.Notate()}";
         _upgradeCostText.text = $"Cost: {_upgrade.CurrentCost.Notate()}";
 
+        _buyButtonText.text = $"Buy {_upgrade.BuyAmountStrategy.GetBuyAmount(_upgrade)}";
         _buyButton.interactable = _upgrade.CanPurchase();
         _buyButtonImage.color = _buyButton.interactable ? _defaultColor : _unavailableColor;
 
@@ -66,13 +69,14 @@ public class UpgradeUI : MonoBehaviour
         }
     }
 
+    private void UpdateVisualsOnBuyAmountChanged(BuyAmountStrategy strategy)
+    {
+        UpdateVisuals();
+    }
+
     private void OnBuyClicked()
     {
         _upgrade.Purchase();
         UpdateVisuals();
     }
-    // private string Notate(BigDouble value)
-    // {
-    //     return value.Notate(_upgrade.config.notationPrecision);
-    // }
 }

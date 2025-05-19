@@ -6,7 +6,9 @@ public class Upgrade
 {
     public readonly UpgradeConfig config;
     public BigDouble CurrentLevel { get; set; }
-    public BigDouble CurrentCost => config.costFormula.Calculate(config.baseCost, CurrentLevel);
+    private BuyAmountStrategy _buyAmountStrategy;
+    public BuyAmountStrategy BuyAmountStrategy => _buyAmountStrategy;
+    public BigDouble CurrentCost => _buyAmountStrategy.GetCost(this);
     private BigDouble _currentPower => config.powerFormula.Calculate(config.basePower, CurrentLevel);
     public BigDoubleSO CurrentPower;
     public event Action<Upgrade> OnLevelChanged;
@@ -17,13 +19,24 @@ public class Upgrade
         this.config = config;
         CurrentLevel = initialLevel;
         CurrentPower = config.upgradePower;
+        _buyAmountStrategy = config.buyAmountStrategy;
+        BuyAmountController.OnBuyAmountStrategyChanged += SetBuyAmountStrategy;
         CalculateBaseValue();
         _purchaseStrategy = UpgradePurchaseStrategyFactory.Create(config.upgradeType);
+    }
+
+    public void SetBuyAmountStrategy(BuyAmountStrategy buyAmountStrategy)
+    {
+        _buyAmountStrategy = buyAmountStrategy;
     }
 
     public bool CanPurchase()
     {
         return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(CurrentCost);
+    }
+    private bool CanPurchaseWithoutCost()
+    {
+        return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(config.costFormula.Calculate(config.baseCost, CurrentLevel));
     }
 
     public void UpdateLevel(BigDouble newlevel)
@@ -47,14 +60,14 @@ public class Upgrade
         if (!CanPurchase()) return;
 
         _purchaseStrategy.PurchaseUpgrade(CurrentCost);
-        CurrentLevel++;
+        CurrentLevel += _buyAmountStrategy.GetBuyAmount(this);
         OnLevelChanged?.Invoke(this);
         CalculateBaseValue();
     }
 
     public void PurchaseWithoutCost()
     {
-        if (!CanPurchase()) return;
+        if (!CanPurchaseWithoutCost()) return;
 
         CurrentLevel++;
         OnLevelChanged?.Invoke(this);
@@ -62,4 +75,9 @@ public class Upgrade
     }
 
     private bool IsMaxLevelReached => config.hasMaxLevel && CurrentLevel >= config.maxLevel;
+
+    private void OnDestroy()
+    {
+        BuyAmountController.OnBuyAmountStrategyChanged -= SetBuyAmountStrategy;
+    }
 }
