@@ -9,7 +9,7 @@ public class ColorfulBalls : UpgradeReceiver
     [SerializeField] private List<BallFlyweightSettings> ballFlyweightSettings;
     [SerializeField] private BallFlyweightSettings defaultBallFlyweightSettings;
     public TooltipText tooltipText;
-    private float buyAmount = 1;
+    private int buyAmount = 1;
 
     protected override void OnUpgradeInitialized()
     {
@@ -30,8 +30,6 @@ public class ColorfulBalls : UpgradeReceiver
 
     private void UpdateTooltip()
     {
-        // Sort the list by ID before displaying it in the tooltip
-
         var orderedBallFlyweightSettings = ballFlyweightSettings.OrderBy(x => x.ID).ToList();
         string result = "Spawn Chances:\n";
         foreach (var ballFlyweightSetting in orderedBallFlyweightSettings)
@@ -65,7 +63,7 @@ public class ColorfulBalls : UpgradeReceiver
         }
         else
         {
-            buyAmount = (float)buyAmountStrategy.GetBuyAmount();
+            buyAmount = (int)buyAmountStrategy.GetBuyAmount();
         }
         UpdateTooltip();
     }

@@ -2,86 +2,22 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-public static class SaveSystem
+public class SaveSystem
 {
-    public static void SaveGame(GameData data)
-    {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/game.fun";
-        FileStream stream = new FileStream(path, FileMode.Create);
+    private readonly IDataRepository _dataRepository;
 
-        formatter.Serialize(stream, data);
-        stream.Close();
+    public SaveSystem(IDataRepository repository)
+    {
+        _dataRepository = repository;
     }
 
-    public static GameData LoadGame()
+    public void Save(GameData data)
     {
-        string path = Application.persistentDataPath + "/game.fun";
-
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            GameData data = formatter.Deserialize(stream) as GameData;
-            stream.Close();
-
-            return data;
-        }
-        else
-        {
-            Debug.LogError("Save file not found in " + path);
-            return null;
-        }
+        _dataRepository.Save(data);
     }
-}
 
-// [System.Serializable]
-// public class GameData
-// {
-//     public PlayerData player;
-//     public LevelData level;
-//     public InventoryData inventory;
-
-//     public GameData(PlayerData player, LevelData level, InventoryData inventory)
-//     {
-//         this.player = player;
-//         this.level = level;
-//         this.inventory = inventory;
-//     }
-// }
-
-[System.Serializable]
-public class PlayerData
-{
-    public int health;
-    public int score;
-
-    public PlayerData(PlayerData player)
+    public GameData Load()
     {
-        health = player.health;
-        score = player.score;
-    }
-}
-
-[System.Serializable]
-public class LevelData
-{
-    public int currentLevel;
-
-    public LevelData(LevelData level)
-    {
-        currentLevel = level.currentLevel;
-    }
-}
-
-[System.Serializable]
-public class InventoryData
-{
-    public int[] items;
-
-    public InventoryData(InventoryData inventory)
-    {
-        items = inventory.items;
+        return _dataRepository.Load();
     }
 }

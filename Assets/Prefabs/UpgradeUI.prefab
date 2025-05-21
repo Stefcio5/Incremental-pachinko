@@ -1012,7 +1012,6 @@ GameObject:
   - component: {fileID: 5141595638252848219}
   - component: {fileID: 2162351463404935119}
   - component: {fileID: 1507254237875452388}
-  - component: {fileID: 6156603347830157614}
   - component: {fileID: -2847357726671716996}
   - component: {fileID: -3675705546834028823}
   m_Layer: 5
@@ -1084,26 +1083,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2.5
---- !u!114 &6156603347830157614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8635294508607714504}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a209decbe7d440f439964d625ded9611, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upgradeButton: {fileID: 7323240330412093990}
-  DefaultColor: {r: 0, g: 1, b: 0, a: 1}
-  UnavailableColor: {r: 0.3882353, g: 0.3882353, b: 0.3882353, a: 1}
-  nameText: {fileID: 0}
-  levelText: {fileID: 0}
-  costText: {fileID: 0}
-  upgradeScriptableObject: {fileID: 0}
-  playerData: {fileID: 0}
 --- !u!114 &-2847357726671716996
 MonoBehaviour:
   m_ObjectHideFlags: 0

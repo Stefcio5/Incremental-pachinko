@@ -6,16 +6,10 @@ using UnityEngine;
 
 public class DataController : PersistentSingleton<DataController>
 {
-    [SerializeField] private GameData _currentGameData = new GameData();
-    public GameData CurrentGameData
-    {
-        get => _currentGameData;
-        private set => _currentGameData = value;
-    }
+    [field: SerializeField]
+    public GameData CurrentGameData { get; private set; }
+    private SaveSystem _saveSystem;
     public event Action OnDataChanged;
-
-    [SerializeField] private PlayerPrefsDataRepository _dataRepository;
-
     private bool _isSaving;
 
     [SerializeField] private FlyweightRuntimeSetSO flyweightRuntimeSet;
@@ -23,7 +17,7 @@ public class DataController : PersistentSingleton<DataController>
     protected override void Awake()
     {
         base.Awake();
-        if (_dataRepository == null) _dataRepository = new PlayerPrefsDataRepository();
+        _saveSystem = new SaveSystem(new PlayerPrefsDataRepository());
     }
     private void Start()
     {
@@ -34,14 +28,14 @@ public class DataController : PersistentSingleton<DataController>
     {
         if (amount <= 0) return;
         CurrentGameData.points += amount;
-        SaveDataAndNotify();
+        OnDataChanged?.Invoke();
     }
 
     public bool SpendPoints(BigDouble amount)
     {
         if (CurrentGameData.points < amount) return false;
         CurrentGameData.points -= amount;
-        SaveDataAndNotify();
+        OnDataChanged?.Invoke();
         return true;
     }
 
@@ -49,7 +43,7 @@ public class DataController : PersistentSingleton<DataController>
     {
         if (CurrentGameData.prestigePoints < amount) return false;
         CurrentGameData.prestigePoints -= amount;
-        SaveDataAndNotify();
+        OnDataChanged?.Invoke();
         return true;
     }
 
@@ -58,7 +52,7 @@ public class DataController : PersistentSingleton<DataController>
         flyweightRuntimeSet.ReturnAllFlyweightsToPool();
         CurrentGameData.prestigePoints += CalculatePrestige();
         CurrentGameData.points = 0;
-        ResetGameData();
+        ResetGameDataOnPrestige();
     }
 
     //TODO: Change magic numbers
@@ -70,32 +64,33 @@ public class DataController : PersistentSingleton<DataController>
     }
 
 
-    [ContextMenu("Reset Game Data")]
-    private void ResetGameData()
+    [ContextMenu("Reset Game Data On Prestige")]
+    private void ResetGameDataOnPrestige()
     {
+        var prestigeUpgradeKeys = UpgradeManager.Instance.GetPrestigeUpgradeKeys();
         foreach (var key in CurrentGameData.upgradeLevels.Keys.ToList())
         {
-            CurrentGameData.upgradeLevels[key] = 0;
+            if (!prestigeUpgradeKeys.Contains(key))
+                CurrentGameData.upgradeLevels[key] = 0;
         }
         CurrentGameData.points = 0;
-        UpgradeManager.Instance.ResetUpgrades();
-        SaveDataAndNotify();
+        UpgradeManager.Instance.ResetUpgradesExceptPrestige();
+        OnDataChanged?.Invoke();
     }
     public void ResetAllData()
     {
         flyweightRuntimeSet.ReturnAllFlyweightsToPool();
-        ResetGameData();
-        CurrentGameData.prestigePoints = 0;
+        CurrentGameData = new GameData();
         PlayerPrefs.DeleteAll();
-        _currentGameData = new GameData();
-        SaveDataAndNotify();
+        UpgradeManager.Instance.ResetAllUpgrades();
+        OnDataChanged?.Invoke();
     }
 
     private void LoadData()
     {
         try
         {
-            CurrentGameData = _dataRepository.Load();
+            CurrentGameData = _saveSystem.Load();
             ValidateLoadedData();
         }
         catch (Exception e)
@@ -119,7 +114,7 @@ public class DataController : PersistentSingleton<DataController>
         try
         {
             _isSaving = true;
-            _dataRepository.Save(CurrentGameData);
+            _saveSystem.Save(CurrentGameData);
         }
         catch (Exception e)
         {
@@ -131,9 +126,8 @@ public class DataController : PersistentSingleton<DataController>
         }
     }
 
-    private void SaveDataAndNotify()
+    void OnApplicationQuit()
     {
-        SaveData();
-        OnDataChanged?.Invoke();
+        _saveSystem.Save(CurrentGameData);
     }
 }

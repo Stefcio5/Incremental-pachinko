@@ -20,37 +20,11 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
     protected override void Awake()
     {
         base.Awake();
-        //StartCoroutine(InitializeWhenReady());
     }
 
     private void Start()
     {
-        //StartCoroutine(InitializeWhenReady());
         Initialize(_upgradeConfigs, DataController.Instance);
-    }
-
-    // Obsolete
-    private IEnumerator InitializeWhenReady()
-    {
-        Debug.Log("UpgradeManager waiting for DataController...");
-        yield return new WaitUntil(() => DataController.Instance != null);
-
-        if (!_initialized)
-        {
-            try
-            {
-                DataController.Instance.OnDataChanged += HandleDataChanged;
-                Initialize(_upgradeConfigs, DataController.Instance);
-                _initialized = true;
-                OnInitialized?.Invoke();
-                OnUpgradesChanged?.Invoke();
-                Debug.Log("UpgradeManager initialized successfully");
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Failed to initialize UpgradeManager: {e.Message}");
-            }
-        }
     }
 
     public void Initialize(IEnumerable<UpgradeConfig> configs, DataController data)
@@ -88,7 +62,6 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
     private void SaveUpgrade(string id, BigDouble level, DataController data)
     {
         data.CurrentGameData.upgradeLevels[id] = level;
-        data.SaveData();
     }
 
     public IEnumerable<Upgrade> GetUpgrades(UpgradeType type) =>
@@ -119,8 +92,20 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
         OnUpgradesChanged?.Invoke();
     }
 
-    //reset upgrade list to level 0
-    public void ResetUpgrades()
+    public void ResetUpgradesExceptPrestige()
+    {
+        foreach (var upgrade in upgradeMap.Values)
+        {
+            if (!IsPrestigeUpgrade(upgrade.config))
+            {
+                upgrade.UpdateLevel(0);
+                Debug.Log("Upgrade level reset: " + upgrade.config.upgradeName + " to 0");
+            }
+        }
+        OnUpgradesChanged?.Invoke();
+    }
+
+    public void ResetAllUpgrades()
     {
         foreach (var upgrade in upgradeMap.Values)
         {
@@ -128,5 +113,18 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
             Debug.Log("Upgrade level reset: " + upgrade.config.upgradeName + " to 0");
         }
         OnUpgradesChanged?.Invoke();
+    }
+
+    public HashSet<string> GetPrestigeUpgradeKeys()
+    {
+        return upgradeMap.Values
+            .Where(u => IsPrestigeUpgrade(u.config))
+            .Select(u => u.config.upgradeName)
+            .ToHashSet();
+    }
+
+    private bool IsPrestigeUpgrade(UpgradeConfig config)
+    {
+        return config.upgradeType == UpgradeType.Prestige;
     }
 }
