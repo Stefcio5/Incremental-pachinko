@@ -5,15 +5,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BuyXStrategy", menuName = "Upgrades/Buy Amount Strategy/Buy X")]
 public class BuyXStrategy : BuyAmountStrategy
 {
-    public BigDouble buyAmount = 1;
+    [SerializeField] private BigDouble _buyAmount = 1;
+    public BigDouble BuyAmount { get => _buyAmount; private set => _buyAmount = value; }
     public override BigDouble GetBuyAmount(Upgrade upgrade)
     {
         if (upgrade.config.hasMaxLevel)
         {
             BigDouble remaining = upgrade.config.maxLevel - upgrade.CurrentLevel;
-            return BigDouble.Min(remaining, buyAmount);
+            return BigDouble.Min(remaining, BuyAmount);
         }
-        return buyAmount;
+        return BuyAmount;
+    }
+
+    public override BigDouble GetBuyAmount()
+    {
+        return BuyAmount;
     }
 
     public override BigDouble GetCost(Upgrade upgrade)

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee4c2ba06a016e428fd46e1681c211d, type: 3}
   m_Name: Buy 100
   m_EditorClassIdentifier: 
-  buyAmount:
+  _buyAmount:
     mantissa: 1
     exponent: 2

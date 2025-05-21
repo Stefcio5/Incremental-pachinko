@@ -9,12 +9,14 @@ public class ColorfulBalls : UpgradeReceiver
     [SerializeField] private List<BallFlyweightSettings> ballFlyweightSettings;
     [SerializeField] private BallFlyweightSettings defaultBallFlyweightSettings;
     public TooltipText tooltipText;
+    private float buyAmount = 1;
 
     protected override void OnUpgradeInitialized()
     {
         base.OnUpgradeInitialized();
         ApplyUpgrade();
         upgradePower.onValueChanged += ApplyUpgrade;
+        BuyAmountController.OnBuyAmountStrategyChanged += GetBuyAmount;
     }
 
     private void ApplyUpgrade()
@@ -35,7 +37,7 @@ public class ColorfulBalls : UpgradeReceiver
         foreach (var ballFlyweightSetting in orderedBallFlyweightSettings)
         {
             if (ballFlyweightSetting.spawnChance > 100) continue;
-            result += $"{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement}%)\n";
+            result += $"{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement * buyAmount}%)\n";
         }
         tooltipText.SetTooltipText(result);
     }
@@ -55,16 +57,26 @@ public class ColorfulBalls : UpgradeReceiver
 
         return defaultBallFlyweightSettings;
     }
-    public void CalculateSpawnChance()
+    private void GetBuyAmount(BuyAmountStrategy buyAmountStrategy)
     {
-        foreach (var ballFlyweightSetting in ballFlyweightSettings)
+        if (buyAmountStrategy == null)
         {
-            Debug.Log($"Ball: {ballFlyweightSetting.name}, Spawn Chance: {ballFlyweightSetting.spawnChance} (+{ballFlyweightSetting.spawnChanceincrement})");
+            buyAmount = 1;
         }
+        else
+        {
+            buyAmount = (float)buyAmountStrategy.GetBuyAmount();
+        }
+        UpdateTooltip();
     }
 
     private void OnDisable()
     {
         upgradePower.onValueChanged -= ApplyUpgrade;
+    }
+
+    private void OnDestroy()
+    {
+        BuyAmountController.OnBuyAmountStrategyChanged -= GetBuyAmount;
     }
 }
