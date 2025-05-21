@@ -40,14 +40,14 @@ public class UpgradeUI : MonoBehaviour
         UpdateVisuals();
         _upgrade.CurrentPower.onValueChanged += UpdateVisuals;
         DataController.Instance.OnDataChanged += UpdateVisuals;
-        BuyAmountController.OnBuyAmountStrategyChanged += UpdateVisualsOnBuyAmountChanged;
+        BuyAmountController.OnBuyAmountStrategyChanged += OnBuyAmountStrategyChanged;
     }
 
     private void OnDestroy()
     {
         _upgrade.CurrentPower.onValueChanged -= UpdateVisuals;
         DataController.Instance.OnDataChanged -= UpdateVisuals;
-        BuyAmountController.OnBuyAmountStrategyChanged -= UpdateVisualsOnBuyAmountChanged;
+        BuyAmountController.OnBuyAmountStrategyChanged -= OnBuyAmountStrategyChanged;
     }
 
     private void UpdateVisuals()
@@ -57,9 +57,12 @@ public class UpgradeUI : MonoBehaviour
         _upgradeLevelText.text = _upgrade.config.hasMaxLevel
             ? $"{_upgrade.CurrentLevel}/{_upgrade.config.maxLevel}"
             : $"{_upgrade.CurrentLevel.Notate()}";
-        _upgradeCostText.text = $"Cost: {_upgrade.CurrentCost.Notate()}";
 
-        _buyButtonText.text = $"Buy {_upgrade.BuyAmountStrategy.GetBuyAmount(_upgrade)}";
+        var buyAmount = _upgrade.BuyAmountStrategy.GetBuyAmount(_upgrade);
+        var cost = _upgrade.CurrentCost;
+
+        _upgradeCostText.text = $"Cost: {cost.Notate()}";
+        _buyButtonText.text = $"Buy {buyAmount}";
         _buyButton.interactable = _upgrade.CanPurchase();
         _buyButtonImage.color = _buyButton.interactable ? _defaultColor : _unavailableColor;
 
@@ -69,7 +72,7 @@ public class UpgradeUI : MonoBehaviour
         }
     }
 
-    private void UpdateVisualsOnBuyAmountChanged(BuyAmountStrategy strategy)
+    private void OnBuyAmountStrategyChanged(BuyAmountStrategy strategy)
     {
         UpdateVisuals();
     }

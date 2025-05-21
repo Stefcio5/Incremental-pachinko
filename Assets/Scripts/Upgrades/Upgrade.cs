@@ -9,10 +9,11 @@ public class Upgrade
     private BuyAmountStrategy _buyAmountStrategy;
     public BuyAmountStrategy BuyAmountStrategy => _buyAmountStrategy;
     public BigDouble CurrentCost => _buyAmountStrategy.GetCost(this);
-    private BigDouble _currentPower => config.powerFormula.Calculate(config.basePower, CurrentLevel);
     public BigDoubleSO CurrentPower;
     public event Action<Upgrade> OnLevelChanged;
     private IUpgradePurchaseStrategy _purchaseStrategy;
+
+    private BigDouble _currentPower => config.powerFormula.Calculate(config.basePower, CurrentLevel);
 
     public Upgrade(UpgradeConfig config, BigDouble initialLevel)
     {
