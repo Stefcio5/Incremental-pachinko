@@ -1,13 +1,13 @@
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using BreakInfinity;
 
 public class Spawner : UpgradeReceiver
 {
-    public Transform holder;
+    [SerializeField] private Transform holder;
     private SpawnRange spawnRangeGO;
     private float timer;
+    private float manualSpawnTimer;
+    [SerializeField] private float spawnInterval;
     private ColorfulBalls colorfulBalls;
 
     protected override void Awake()
@@ -19,6 +19,7 @@ public class Spawner : UpgradeReceiver
     {
         base.OnUpgradeInitialized();
         spawnRangeGO = FindFirstObjectByType<SpawnRange>();
+
     }
 
     void Update()
@@ -31,9 +32,14 @@ public class Spawner : UpgradeReceiver
                 SpawnBall(spawnRangeGO.GetUpgradeValue());
                 timer = 0f;
             }
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space))
             {
-                SpawnBall(spawnRangeGO.GetUpgradeValue());
+                manualSpawnTimer += Time.deltaTime;
+                if (manualSpawnTimer >= spawnInterval)
+                {
+                    SpawnBall(spawnRangeGO.GetUpgradeValue());
+                    manualSpawnTimer = 0f;
+                }
             }
         }
     }
@@ -45,7 +51,6 @@ public class Spawner : UpgradeReceiver
         flyweight.Init();
         flyweight.transform.position = new Vector3(0f, 35f, Random.Range((float)-position, (float)position));
         flyweight.transform.rotation = Quaternion.identity;
-        // set parent to the spawner
         flyweight.transform.SetParent(holder);
     }
 }
