@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d4735d23c8bd64bbe302199eba1110, type: 3}
   m_Name: AdditiveLinearFormula x1
   m_EditorClassIdentifier: 
-  multiplier:
+  _multiplier:
     mantissa: 1
     exponent: 0
-  isAdditive: 1
+  _isLinear: 0
+  _isAdditive: 1

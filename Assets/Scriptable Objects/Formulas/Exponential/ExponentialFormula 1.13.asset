@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a3cfaa25d83e44e812b10875eefa9e, type: 3}
   m_Name: ExponentialFormula 1.13
   m_EditorClassIdentifier: 
-  exponent:
+  _exponent:
     mantissa: 1.13
+    exponent: 0
+  _useLevelOffset: 0
+  _levelOffset:
+    mantissa: 0
     exponent: 0

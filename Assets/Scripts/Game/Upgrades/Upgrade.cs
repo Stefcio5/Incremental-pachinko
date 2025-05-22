@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Upgrade
 {
-    public readonly UpgradeConfig config;
+    public UpgradeConfig Config { get; }
     public BigDouble CurrentLevel { get; set; }
     private BuyAmountStrategy _buyAmountStrategy;
     public BuyAmountStrategy BuyAmountStrategy => _buyAmountStrategy;
@@ -13,11 +13,11 @@ public class Upgrade
     public event Action<Upgrade> OnLevelChanged;
     private IUpgradePurchaseStrategy _purchaseStrategy;
 
-    private BigDouble _currentPower => config.powerFormula.Calculate(config.basePower, CurrentLevel);
+    private BigDouble _currentPower => Config.powerFormula.Calculate(Config.basePower, CurrentLevel);
 
     public Upgrade(UpgradeConfig config, BigDouble initialLevel)
     {
-        this.config = config;
+        Config = config;
         CurrentLevel = initialLevel;
         CurrentPower = config.upgradePower;
         _buyAmountStrategy = config.buyAmountStrategy;
@@ -37,7 +37,7 @@ public class Upgrade
     }
     private bool CanPurchaseWithoutCost()
     {
-        return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(config.costFormula.Calculate(config.baseCost, CurrentLevel));
+        return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(Config.costFormula.Calculate(Config.baseCost, CurrentLevel));
     }
 
     public void UpdateLevel(BigDouble newlevel)
@@ -52,7 +52,7 @@ public class Upgrade
         if (CurrentPower != null)
         {
             CurrentPower.BaseValue = _currentPower;
-            Debug.Log($"Upgrade {config.upgradeName} base value {config.upgradePower.BaseValue} final value {config.upgradePower.FinalValue}");
+            Debug.Log($"Upgrade {Config.upgradeName} base value {Config.upgradePower.BaseValue} final value {Config.upgradePower.FinalValue}");
         }
     }
 
@@ -75,7 +75,7 @@ public class Upgrade
         CalculateBaseValue();
     }
 
-    private bool IsMaxLevelReached => config.hasMaxLevel && CurrentLevel >= config.maxLevel;
+    private bool IsMaxLevelReached => Config.hasMaxLevel && CurrentLevel >= Config.maxLevel;
 
     private void OnDestroy()
     {

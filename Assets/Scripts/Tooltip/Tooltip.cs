@@ -5,24 +5,24 @@ using UnityEngine.UI;
 [ExecuteInEditMode()]
 public class Tooltip : MonoBehaviour
 {
-    public TextMeshProUGUI headerField;
-    public TextMeshProUGUI contentField;
-    public LayoutElement layoutElement;
+    [SerializeField] private TextMeshProUGUI _headerField;
+    [SerializeField] private TextMeshProUGUI _contentField;
+    [SerializeField] private LayoutElement _layoutElement;
 
     public void SetText(string content, string header)
     {
         if (string.IsNullOrEmpty(header))
         {
-            headerField.gameObject.SetActive(false);
+            _headerField.gameObject.SetActive(false);
         }
         else
         {
-            headerField.gameObject.SetActive(true);
-            headerField.text = header;
+            _headerField.gameObject.SetActive(true);
+            _headerField.text = header;
         }
-        contentField.text = content;
+        _contentField.text = content;
 
-        layoutElement.enabled = Mathf.Max(headerField.preferredWidth, contentField.preferredWidth) >= layoutElement.preferredWidth;
+        _layoutElement.enabled = Mathf.Max(_headerField.preferredWidth, _contentField.preferredWidth) >= _layoutElement.preferredWidth;
 
     }
 
@@ -30,7 +30,7 @@ public class Tooltip : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            layoutElement.enabled = Mathf.Max(headerField.preferredWidth, contentField.preferredWidth) >= layoutElement.preferredWidth;
+            _layoutElement.enabled = Mathf.Max(_headerField.preferredWidth, _contentField.preferredWidth) >= _layoutElement.preferredWidth;
         }
 
         Vector2 mousePos = Input.mousePosition;

@@ -4,18 +4,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LinearFormula", menuName = "Upgrades/Formulas/LinearFormula")]
 public class LinearFormula : UpgradeFormula
 {
-    [SerializeField] private BigDouble multiplier = 1;
-    [SerializeField] private bool isLinear;
-    [SerializeField] private bool isAdditive;
+    [SerializeField] private BigDouble _multiplier = 1;
+    [SerializeField] private bool _isLinear;
+    [SerializeField] private bool _isAdditive;
     public override BigDouble Calculate(BigDouble baseValue, BigDouble level)
     {
-        if (isLinear)
-            return baseValue * level * multiplier;
+        if (_isLinear)
+            return baseValue * level * _multiplier;
 
-        else if (isAdditive)
-            return baseValue + (level * multiplier);
+        else if (_isAdditive)
+            return baseValue + (level * _multiplier);
         else
-            return baseValue * (1 + (level * multiplier));
+            return baseValue * (1 + (level * _multiplier));
     }
 }
 

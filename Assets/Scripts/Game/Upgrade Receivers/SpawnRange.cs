@@ -1,18 +1,16 @@
-using System;
-using BreakInfinity;
 using UnityEngine;
 
 public class SpawnRange : UpgradeReceiver
 {
-    private GameObject spawnRangeObject;
+    private GameObject _spawnRangeObject;
     protected override void Start()
     {
         base.Start();
-        spawnRangeObject = gameObject;
+        _spawnRangeObject = gameObject;
         SetObjectScale();
         OnSpawnRangeUpgradeLevelChanged();
-        Debug.Log(spawnRangeObject.name);
-        Debug.Log(spawnRangeObject.transform.localScale);
+        Debug.Log(_spawnRangeObject.name);
+        Debug.Log(_spawnRangeObject.transform.localScale);
     }
 
     private void OnSpawnRangeUpgradeLevelChanged()
@@ -22,7 +20,6 @@ public class SpawnRange : UpgradeReceiver
     private void SetObjectScale()
     {
         var scale = upgradePower.FinalValue * 2;
-        //set the scale of the GameObject to the new scale on z axis
-        spawnRangeObject.transform.localScale = new Vector3(spawnRangeObject.transform.localScale.x, spawnRangeObject.transform.localScale.y, (float)scale);
+        _spawnRangeObject.transform.localScale = new Vector3(_spawnRangeObject.transform.localScale.x, _spawnRangeObject.transform.localScale.y, (float)scale);
     }
 }

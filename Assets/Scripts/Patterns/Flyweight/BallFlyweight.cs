@@ -3,24 +3,24 @@ using UnityEngine;
 public class BallFlyweight : Flyweight
 {
     new BallFlyweightSettings settings => (BallFlyweightSettings)base.settings;
-    private Ball ball;
-    private MeshRenderer meshRenderer;
+    private Ball _ball;
+    private MeshRenderer _meshRenderer;
 
     private void Awake()
     {
-        if (ball == null)
+        if (_ball == null)
         {
-            ball = GetComponent<Ball>();
+            _ball = GetComponent<Ball>();
         }
-        if (meshRenderer == null)
+        if (_meshRenderer == null)
         {
-            meshRenderer = GetComponent<MeshRenderer>();
+            _meshRenderer = GetComponent<MeshRenderer>();
         }
     }
     //TODO: Check MaterialPropertyBlock for performance
     public override void Init()
     {
-        ball.Init(settings);
-        meshRenderer.material = settings.material;
+        _ball.Init(settings);
+        _meshRenderer.material = settings.material;
     }
 }

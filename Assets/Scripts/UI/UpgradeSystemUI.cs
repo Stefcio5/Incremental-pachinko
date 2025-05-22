@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.UI;
 
 public class UpgradeSystemUI : MonoBehaviour
 {
@@ -23,22 +22,10 @@ public class UpgradeSystemUI : MonoBehaviour
     {
         // Wait for UpgradeManager and DataController to be ready.
         yield return new WaitUntil(() => UpgradeManager.Instance != null && DataController.Instance != null);
-        // Wait another frame to ensure everything is fully initialized.
         yield return null;
-
-        //UpgradeManager.Instance.OnUpgradesChanged += UpdateUI;
         _initialized = true;
         UpdateUI();
-
         Debug.Log($"UpgradeSystemUI initialized for type: {_upgradeType}");
-    }
-
-    private void OnDestroy()
-    {
-        if (UpgradeManager.Instance != null)
-        {
-            //UpgradeManager.Instance.OnUpgradesChanged -= UpdateUI;
-        }
     }
 
     private void UpdateUI()

@@ -3,22 +3,22 @@ using BreakInfinity;
 
 public class Spawner : UpgradeReceiver
 {
-    [SerializeField] private Transform holder;
-    private SpawnRange spawnRangeGO;
-    private float timer;
-    private float manualSpawnTimer;
-    [SerializeField] private float spawnInterval;
-    private ColorfulBalls colorfulBalls;
+    [SerializeField] private Transform _holder;
+    private SpawnRange _spawnRangeGO;
+    private float _timer;
+    private float _manualSpawnTimer;
+    [SerializeField] private float _spawnInterval;
+    private ColorfulBalls _colorfulBalls;
 
     protected override void Awake()
     {
-        colorfulBalls = GetComponent<ColorfulBalls>();
+        _colorfulBalls = GetComponent<ColorfulBalls>();
     }
 
     protected override void OnUpgradeInitialized()
     {
         base.OnUpgradeInitialized();
-        spawnRangeGO = FindFirstObjectByType<SpawnRange>();
+        _spawnRangeGO = FindFirstObjectByType<SpawnRange>();
 
     }
 
@@ -26,19 +26,19 @@ public class Spawner : UpgradeReceiver
     {
         if (UpgradeManager.Instance.Initialized)
         {
-            timer += Time.deltaTime;
-            if (timer >= GetUpgradeValue())
+            _timer += Time.deltaTime;
+            if (_timer >= GetUpgradeValue())
             {
-                SpawnBall(spawnRangeGO.GetUpgradeValue());
-                timer = 0f;
+                SpawnBall(_spawnRangeGO.GetUpgradeValue());
+                _timer = 0f;
             }
             if (Input.GetKey(KeyCode.Space))
             {
-                manualSpawnTimer += Time.deltaTime;
-                if (manualSpawnTimer >= spawnInterval)
+                _manualSpawnTimer += Time.deltaTime;
+                if (_manualSpawnTimer >= _spawnInterval)
                 {
-                    SpawnBall(spawnRangeGO.GetUpgradeValue());
-                    manualSpawnTimer = 0f;
+                    SpawnBall(_spawnRangeGO.GetUpgradeValue());
+                    _manualSpawnTimer = 0f;
                 }
             }
         }
@@ -46,11 +46,11 @@ public class Spawner : UpgradeReceiver
 
     private void SpawnBall(BigDouble position)
     {
-        BallFlyweightSettings ballFlyweightSettings = colorfulBalls.GetRandomBallFlyweightSettings();
+        BallFlyweightSettings ballFlyweightSettings = _colorfulBalls.GetRandomBallFlyweightSettings();
         var flyweight = FlyweightFactory.Spawn(ballFlyweightSettings);
         flyweight.Init();
         flyweight.transform.position = new Vector3(0f, 35f, Random.Range((float)-position, (float)position));
         flyweight.transform.rotation = Quaternion.identity;
-        flyweight.transform.SetParent(holder);
+        flyweight.transform.SetParent(_holder);
     }
 }

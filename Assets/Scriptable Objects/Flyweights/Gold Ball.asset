@@ -18,7 +18,7 @@ MonoBehaviour:
   multiplier:
     mantissa: 7.777
     exponent: 3
-  spawnChance: 0.25100002
+  spawnChance: 0
   spawnChanceincrement: 0.001
   material: {fileID: 2100000, guid: d72645eddc7b92c4bae5a3f206a605c8, type: 2}
   ID: 5

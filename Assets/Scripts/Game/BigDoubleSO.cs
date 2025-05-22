@@ -6,21 +6,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BigDoubleSO", menuName = "BigDouble Value/BigDoubleSO")]
 public class BigDoubleSO : ScriptableObject
 {
-    [SerializeField] private BigDouble baseValue;
-    [SerializeField] private BigDouble finalValue;
-    [SerializeField] private List<BigDoubleSO> modifiers;
-    [SerializeField] public event Action onValueChanged;
+    [SerializeField] private BigDouble _baseValue;
+    [SerializeField] private BigDouble _finalValue;
+    [SerializeField] private List<BigDoubleSO> _modifiers;
+    public event Action onValueChanged;
 
     public BigDouble BaseValue
     {
-        get => baseValue;
+        get => _baseValue;
         set
         {
-            baseValue = value;
+            _baseValue = value;
             RecalculateFinalValue();
         }
     }
-    public BigDouble FinalValue => finalValue;
+    public BigDouble FinalValue => _finalValue;
 
 
     void OnEnable()
@@ -32,24 +32,24 @@ public class BigDoubleSO : ScriptableObject
 
     public void AddModifier(BigDoubleSO modifier)
     {
-        if (modifier == null || modifier == this || modifiers.Contains(modifier))
+        if (modifier == null || modifier == this || _modifiers.Contains(modifier))
         {
             return;
         }
 
-        modifiers.Add(modifier);
+        _modifiers.Add(modifier);
         modifier.onValueChanged += RecalculateFinalValue;
         RecalculateFinalValue();
 
     }
     public void RemoveModifier(BigDoubleSO modifier)
     {
-        if (modifier == null || !modifiers.Contains(modifier))
+        if (modifier == null || !_modifiers.Contains(modifier))
         {
             return;
         }
 
-        modifiers.Remove(modifier);
+        _modifiers.Remove(modifier);
         modifier.onValueChanged -= RecalculateFinalValue;
         RecalculateFinalValue();
     }
@@ -57,20 +57,20 @@ public class BigDoubleSO : ScriptableObject
     public void ClearModifiers()
     {
         UnsubscribeFromModifiers();
-        modifiers.Clear();
+        _modifiers.Clear();
         RecalculateFinalValue();
     }
 
     private void RecalculateFinalValue()
     {
-        finalValue = baseValue;
+        _finalValue = _baseValue;
         onValueChanged?.Invoke();
-        if (modifiers.Count == 0) return;
+        if (_modifiers.Count == 0) return;
 
-        foreach (var modifier in modifiers)
+        foreach (var modifier in _modifiers)
         {
             if (modifier.FinalValue == 0) continue;
-            finalValue *= modifier.FinalValue;
+            _finalValue *= modifier.FinalValue;
         }
         onValueChanged?.Invoke();
     }
@@ -81,7 +81,7 @@ public class BigDoubleSO : ScriptableObject
     }
     private void SubscribeToModifiers()
     {
-        foreach (var modifier in modifiers)
+        foreach (var modifier in _modifiers)
         {
             if (modifier != null)
             {
@@ -92,7 +92,7 @@ public class BigDoubleSO : ScriptableObject
 
     private void UnsubscribeFromModifiers()
     {
-        foreach (var modifier in modifiers)
+        foreach (var modifier in _modifiers)
         {
             if (modifier != null)
             {

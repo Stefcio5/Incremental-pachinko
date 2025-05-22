@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BreakInfinity;
@@ -10,8 +9,6 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
     [SerializeField] private List<UpgradeConfig> _upgradeConfigs = new();
     private readonly Dictionary<UpgradeType, List<Upgrade>> _upgrades = new();
     public Dictionary<string, Upgrade> upgradeMap = new();
-
-    public event Action OnUpgradesChanged;
     public event Action OnInitialized;
 
     private bool _initialized;
@@ -53,7 +50,6 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
             _upgrades[config.upgradeType].Add(upgrade);
             upgradeMap[config.upgradeName] = upgrade;
         }
-        OnUpgradesChanged?.Invoke();
         _initialized = true;
         Debug.Log("Upgrade Manager Initialized");
         OnInitialized?.Invoke();
@@ -82,27 +78,16 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
             : BigDouble.Zero;
     }
 
-    public void HandleDataChanged()
-    {
-        foreach (var upgrade in upgradeMap.Values)
-        {
-            upgrade.UpdateLevel(DataController.Instance.CurrentGameData.upgradeLevels.GetValueOrDefault(upgrade.config.upgradeName, 0));
-            Debug.Log("Upgrade level updated: " + upgrade.config.upgradeName + " to " + upgrade.CurrentLevel);
-        }
-        OnUpgradesChanged?.Invoke();
-    }
-
     public void ResetUpgradesExceptPrestige()
     {
         foreach (var upgrade in upgradeMap.Values)
         {
-            if (!IsPrestigeUpgrade(upgrade.config))
+            if (!IsPrestigeUpgrade(upgrade.Config))
             {
                 upgrade.UpdateLevel(0);
-                Debug.Log("Upgrade level reset: " + upgrade.config.upgradeName + " to 0");
+                Debug.Log("Upgrade level reset: " + upgrade.Config.upgradeName + " to 0");
             }
         }
-        OnUpgradesChanged?.Invoke();
     }
 
     public void ResetAllUpgrades()
@@ -110,16 +95,15 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
         foreach (var upgrade in upgradeMap.Values)
         {
             upgrade.UpdateLevel(0);
-            Debug.Log("Upgrade level reset: " + upgrade.config.upgradeName + " to 0");
+            Debug.Log("Upgrade level reset: " + upgrade.Config.upgradeName + " to 0");
         }
-        OnUpgradesChanged?.Invoke();
     }
 
     public HashSet<string> GetPrestigeUpgradeKeys()
     {
         return upgradeMap.Values
-            .Where(u => IsPrestigeUpgrade(u.config))
-            .Select(u => u.config.upgradeName)
+            .Where(u => IsPrestigeUpgrade(u.Config))
+            .Select(u => u.Config.upgradeName)
             .ToHashSet();
     }
 

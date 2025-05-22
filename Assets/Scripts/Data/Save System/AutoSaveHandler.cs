@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class AutoSaveHandler : MonoBehaviour
 {
-    public float autoSaveInterval = 60f;
-    private float timer;
+    [SerializeField] private float _autoSaveInterval = 60f;
+    private float _timer;
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= autoSaveInterval)
+        _timer += Time.deltaTime;
+        if (_timer >= _autoSaveInterval)
         {
             DataController.Instance.SaveData();
-            timer = 0f;
+            _timer = 0f;
         }
     }
 }

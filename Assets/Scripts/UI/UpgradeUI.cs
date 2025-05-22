@@ -33,7 +33,7 @@ public class UpgradeUI : MonoBehaviour
     public void SetUpgrade(Upgrade upgrade)
     {
         _upgrade = upgrade;
-        if (_upgrade.config.hasTooltip)
+        if (_upgrade.Config.hasTooltip)
         {
             _tooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
         }
@@ -52,10 +52,10 @@ public class UpgradeUI : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        _upgradeNameText.text = $"{_upgrade.config.upgradeName}";
-        _upgradeDescriptionText.text = $"{_upgrade.config.upgradeDescription}{_upgrade.CurrentPower.FinalValue.Notate(_upgrade.config.notationPrecision)}{_upgrade.config.descriptionSuffix}";
-        _upgradeLevelText.text = _upgrade.config.hasMaxLevel
-            ? $"{_upgrade.CurrentLevel}/{_upgrade.config.maxLevel}"
+        _upgradeNameText.text = $"{_upgrade.Config.upgradeName}";
+        _upgradeDescriptionText.text = $"{_upgrade.Config.upgradeDescription}{_upgrade.CurrentPower.FinalValue.Notate(_upgrade.Config.notationPrecision)}{_upgrade.Config.descriptionSuffix}";
+        _upgradeLevelText.text = _upgrade.Config.hasMaxLevel
+            ? $"{_upgrade.CurrentLevel}/{_upgrade.Config.maxLevel}"
             : $"{_upgrade.CurrentLevel.Notate()}";
 
         var buyAmount = _upgrade.BuyAmountStrategy.GetBuyAmount(_upgrade);
@@ -68,7 +68,7 @@ public class UpgradeUI : MonoBehaviour
 
         if (_tooltipTrigger != null)
         {
-            _tooltipTrigger.content = _upgrade.config.tooltipText.tooltipText;
+            _tooltipTrigger.content = _upgrade.Config.tooltipText.tooltipText;
         }
     }
 

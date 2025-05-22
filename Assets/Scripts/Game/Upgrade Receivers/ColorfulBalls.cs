@@ -1,15 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using BreakInfinity;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ColorfulBalls : UpgradeReceiver
 {
-    [SerializeField] private List<BallFlyweightSettings> ballFlyweightSettings;
-    [SerializeField] private BallFlyweightSettings defaultBallFlyweightSettings;
-    public TooltipText tooltipText;
-    private int buyAmount = 1;
+    [SerializeField] private List<BallFlyweightSettings> _ballFlyweightSettings;
+    [SerializeField] private BallFlyweightSettings _defaultBallFlyweightSettings;
+    [SerializeField] private TooltipText _tooltipText;
+    private int _buyAmount = 1;
 
     protected override void OnUpgradeInitialized()
     {
@@ -21,7 +19,7 @@ public class ColorfulBalls : UpgradeReceiver
 
     private void ApplyUpgrade()
     {
-        foreach (var ballFlyweightSetting in ballFlyweightSettings)
+        foreach (var ballFlyweightSetting in _ballFlyweightSettings)
         {
             ballFlyweightSetting.spawnChance = ballFlyweightSetting.spawnChanceincrement * (float)upgradePower.FinalValue;
         }
@@ -30,14 +28,14 @@ public class ColorfulBalls : UpgradeReceiver
 
     private void UpdateTooltip()
     {
-        var orderedBallFlyweightSettings = ballFlyweightSettings.OrderBy(x => x.ID).ToList();
+        var orderedBallFlyweightSettings = _ballFlyweightSettings.OrderBy(x => x.ID).ToList();
         string result = "Spawn Chances:\n";
         foreach (var ballFlyweightSetting in orderedBallFlyweightSettings)
         {
             if (ballFlyweightSetting.spawnChance > 100) continue;
-            result += $"{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement * buyAmount}%)\n";
+            result += $"{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement * _buyAmount}%)\n";
         }
-        tooltipText.SetTooltipText(result);
+        _tooltipText.SetTooltipText(result);
     }
 
 
@@ -45,7 +43,7 @@ public class ColorfulBalls : UpgradeReceiver
     {
         float randomValue = Random.Range(0f, 100f);
 
-        foreach (var ballFlyweightSetting in ballFlyweightSettings)
+        foreach (var ballFlyweightSetting in _ballFlyweightSettings)
         {
             if (randomValue < ballFlyweightSetting.spawnChance)
             {
@@ -53,17 +51,17 @@ public class ColorfulBalls : UpgradeReceiver
             }
         }
 
-        return defaultBallFlyweightSettings;
+        return _defaultBallFlyweightSettings;
     }
     private void GetBuyAmount(BuyAmountStrategy buyAmountStrategy)
     {
         if (buyAmountStrategy == null)
         {
-            buyAmount = 1;
+            _buyAmount = 1;
         }
         else
         {
-            buyAmount = (int)buyAmountStrategy.GetBuyAmount();
+            _buyAmount = (int)buyAmountStrategy.GetBuyAmount();
         }
         UpdateTooltip();
     }

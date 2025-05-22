@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using BreakInfinity;
@@ -6,30 +5,30 @@ using UnityEngine;
 
 public class AutoBuyer : UpgradeReceiver
 {
-    [SerializeField] private UpgradeConfig upgradeConfig;
-    [SerializeField] private UpgradeType upgradeType;
-    private List<Upgrade> upgrades;
-    private float timer;
+    [SerializeField] private UpgradeConfig _upgradeConfig;
+    [SerializeField] private UpgradeType _upgradeType;
+    private List<Upgrade> _upgrades;
+    private float _timer;
 
     protected override void Start()
     {
         base.Start();
-        upgrades = UpgradeManager.Instance.GetUpgrades(upgradeType).ToList();
-        if (upgrades == null || upgrades.Count == 0)
+        _upgrades = UpgradeManager.Instance.GetUpgrades(_upgradeType).ToList();
+        if (_upgrades == null || _upgrades.Count == 0)
         {
-            Debug.LogWarning($"AutoBuyer: No upgrades found for type {upgradeType}");
+            Debug.LogWarning($"AutoBuyer: No upgrades found for type {_upgradeType}");
         }
     }
 
     private void Update()
     {
-        if (GetUpgradeLevel(upgradeConfig) > 0)
+        if (GetUpgradeLevel(_upgradeConfig) > 0)
         {
 
-            timer += Time.deltaTime;
-            if (timer >= upgradePower.FinalValue)
+            _timer += Time.deltaTime;
+            if (_timer >= upgradePower.FinalValue)
             {
-                timer = 0f;
+                _timer = 0f;
                 TryPurchaseUpgrades();
             }
         }
@@ -37,7 +36,7 @@ public class AutoBuyer : UpgradeReceiver
 
     private void TryPurchaseUpgrades()
     {
-        foreach (var upgrade in upgrades)
+        foreach (var upgrade in _upgrades)
         {
             if (upgrade.CanPurchase())
             {

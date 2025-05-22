@@ -3048,7 +3048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f1db04b5e44b84790a75a76c2ca27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoSaveInterval: 60
+  _autoSaveInterval: 60
 --- !u!4 &143458372
 Transform:
   m_ObjectHideFlags: 0
@@ -4399,8 +4399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23dac7f5f5cfb094b92b16e2b8fae2fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  header: Prestige
-  content: Add 10 prestige points
+  header: 
+  content: 
 --- !u!222 &200157373
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5174,13 +5174,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa5590ceec359542a9f30020eba028c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentBuyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
-  buyAmountStrategies:
+  _currentBuyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
+  _buyAmountStrategies:
   - {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
   - {fileID: 11400000, guid: 78e0107f3c8af6249b65b1e7e0002154, type: 2}
   - {fileID: 11400000, guid: 733f57ba2c9f6774bb0ec8fc2d31336d, type: 2}
-  button: {fileID: 680541194}
-  buttonText: {fileID: 1296561584}
+  _button: {fileID: 680541194}
+  _buttonText: {fileID: 1296561584}
 --- !u!1 &225789504
 GameObject:
   m_ObjectHideFlags: 0
@@ -5322,8 +5322,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradePower: {fileID: 11400000, guid: ca2949efe9c02364c985b7fe2b408133, type: 2}
-  holder: {fileID: 2055493377}
-  spawnInterval: 0.5
+  _holder: {fileID: 2055493377}
+  _spawnInterval: 0.5
 --- !u!4 &237142070
 Transform:
   m_ObjectHideFlags: 0
@@ -5354,14 +5354,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradePower: {fileID: 11400000, guid: 5b66576cb362d784abed9b4edeb3dfbb, type: 2}
-  ballFlyweightSettings:
+  _ballFlyweightSettings:
   - {fileID: 11400000, guid: ec184426cb7969e4a910152a6f2cd09b, type: 2}
   - {fileID: 11400000, guid: 7ad1d129ae260da4a8ee6a4c08723296, type: 2}
   - {fileID: 11400000, guid: 795b7f94c2c0ecd4b839403e4706e64f, type: 2}
   - {fileID: 11400000, guid: 784ec504af74fc14dafaac4b5f793995, type: 2}
   - {fileID: 11400000, guid: 93d9e68bfa3889247ae007feb68939a0, type: 2}
-  defaultBallFlyweightSettings: {fileID: 11400000, guid: bfadb97b837d8c14facabbf8c5610ed1, type: 2}
-  tooltipText: {fileID: 11400000, guid: 261ef943828f9d2499d0b4be368e4f60, type: 2}
+  _defaultBallFlyweightSettings: {fileID: 11400000, guid: bfadb97b837d8c14facabbf8c5610ed1, type: 2}
+  _tooltipText: {fileID: 11400000, guid: 261ef943828f9d2499d0b4be368e4f60, type: 2}
 --- !u!1 &239300881
 GameObject:
   m_ObjectHideFlags: 0
@@ -5838,18 +5838,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b482014dfd9d6249a2edb8cb7e8fda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabs:
+  _tabs:
   - {fileID: 930465520}
   - {fileID: 1223216445}
   - {fileID: 1568839233}
-  tabButtons:
+  _tabButtons:
   - {fileID: 610275514}
   - {fileID: 1488062462}
   - {fileID: 759233775}
-  inactiveTabBG: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  activeTabBG: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  inactiveTabSize: {x: 0, y: 0}
-  activeTabSize: {x: 0, y: 0}
+  _inactiveTabBG: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  _activeTabBG: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  _inactiveTabSize: {x: 0, y: 0}
+  _activeTabSize: {x: 0, y: 0}
 --- !u!1 &252932162
 GameObject:
   m_ObjectHideFlags: 0
@@ -7198,6 +7198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 300730813}
   - component: {fileID: 300730814}
+  - component: {fileID: 300730815}
   m_Layer: 0
   m_Name: Pins
   m_TagString: Untagged
@@ -7233,15 +7234,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78976854088d5de47a11b04f0a5c5806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pinPrefab: {fileID: 7685502835950361225, guid: 2e1c3c502ba9d7e478df9c224ce8d7e9, type: 3}
-  pinParent: {fileID: 300730813}
-  pinX: 0
-  minZ: -20
-  maxZ: 20
-  minY: 7
-  maxY: 27
-  spacingY: 1.8
-  spacingZ: 2.85711
+  _pinPrefab: {fileID: 7685502835950361225, guid: 2e1c3c502ba9d7e478df9c224ce8d7e9, type: 3}
+  _pinParent: {fileID: 300730813}
+  _pinX: 0
+  _minZ: -20
+  _maxZ: 20
+  _minY: 7
+  _maxY: 25
+  _spacingY: 1.8
+  _spacingZ: 2.85711
+--- !u!114 &300730815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300730812}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78976854088d5de47a11b04f0a5c5806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pinPrefab: {fileID: 7685502835950361225, guid: 2e1c3c502ba9d7e478df9c224ce8d7e9, type: 3}
+  _pinParent: {fileID: 300730813}
+  _pinX: 0
+  _minZ: -20
+  _maxZ: 20
+  _minY: 7
+  _maxY: 25
+  _spacingY: 1.8
+  _spacingZ: 2.85711
 --- !u!1 &301559764
 GameObject:
   m_ObjectHideFlags: 0
@@ -11777,6 +11799,10 @@ PrefabInstance:
       propertyPath: floatingTextSettings
       value: 
       objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: a5e9277650abb8446b577b24442cc602, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -21301,9 +21327,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad02fa1bf9fdbf44e821177afe50ea2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headerField: {fileID: 1337344734}
-  contentField: {fileID: 1850054713}
-  layoutElement: {fileID: 912590947}
+  _headerField: {fileID: 1337344734}
+  _contentField: {fileID: 1850054713}
+  _layoutElement: {fileID: 912590947}
 --- !u!114 &912590947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25029,6 +25055,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: a5e9277650abb8446b577b24442cc602, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
       objectReference: {fileID: 11400000, guid: 02b3df1a5a5fad14998533b6d1ec85da, type: 2}
@@ -27921,6 +27951,10 @@ PrefabInstance:
       propertyPath: floatingTextSettings
       value: 
       objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: a5e9277650abb8446b577b24442cc602, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -33634,8 +33668,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradePower: {fileID: 11400000, guid: bfb13b2824990114d877d9d2a5aefb51, type: 2}
-  upgradeConfig: {fileID: 11400000, guid: 3e3097bfc0c68cd468e28ae830da6fe0, type: 2}
-  upgradeType: 1
+  _upgradeConfig: {fileID: 11400000, guid: 3e3097bfc0c68cd468e28ae830da6fe0, type: 2}
+  _upgradeType: 1
 --- !u!1 &1414229005
 GameObject:
   m_ObjectHideFlags: 0
@@ -34633,6 +34667,10 @@ PrefabInstance:
       propertyPath: floatingTextSettings
       value: 
       objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: a5e9277650abb8446b577b24442cc602, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -37686,6 +37724,10 @@ PrefabInstance:
       propertyPath: floatingTextSettings
       value: 
       objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: a5e9277650abb8446b577b24442cc602, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -42869,6 +42911,10 @@ PrefabInstance:
       propertyPath: floatingTextSettings
       value: 
       objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: a5e9277650abb8446b577b24442cc602, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 
@@ -48635,8 +48681,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradePower: {fileID: 11400000, guid: 589f09419344d3041a5e1716212084ba, type: 2}
-  upgradeConfig: {fileID: 11400000, guid: 397971e3ffa47f348a2f5dbc04c756f5, type: 2}
-  upgradeType: 0
+  _upgradeConfig: {fileID: 11400000, guid: 397971e3ffa47f348a2f5dbc04c756f5, type: 2}
+  _upgradeType: 0
 --- !u!1 &2106497455
 GameObject:
   m_ObjectHideFlags: 0
@@ -49639,6 +49685,10 @@ PrefabInstance:
       propertyPath: floatingTextSettings
       value: 
       objectReference: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _floatingTextSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: a5e9277650abb8446b577b24442cc602, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeScriptableObject
       value: 

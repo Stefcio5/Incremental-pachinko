@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.WindowsRuntime;
 using BreakInfinity;
 using UnityEngine;
 
@@ -7,11 +6,12 @@ public class BuyXStrategy : BuyAmountStrategy
 {
     [SerializeField] private BigDouble _buyAmount = 1;
     public BigDouble BuyAmount { get => _buyAmount; private set => _buyAmount = value; }
+
     public override BigDouble GetBuyAmount(Upgrade upgrade)
     {
-        if (upgrade.config.hasMaxLevel)
+        if (upgrade.Config.hasMaxLevel)
         {
-            BigDouble remaining = upgrade.config.maxLevel - upgrade.CurrentLevel;
+            BigDouble remaining = upgrade.Config.maxLevel - upgrade.CurrentLevel;
             return BigDouble.Min(remaining, BuyAmount);
         }
         return BuyAmount;
@@ -24,8 +24,8 @@ public class BuyXStrategy : BuyAmountStrategy
 
     public override BigDouble GetCost(Upgrade upgrade)
     {
-        var upgradeFormula = upgrade.config.costFormula as ExponentialFormula;
+        var upgradeFormula = upgrade.Config.costFormula as ExponentialFormula;
         var exponent = upgradeFormula.Exponent;
-        return BigMath.SumGeometricSeries(GetBuyAmount(upgrade), upgrade.config.baseCost, exponent, upgrade.CurrentLevel);
+        return BigMath.SumGeometricSeries(GetBuyAmount(upgrade), upgrade.Config.baseCost, exponent, upgrade.CurrentLevel);
     }
 }

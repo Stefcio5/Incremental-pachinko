@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class PinGenerator : MonoBehaviour
 {
-    public GameObject pinPrefab;
-    public Transform pinParent;
+    [SerializeField] private GameObject _pinPrefab;
+    [SerializeField] private Transform _pinParent;
 
     [Header("Settings")]
-    public float pinX = 0.0f;
-    public float minZ = -20f;
-    public float maxZ = 20f;
-    public float minY = 7.0f;
-    public float maxY = 25.0f;
+    [SerializeField] private float _pinX = 0.0f;
+    [SerializeField] private float _minZ = -20f;
+    [SerializeField] private float _maxZ = 20f;
+    [SerializeField] private float _minY = 7.0f;
+    [SerializeField] private float _maxY = 25.0f;
 
     [Header("Spacing")]
-    public float spacingY = 2.0f;
-    public float spacingZ = 2.85711f;
+    [SerializeField] private float _spacingY = 2.0f;
+    [SerializeField] private float _spacingZ = 2.85711f;
 
-    private List<GameObject> spawnedPins = new List<GameObject>();
+    private List<GameObject> _spawnedPins = new List<GameObject>();
 
     void Start()
     {
@@ -29,13 +29,13 @@ public class PinGenerator : MonoBehaviour
     {
         ClearPins();
 
-        for (float y = minY; y <= maxY; y += spacingY)
+        for (float y = _minY; y <= _maxY; y += _spacingY)
         {
-            float zOffset = ((int)((y - minY) / spacingY) % 2 == 0) ? 0f : spacingZ * 0.5f;
+            float zOffset = ((int)((y - _minY) / _spacingY) % 2 == 0) ? 0f : _spacingZ * 0.5f;
 
-            for (float z = minZ + spacingZ * 0.5f + zOffset; z <= maxZ - spacingZ * 0.5f; z += spacingZ)
+            for (float z = _minZ + _spacingZ * 0.5f + zOffset; z <= _maxZ - _spacingZ * 0.5f; z += _spacingZ)
             {
-                SpawnPin(new Vector3(pinX, y, z));
+                SpawnPin(new Vector3(_pinX, y, z));
             }
         }
     }
@@ -43,18 +43,18 @@ public class PinGenerator : MonoBehaviour
     private void SpawnPin(Vector3 position)
     {
         Quaternion rotation = Quaternion.Euler(0, 0, 90);
-        GameObject pin = Instantiate(pinPrefab, position, rotation, pinParent);
-        spawnedPins.Add(pin);
+        GameObject pin = Instantiate(_pinPrefab, position, rotation, _pinParent);
+        _spawnedPins.Add(pin);
     }
 
     [ContextMenu("Clear Pins")]
     private void ClearPins()
     {
-        foreach (var p in spawnedPins)
+        foreach (var p in _spawnedPins)
         {
             if (p != null)
                 DestroyImmediate(p);
         }
-        spawnedPins.Clear();
+        _spawnedPins.Clear();
     }
 }

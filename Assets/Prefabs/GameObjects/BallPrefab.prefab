@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -150,7 +150,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradePower: {fileID: 11400000, guid: 6cb1ad2909e0cbf4e9e96965f3214544, type: 2}
-  gravityScale: 3
-  ballMultiplier:
-    mantissa: 0
-    exponent: 0
+  _gravityScale: 3.5

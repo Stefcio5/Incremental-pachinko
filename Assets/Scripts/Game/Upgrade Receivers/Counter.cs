@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
-using BreakInfinity;
+﻿using BreakInfinity;
 using UnityEngine;
 
 public class Counter : UpgradeReceiver
 {
-    [SerializeField] private FlyweightSettings floatingTextSettings;
+    [SerializeField] private FloatingTextFlyweightSettings _floatingTextSettings;
 
     protected override void Start()
     {
@@ -34,13 +32,9 @@ public class Counter : UpgradeReceiver
 
     private void ShowFloatingText(Collider collider, BigDouble value)
     {
-        var floatingText = FlyweightFactory.Spawn(floatingTextSettings);
+        FloatingTextFlyweight floatingText = (FloatingTextFlyweight)FlyweightFactory.Spawn(_floatingTextSettings);
         var spawnLocation = collider.transform.position + Vector3.right * 3f;
         floatingText.transform.SetPositionAndRotation(spawnLocation, floatingText.transform.rotation);
-
-        if (floatingText.TryGetComponent<TextMesh>(out var textMesh))
-        {
-            textMesh.text = "+" + value.Notate();
-        }
+        floatingText.SetText(value.Notate());
     }
 }

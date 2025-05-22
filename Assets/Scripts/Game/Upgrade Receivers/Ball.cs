@@ -1,14 +1,11 @@
-using System;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using BreakInfinity;
 using UnityEngine;
 
 public class Ball : UpgradeReceiver
 {
-    [SerializeField] private float gravityScale;
-    public BigDouble ballMultiplier;
-    private Rigidbody rb;
+    [SerializeField] private float _gravityScale;
+    private BigDouble _ballMultiplier;
+    private Rigidbody _rb;
     protected override void Start()
     {
         base.Start();
@@ -16,30 +13,30 @@ public class Ball : UpgradeReceiver
 
     public void Init(BallFlyweightSettings settings)
     {
-        ballMultiplier = settings.multiplier;
+        _ballMultiplier = settings.multiplier;
     }
 
     private void OnEnable()
     {
-        if (rb == null)
+        if (_rb == null)
         {
-            rb = GetComponent<Rigidbody>();
+            _rb = GetComponent<Rigidbody>();
             Debug.Log("Got rigidbody component");
-            rb.linearDamping = 0;
-            rb.angularDamping = 0;
+            _rb.linearDamping = 0;
+            _rb.angularDamping = 0;
         }
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
     }
 
     public override BigDouble GetUpgradeValue()
     {
-        return ballMultiplier * upgradePower.FinalValue;
+        return _ballMultiplier * upgradePower.FinalValue;
     }
 
     private void FixedUpdate()
     {
-        Vector3 gravity = (Physics.gravity * gravityScale) - Physics.gravity;
-        rb.AddForce(gravity, ForceMode.Acceleration);
+        Vector3 gravity = (Physics.gravity * _gravityScale) - Physics.gravity;
+        _rb.AddForce(gravity, ForceMode.Acceleration);
     }
 }

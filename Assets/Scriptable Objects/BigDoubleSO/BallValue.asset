@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13ffed52c15bfa4b929b708e804ed71, type: 3}
   m_Name: BallValue
   m_EditorClassIdentifier: 
-  baseValue:
+  _baseValue:
+    mantissa: 2
+    exponent: 0
+  _finalValue:
     mantissa: 4
     exponent: 0
-  finalValue:
-    mantissa: 5.6
-    exponent: 1
-  modifiers:
+  _modifiers:
   - {fileID: 11400000, guid: de9e2e2965921e444a7bdaef098aeb26, type: 2}

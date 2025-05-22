@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 786773107387146724}
   - component: {fileID: 786773107387146725}
   - component: {fileID: 349850564}
-  - component: {fileID: 211288465857632712}
-  - component: {fileID: -8332202557976982725}
+  - component: {fileID: -7422765944537311036}
   m_Layer: 5
   m_Name: Floating Text
   m_TagString: Untagged
@@ -59,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3bae05229f7efe643977423e86ee680a, type: 3}
+  - {fileID: 2100000, guid: 71dc92af2cd5ae84bb923bd3f86244d1, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,7 +98,7 @@ TextMesh:
   m_FontSize: 35
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 3bae05229f7efe643977423e86ee680a, type: 3}
+  m_Font: {fileID: 12800000, guid: 71dc92af2cd5ae84bb923bd3f86244d1, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4278190080
@@ -120,7 +119,7 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
---- !u!114 &211288465857632712
+--- !u!114 &-7422765944537311036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,19 +128,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 786773107387146726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: accc8c0df1831754290a5d90858800c7, type: 3}
+  m_Script: {fileID: 11500000, guid: d00d9812663e235479fec23ee1cbb039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-8332202557976982725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786773107387146726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59e8514f0a6fa2d46b2446d0b87e2c66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings: {fileID: 11400000, guid: 90ca1122117c0e745a020a90f74b16c7, type: 2}
+  settings: {fileID: 11400000, guid: a5e9277650abb8446b577b24442cc602, type: 2}

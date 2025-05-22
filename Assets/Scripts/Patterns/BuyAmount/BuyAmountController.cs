@@ -5,45 +5,45 @@ using UnityEngine.UI;
 
 public class BuyAmountController : MonoBehaviour
 {
-    [SerializeField] private BuyAmountStrategy currentBuyAmountStrategy;
-    [SerializeField] private BuyAmountStrategy[] buyAmountStrategies;
-    private int currentBuyAmountIndex = 0;
-    [SerializeField] private Button button;
-    [SerializeField] private TextMeshProUGUI buttonText;
+    [SerializeField] private BuyAmountStrategy _currentBuyAmountStrategy;
+    [SerializeField] private BuyAmountStrategy[] _buyAmountStrategies;
+    [SerializeField] private Button _button;
+    [SerializeField] private TextMeshProUGUI _buttonText;
+    private int _currentBuyAmountIndex = 0;
 
     public static event Action<BuyAmountStrategy> OnBuyAmountStrategyChanged;
 
     private void Start()
     {
-        if (currentBuyAmountStrategy == null)
+        if (_currentBuyAmountStrategy == null)
         {
-            currentBuyAmountStrategy = buyAmountStrategies[0];
+            _currentBuyAmountStrategy = _buyAmountStrategies[0];
         }
 
         UpdateButtonText();
-        button.onClick.AddListener(SwitchStrategy);
+        _button.onClick.AddListener(SwitchStrategy);
     }
 
     private void SwitchStrategy()
     {
-        currentBuyAmountIndex++;
-        if (currentBuyAmountIndex >= buyAmountStrategies.Length)
+        _currentBuyAmountIndex++;
+        if (_currentBuyAmountIndex >= _buyAmountStrategies.Length)
         {
-            currentBuyAmountIndex = 0;
+            _currentBuyAmountIndex = 0;
         }
 
-        currentBuyAmountStrategy = buyAmountStrategies[currentBuyAmountIndex];
-        OnBuyAmountStrategyChanged?.Invoke(currentBuyAmountStrategy);
+        _currentBuyAmountStrategy = _buyAmountStrategies[_currentBuyAmountIndex];
+        OnBuyAmountStrategyChanged?.Invoke(_currentBuyAmountStrategy);
         UpdateButtonText();
     }
 
     private void UpdateButtonText()
     {
-        buttonText.text = $"{currentBuyAmountStrategy.name}";
+        _buttonText.text = $"{_currentBuyAmountStrategy.name}";
     }
 
     void OnDestroy()
     {
-        button.onClick.RemoveListener(SwitchStrategy);
+        _button.onClick.RemoveListener(SwitchStrategy);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +18,6 @@ public class GameHeaderUI : MonoBehaviour
 
     private void OnPrestigeButtonClicked()
     {
-        //FlyweightFactory.ClearAllPools();
         DataController.Instance.PrestigeGame();
     }
 
