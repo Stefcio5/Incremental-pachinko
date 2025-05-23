@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13ffed52c15bfa4b929b708e804ed71, type: 3}
   m_Name: SpawnRangeValue
   m_EditorClassIdentifier: 
-  baseValue:
+  _baseValue:
     mantissa: 1
     exponent: 0
-  cachedFinalValue:
-    mantissa: 0
+  _finalValue:
+    mantissa: 1
     exponent: 0
-  isDirty: 1
-  modifiers: []
+  _modifiers: []

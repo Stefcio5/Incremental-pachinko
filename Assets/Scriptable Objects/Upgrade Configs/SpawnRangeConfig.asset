@@ -28,7 +28,7 @@ MonoBehaviour:
   powerFormula: {fileID: 11400000, guid: 06deff0ad47f76747948e4224562d515, type: 2}
   hasMaxLevel: 1
   maxLevel:
-    mantissa: 7.5
+    mantissa: 8.5
     exponent: 1
   notationPrecision: 1
   hasTooltip: 0

@@ -4,7 +4,7 @@ using BreakInfinity;
 public class Spawner : UpgradeReceiver
 {
     [SerializeField] private Transform _holder;
-    private SpawnRange _spawnRangeGO;
+    [SerializeField] private SpawnRange _spawnRangeGO;
     private float _timer;
     private float _manualSpawnTimer;
     [SerializeField] private float _spawnInterval;
@@ -18,8 +18,6 @@ public class Spawner : UpgradeReceiver
     protected override void OnUpgradeInitialized()
     {
         base.OnUpgradeInitialized();
-        _spawnRangeGO = FindFirstObjectByType<SpawnRange>();
-
     }
 
     void Update()
@@ -48,9 +46,9 @@ public class Spawner : UpgradeReceiver
     {
         BallFlyweightSettings ballFlyweightSettings = _colorfulBalls.GetRandomBallFlyweightSettings();
         var flyweight = FlyweightFactory.Spawn(ballFlyweightSettings);
-        flyweight.Init();
-        flyweight.transform.position = new Vector3(0f, 35f, Random.Range((float)-position, (float)position));
-        flyweight.transform.rotation = Quaternion.identity;
+        flyweight.gameObject.transform.position = new Vector3(0, 35.5f, Random.Range((float)-position, (float)position));
         flyweight.transform.SetParent(_holder);
+        flyweight.transform.rotation = Quaternion.identity;
+        flyweight.Init();
     }
 }
