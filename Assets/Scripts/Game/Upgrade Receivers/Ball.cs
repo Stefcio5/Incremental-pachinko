@@ -44,7 +44,6 @@ public class Ball : UpgradeReceiver
     {
         _rb.AddForce(Vector3.down * _gravityScale, ForceMode.Acceleration);
 
-        // Ogranicz prędkość poziomą (arcade feel)
         Vector3 vel = _rb.linearVelocity;
         vel.x = Mathf.Clamp(vel.x, -10f, 10f);
         vel.y = Mathf.Clamp(vel.y, -20f, 10f);
