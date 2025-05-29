@@ -33,7 +33,7 @@ public class ColorfulBalls : UpgradeReceiver
         foreach (var ballFlyweightSetting in orderedBallFlyweightSettings)
         {
             if (ballFlyweightSetting.spawnChance > 100) continue;
-            result += $"{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement * _buyAmount}%)\n";
+            result += $"<color=#{ColorUtility.ToHtmlStringRGB(ballFlyweightSetting.color)}>{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement * _buyAmount}%)</color>\n";
         }
         _tooltipText.SetTooltipText(result);
     }

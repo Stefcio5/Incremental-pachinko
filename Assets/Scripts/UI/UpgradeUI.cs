@@ -1,7 +1,9 @@
 using System;
 using BreakInfinity;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
@@ -20,6 +22,7 @@ public class UpgradeUI : MonoBehaviour
 
     private Upgrade _upgrade;
     private TooltipTrigger _tooltipTrigger;
+    private Sequence _animationSequence;
     private void OnEnable()
     {
         _buyButton.onClick.AddListener(OnBuyClicked);
@@ -81,5 +84,17 @@ public class UpgradeUI : MonoBehaviour
     {
         _upgrade.Purchase();
         UpdateVisuals();
+        AnimateUI();
+    }
+    public void AnimateUI()
+    {
+        _animationSequence = DOTween.Sequence();
+        _animationSequence.Append(transform.DOPunchScale(Vector3.one * 0.05f, 0.5f, 5, 0f)).SetEase(Ease.OutBack);
+        _animationSequence.Append(transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InBack)).
+        OnComplete(() =>
+        {
+            _animationSequence.Kill(true);
+        });
+
     }
 }

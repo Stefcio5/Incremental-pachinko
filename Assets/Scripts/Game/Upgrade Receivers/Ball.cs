@@ -7,6 +7,8 @@ public class Ball : UpgradeReceiver
     private BigDouble _ballMultiplier;
     private Rigidbody _rb;
     private Color _ballColor;
+    private int _ballID;
+    public int BallID { get => _ballID; private set => _ballID = value; }
     Vector3 gravity = new Vector3(0, -20f, 0);
 
     public Color BallColor { get => _ballColor; }
@@ -30,6 +32,7 @@ public class Ball : UpgradeReceiver
     {
         _ballMultiplier = settings.multiplier;
         _ballColor = settings.color;
+        _ballID = settings.ID;
     }
 
     private void OnEnable()

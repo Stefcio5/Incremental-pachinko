@@ -1,5 +1,7 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameHeaderUI : MonoBehaviour
@@ -34,4 +36,23 @@ public class GameHeaderUI : MonoBehaviour
         _prestigeButton.onClick.RemoveListener(OnPrestigeButtonClicked);
     }
 
+    public void OnPrestigeButtonPointerEnter()
+    {
+        if (!_prestigeButton.IsInteractable())
+        {
+            _prestigeButton.transform.DOScale(1f, 0.25f).SetEase(Ease.OutQuad);
+            return;
+        }
+        _prestigeButton.transform.DOScale(1.1f, 0.25f).SetEase(Ease.OutQuad);
+    }
+
+    public void OnPrestigeButtonPointerExit()
+    {
+        if (!_prestigeButton.IsInteractable())
+        {
+            _prestigeButton.transform.DOScale(1f, 0.25f).SetEase(Ease.OutQuad);
+            return;
+        }
+        _prestigeButton.transform.DOScale(1f, 0.25f).SetEase(Ease.OutQuad);
+    }
 }
