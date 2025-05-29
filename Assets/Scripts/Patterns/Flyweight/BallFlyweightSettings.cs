@@ -8,6 +8,7 @@ public class BallFlyweightSettings : FlyweightSettings
     public float spawnChance;
     public float spawnChanceincrement;
     public Material material;
+    public Color color;
     public int ID;
 
 

@@ -20,12 +20,12 @@ public class Flyweight : MonoBehaviour
     {
 
     }
-    public void Despawn()
+    public virtual void Despawn()
     {
-        StartCoroutine(Despawn(settings.despawnTime));
+        StartCoroutine(DespawnCoroutine(settings.despawnTime));
     }
 
-    IEnumerator Despawn(float delay)
+    private IEnumerator DespawnCoroutine(float delay)
     {
         yield return Helpers.GetWaitForSeconds(delay);
         FlyweightFactory.ReturnToPool(this);

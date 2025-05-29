@@ -17,7 +17,7 @@ public class Counter : UpgradeReceiver
             BigDouble finalValue = GetFinalValue(ball);
 
             DataController.Instance.AddPoints(finalValue);
-            ShowFloatingText(collider, finalValue);
+            ShowFloatingText(collider, ball.BallColor, finalValue);
         }
         if (collider.gameObject.TryGetComponent<Flyweight>(out var flyweight))
         {
@@ -30,11 +30,11 @@ public class Counter : UpgradeReceiver
         return ball.GetUpgradeValue() * upgradePower.FinalValue;
     }
 
-    private void ShowFloatingText(Collider collider, BigDouble value)
+    private void ShowFloatingText(Collider collider, Color color, BigDouble value)
     {
         FloatingTextFlyweight floatingText = (FloatingTextFlyweight)FlyweightFactory.Spawn(_floatingTextSettings);
-        var spawnLocation = collider.transform.position + Vector3.right * 3f;
-        floatingText.transform.SetPositionAndRotation(spawnLocation, floatingText.transform.rotation);
-        floatingText.SetText(value.Notate());
+        var spawnLocation = collider.transform.position;
+        floatingText.SetText(value.Notate(), color);
+        floatingText.AnimateFloatingText(spawnLocation);
     }
 }

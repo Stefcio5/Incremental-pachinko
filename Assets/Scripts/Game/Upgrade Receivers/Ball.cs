@@ -6,7 +6,10 @@ public class Ball : UpgradeReceiver
     [SerializeField] private float _gravityScale;
     private BigDouble _ballMultiplier;
     private Rigidbody _rb;
+    private Color _ballColor;
     Vector3 gravity = new Vector3(0, -20f, 0);
+
+    public Color BallColor { get => _ballColor; }
 
     protected override void Awake()
     {
@@ -26,6 +29,7 @@ public class Ball : UpgradeReceiver
     public void Init(BallFlyweightSettings settings)
     {
         _ballMultiplier = settings.multiplier;
+        _ballColor = settings.color;
     }
 
     private void OnEnable()
