@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using BreakInfinity;
 using UnityEngine;
 
 public class ColorfulBalls : UpgradeReceiver
@@ -33,7 +34,7 @@ public class ColorfulBalls : UpgradeReceiver
         foreach (var ballFlyweightSetting in orderedBallFlyweightSettings)
         {
             if (ballFlyweightSetting.spawnChance > 100) continue;
-            result += $"<color=#{ColorUtility.ToHtmlStringRGB(ballFlyweightSetting.color)}>{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{ballFlyweightSetting.spawnChanceincrement * _buyAmount}%)</color>\n";
+            result += $"<color=#{ColorUtility.ToHtmlStringRGB(ballFlyweightSetting.color)}>{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {ballFlyweightSetting.spawnChance}% (+{(ballFlyweightSetting.spawnChanceincrement * _buyAmount).ToString("F3")}%)</color>\n";
         }
         _tooltipText.SetTooltipText(result);
     }

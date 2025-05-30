@@ -5,6 +5,7 @@ using BreakInfinity;
 public class GameData
 {
     public BigDouble points = 0;
+    public BigDouble totalPoints = 0;
     public BigDouble prestigePoints = 0;
     public Dictionary<string, BigDouble> upgradeLevels = new();
 
@@ -25,9 +26,10 @@ public class GameData
     {
     }
 
-    public GameData(BigDouble points, BigDouble prestigePoints, Dictionary<string, BigDouble> upgradeLevels)
+    public GameData(BigDouble points, BigDouble totalPoints, BigDouble prestigePoints, Dictionary<string, BigDouble> upgradeLevels)
     {
         this.points = points;
+        this.totalPoints = totalPoints;
         this.prestigePoints = prestigePoints;
         this.upgradeLevels = upgradeLevels;
     }

@@ -28,6 +28,7 @@ public class DataController : PersistentSingleton<DataController>
     {
         if (amount <= 0) return;
         CurrentGameData.points += amount;
+        CurrentGameData.totalPoints += amount;
         OnDataChanged?.Invoke();
     }
 
@@ -56,11 +57,11 @@ public class DataController : PersistentSingleton<DataController>
     }
 
     //TODO: Change magic numbers
-    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.points / 1000000000));
+    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.totalPoints / 1000000000));
     public BigDouble PointsToNextPrestige()
     {
         BigDouble prestigePointsToAdd = CalculatePrestige();
-        return BigDouble.Pow(prestigePointsToAdd + 1, 2) * 1000000000 - CurrentGameData.points;
+        return BigDouble.Pow(prestigePointsToAdd + 1, 2) * 1000000000 - CurrentGameData.totalPoints;
     }
 
 
@@ -74,6 +75,7 @@ public class DataController : PersistentSingleton<DataController>
                 CurrentGameData.upgradeLevels[key] = 0;
         }
         CurrentGameData.points = 0;
+        CurrentGameData.totalPoints = 0;
         UpgradeManager.Instance.ResetUpgradesExceptPrestige();
         OnDataChanged?.Invoke();
     }

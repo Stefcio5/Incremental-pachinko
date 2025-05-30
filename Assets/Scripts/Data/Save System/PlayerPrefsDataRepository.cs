@@ -55,6 +55,7 @@ public class PlayerPrefsDataRepository : IDataRepository
 public class SerializableGameData
 {
     public string points;
+    public string totalPoints;
     public string prestigePoints;
     public string upgradeLevels;
     public int version;
@@ -64,6 +65,7 @@ public class SerializableGameData
     public SerializableGameData(GameData data)
     {
         points = data.points.ToString();
+        totalPoints = data.totalPoints.ToString();
         prestigePoints = data.prestigePoints.ToString();
         upgradeLevels = SerializeDictionary(data.upgradeLevels);
         version = 1;
@@ -73,6 +75,7 @@ public class SerializableGameData
     {
         return new GameData(
             BigDouble.Parse(points),
+            BigDouble.Parse(totalPoints),
             BigDouble.Parse(prestigePoints),
             DeserializeDictionary(upgradeLevels)
         );
