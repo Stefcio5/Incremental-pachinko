@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,22 +5,22 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 {
     public string header;
     public string content;
-    private bool isMouseOver;
+    private bool _isMouseOver;
     public void OnPointerEnter(PointerEventData eventData)
     {
-        isMouseOver = true;
+        _isMouseOver = true;
         TooltipSystem.Show(content, header);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        isMouseOver = false;
+        _isMouseOver = false;
         TooltipSystem.Hide();
     }
 
     private void Update()
     {
-        if (isMouseOver)
+        if (_isMouseOver)
         {
             TooltipSystem.Refresh(content, header);
         }

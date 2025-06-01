@@ -13,4 +13,17 @@ public class FlyweightRuntimeSetSO : RuntimeSetSO<Flyweight>
             }
         }
     }
+
+    public int GetActiveBallCount()
+    {
+        int count = 0;
+        foreach (var flyweight in items)
+        {
+            if (flyweight.gameObject.activeSelf && flyweight is BallFlyweight)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
 }

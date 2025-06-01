@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 788d3a2f4c0b20d41ae5fc88b75009a8, type: 3}
+  m_Name: RedBoxConfig
+  m_EditorClassIdentifier: 
+  upgradeName: Red Box
+  upgradeDescription: Increases multiplier x
+  descriptionSuffix: 
+  upgradeType: 0
+  baseCost:
+    mantissa: 1.5
+    exponent: 5
+  costFormula: {fileID: 11400000, guid: 6e6080133883c5f4b9712e38bd26f870, type: 2}
+  buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
+  basePower:
+    mantissa: 5
+    exponent: 1
+  upgradePower: {fileID: 11400000, guid: fad70c1f7e9f1c94397afa2d5a7023cd, type: 2}
+  powerFormula: {fileID: 11400000, guid: 19bffeddd545e644ea75395b1e751487, type: 2}
+  hasMaxLevel: 0
+  maxLevel:
+    mantissa: 0
+    exponent: 0
+  notationPrecision: 0
+  hasTooltip: 0
+  tooltipText: {fileID: 0}

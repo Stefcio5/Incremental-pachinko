@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public abstract class RuntimeSetSO<T> : ScriptableObject where T : Component
 {
     protected readonly HashSet<T> items = new();
