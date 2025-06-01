@@ -46,8 +46,10 @@ public class Spawner : UpgradeReceiver
     private void SpawnBall(BigDouble position)
     {
         BallFlyweightSettings ballFlyweightSettings = _colorfulBalls.GetRandomBallFlyweightSettings();
+
         _spawnRangeGO.ChangeSpawnRangeColor(ballFlyweightSettings.color);
         _spawnRangeGO.DoPunchScale(ballFlyweightSettings.ID);
+
         var flyweight = FlyweightFactory.Spawn(ballFlyweightSettings);
         flyweight.gameObject.transform.position = new Vector3(0, 35.5f, Random.Range((float)-position, (float)position));
         flyweight.transform.SetParent(_holder);

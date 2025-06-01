@@ -12,7 +12,8 @@ public class DataController : PersistentSingleton<DataController>
     public event Action OnDataChanged;
     private bool _isSaving;
 
-    [SerializeField] private FlyweightRuntimeSetSO flyweightRuntimeSet;
+    [SerializeField] private FlyweightRuntimeSetSO _flyweightRuntimeSet;
+    [SerializeField] private BigDoubleSO _prestigePointsMultiplier;
 
     protected override void Awake()
     {
@@ -50,17 +51,17 @@ public class DataController : PersistentSingleton<DataController>
 
     public void PrestigeGame()
     {
-        flyweightRuntimeSet.ReturnAllFlyweightsToPool();
+        _flyweightRuntimeSet.ReturnAllFlyweightsToPool();
         CurrentGameData.prestigePoints += CalculatePrestige();
         CurrentGameData.points = 0;
         ResetGameDataOnPrestige();
     }
 
     //TODO: Change magic numbers
-    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.totalPoints / 1000000000));
+    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.totalPoints / 1000000000)) * _prestigePointsMultiplier.FinalValue;
     public BigDouble PointsToNextPrestige()
     {
-        BigDouble prestigePointsToAdd = CalculatePrestige();
+        BigDouble prestigePointsToAdd = CalculatePrestige() / _prestigePointsMultiplier.FinalValue;
         return BigDouble.Pow(prestigePointsToAdd + 1, 2) * 1000000000 - CurrentGameData.totalPoints;
     }
 
@@ -81,7 +82,7 @@ public class DataController : PersistentSingleton<DataController>
     }
     public void ResetAllData()
     {
-        flyweightRuntimeSet.ReturnAllFlyweightsToPool();
+        _flyweightRuntimeSet.ReturnAllFlyweightsToPool();
         CurrentGameData = new GameData();
         PlayerPrefs.DeleteAll();
         UpgradeManager.Instance.ResetAllUpgrades();

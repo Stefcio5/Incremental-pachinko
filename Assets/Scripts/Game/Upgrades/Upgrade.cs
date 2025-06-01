@@ -2,7 +2,7 @@ using System;
 using BreakInfinity;
 using UnityEngine;
 
-public class Upgrade
+public class Upgrade : IDisposable
 {
     public UpgradeConfig Config { get; }
     public BigDouble CurrentLevel { get; set; }
@@ -60,8 +60,8 @@ public class Upgrade
     {
         if (!CanPurchase()) return;
 
-        _purchaseStrategy.PurchaseUpgrade(CurrentCost);
         CurrentLevel += _buyAmountStrategy.GetBuyAmount(this);
+        _purchaseStrategy.PurchaseUpgrade(CurrentCost);
         OnLevelChanged?.Invoke(this);
         CalculateBaseValue();
     }
@@ -77,8 +77,13 @@ public class Upgrade
 
     private bool IsMaxLevelReached => Config.hasMaxLevel && CurrentLevel >= Config.maxLevel;
 
-    private void OnDestroy()
+    public void OnDestroy()
     {
         BuyAmountController.OnBuyAmountStrategyChanged -= SetBuyAmountStrategy;
+    }
+
+    public void Dispose()
+    {
+        OnDestroy();
     }
 }
