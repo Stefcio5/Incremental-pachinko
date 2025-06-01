@@ -62684,6 +62684,7 @@ MonoBehaviour:
   _prestigePointsText: {fileID: 450164526}
   _pointsToPrestigeText: {fileID: 200157374}
   _prestigeButton: {fileID: 368208107}
+  _prestigeUpgradeConfig: {fileID: 11400000, guid: 1e4ac6c6980d2b54da6535739a6cd09c, type: 2}
 --- !u!114 &1727927661
 MonoBehaviour:
   m_ObjectHideFlags: 0

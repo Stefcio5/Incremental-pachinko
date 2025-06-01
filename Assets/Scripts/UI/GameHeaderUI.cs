@@ -10,12 +10,14 @@ public class GameHeaderUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _prestigePointsText;
     [SerializeField] private TextMeshProUGUI _pointsToPrestigeText;
     [SerializeField] private Button _prestigeButton;
+    [SerializeField] private UpgradeConfig _prestigeUpgradeConfig;
 
     private void Start()
     {
         UpdateUI();
         DataController.Instance.OnDataChanged += UpdateUI;
         _prestigeButton.onClick.AddListener(OnPrestigeButtonClicked);
+        _prestigeUpgradeConfig.upgradePower.onValueChanged += () => UpdateUI();
     }
 
     private void OnPrestigeButtonClicked()
@@ -34,6 +36,7 @@ public class GameHeaderUI : MonoBehaviour
     {
         DataController.Instance.OnDataChanged -= UpdateUI;
         _prestigeButton.onClick.RemoveListener(OnPrestigeButtonClicked);
+        _prestigeUpgradeConfig.upgradePower.onValueChanged -= () => UpdateUI();
     }
 
     public void OnPrestigeButtonPointerEnter()

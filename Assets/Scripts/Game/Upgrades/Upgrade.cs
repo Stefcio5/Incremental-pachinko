@@ -60,8 +60,8 @@ public class Upgrade : IDisposable
     {
         if (!CanPurchase()) return;
 
-        CurrentLevel += _buyAmountStrategy.GetBuyAmount(this);
         _purchaseStrategy.PurchaseUpgrade(CurrentCost);
+        CurrentLevel += _buyAmountStrategy.GetBuyAmount(this);
         OnLevelChanged?.Invoke(this);
         CalculateBaseValue();
     }
