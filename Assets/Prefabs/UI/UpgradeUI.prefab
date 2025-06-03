@@ -1144,6 +1144,7 @@ MonoBehaviour:
   _upgradeNameText: {fileID: 5569329411235123217}
   _upgradeDescriptionText: {fileID: 211392268694042234}
   _upgradeLevelText: {fileID: 2486479733175402294}
+  _upgradeLevelImage: {fileID: 7746249044062213085}
   _upgradeCostText: {fileID: 6233264750861384857}
   _buyButton: {fileID: 3016040223537025502}
   _buyButtonText: {fileID: 3696779741657529438}

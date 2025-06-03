@@ -3,16 +3,17 @@ using BreakInfinity;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 public class UpgradeUI : MonoBehaviour
 {
+    // --- UI REFERENCES ---
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI _upgradeNameText;
     [SerializeField] private TextMeshProUGUI _upgradeDescriptionText;
     [SerializeField] private TextMeshProUGUI _upgradeLevelText;
+    [SerializeField] private Image _upgradeLevelImage;
     [SerializeField] private TextMeshProUGUI _upgradeCostText;
     [SerializeField] private Button _buyButton;
     [SerializeField] private TextMeshProUGUI _buyButtonText;
@@ -20,9 +21,12 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField] private Color _defaultColor;
     [SerializeField] private Color _unavailableColor;
 
+    // --- INTERNAL REFERENCES ---
     private Upgrade _upgrade;
     private TooltipTrigger _tooltipTrigger;
     private Sequence _animationSequence;
+
+    // --- UNITY EVENTS ---
     private void OnEnable()
     {
         _buyButton.onClick.AddListener(OnBuyClicked);
@@ -33,39 +37,72 @@ public class UpgradeUI : MonoBehaviour
         _buyButton.onClick.RemoveListener(OnBuyClicked);
     }
 
-    public void SetUpgrade(Upgrade upgrade)
-    {
-        _upgrade = upgrade;
-        if (_upgrade.Config.hasTooltip)
-        {
-            _tooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
-        }
-        UpdateVisuals();
-        _upgrade.CurrentPower.onValueChanged += UpdateVisuals;
-        DataController.Instance.OnDataChanged += UpdateVisuals;
-        BuyAmountController.OnBuyAmountStrategyChanged += OnBuyAmountStrategyChanged;
-    }
-
     private void OnDestroy()
     {
-        _upgrade.CurrentPower.onValueChanged -= UpdateVisuals;
+        if (_upgrade?.CurrentPower != null)
+            _upgrade.CurrentPower.onValueChanged -= UpdateVisuals;
+
         DataController.Instance.OnDataChanged -= UpdateVisuals;
         BuyAmountController.OnBuyAmountStrategyChanged -= OnBuyAmountStrategyChanged;
     }
 
+    // --- PUBLIC API ---
+
+    public void SetUpgrade(Upgrade upgrade)
+    {
+        _upgrade = upgrade;
+
+        if (_upgrade.Config.hasTooltip && _tooltipTrigger == null)
+        {
+            _tooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
+        }
+
+        SubscribeToEvents();
+        UpdateVisuals();
+    }
+
+    public void AnimateUI()
+    {
+        _animationSequence = DOTween.Sequence();
+        _animationSequence.Append(transform.DOPunchScale(Vector3.one * 0.05f, 0.5f, 5, 0f).SetEase(Ease.OutBack));
+        _animationSequence.Append(transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InBack));
+        _animationSequence.OnComplete(() => _animationSequence.Kill(true));
+    }
+
+    // --- PRIVATE METHODS ---
+
+    private void SubscribeToEvents()
+    {
+        if (_upgrade?.CurrentPower != null)
+            _upgrade.CurrentPower.onValueChanged += UpdateVisuals;
+
+        DataController.Instance.OnDataChanged += UpdateVisuals;
+        BuyAmountController.OnBuyAmountStrategyChanged += OnBuyAmountStrategyChanged;
+    }
+
     private void UpdateVisuals()
     {
-        _upgradeNameText.text = $"{_upgrade.Config.upgradeName}";
-        _upgradeDescriptionText.text = $"{_upgrade.Config.upgradeDescription}{_upgrade.CurrentPower.FinalValue.Notate(_upgrade.Config.notationPrecision)}{_upgrade.Config.descriptionSuffix}";
+        if (_upgrade == null) return;
+
+        _upgradeNameText.text = _upgrade.Config.upgradeName;
+
+        _upgradeDescriptionText.text =
+            $"{_upgrade.Config.descriptionPrefix}{_upgrade.CurrentPower.FinalValue.Notate(_upgrade.Config.notationPrecision)}" +
+            $"{_upgrade.Config.descriptionSuffix} <voffset=0.2em>→</voffset> " +
+            $"{_upgrade.Config.descriptionPrefix}{_upgrade.GetNextPower().Notate(_upgrade.Config.notationPrecision)}" +
+            $"{_upgrade.Config.descriptionSuffix}";
+
         _upgradeLevelText.text = _upgrade.Config.hasMaxLevel
             ? $"{_upgrade.CurrentLevel}/{_upgrade.Config.maxLevel}"
-            : $"{_upgrade.CurrentLevel.Notate()}";
+            : _upgrade.CurrentLevel.Notate();
+
+
+        _upgradeLevelImage.fillAmount = _upgrade.Config.useStepMultiplier ? _upgrade.GetCurrentStepValue() : 0f;
 
         var buyAmount = _upgrade.BuyAmountStrategy.GetBuyAmount(_upgrade);
-        var cost = _upgrade.CurrentCost;
-
-        _upgradeCostText.text = $"Cost: {cost.Notate()}";
+        _upgradeCostText.text = $"Cost: {_upgrade.CurrentCost.Notate()}";
         _buyButtonText.text = $"Buy {buyAmount}";
+
         _buyButton.interactable = _upgrade.CanPurchase();
         _buyButtonImage.color = _buyButton.interactable ? _defaultColor : _unavailableColor;
 
@@ -75,26 +112,15 @@ public class UpgradeUI : MonoBehaviour
         }
     }
 
-    private void OnBuyAmountStrategyChanged(BuyAmountStrategy strategy)
-    {
-        UpdateVisuals();
-    }
-
     private void OnBuyClicked()
     {
-        _upgrade.Purchase();
+        _upgrade?.Purchase();
         UpdateVisuals();
         AnimateUI();
     }
-    public void AnimateUI()
-    {
-        _animationSequence = DOTween.Sequence();
-        _animationSequence.Append(transform.DOPunchScale(Vector3.one * 0.05f, 0.5f, 5, 0f)).SetEase(Ease.OutBack);
-        _animationSequence.Append(transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InBack)).
-        OnComplete(() =>
-        {
-            _animationSequence.Kill(true);
-        });
 
+    private void OnBuyAmountStrategyChanged(BuyAmountStrategy strategy)
+    {
+        UpdateVisuals();
     }
 }

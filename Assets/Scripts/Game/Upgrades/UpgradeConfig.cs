@@ -7,8 +7,11 @@ public class UpgradeConfig : ScriptableObject
     [Header("Base Settings")]
     public string upgradeName;
     public string upgradeDescription;
+    [Tooltip("Optional text to add before upgradeDescription")]
+    public string descriptionPrefix;
     [Tooltip("Optional text to add after upgradeDescription")]
     public string descriptionSuffix;
+    [Header("Upgrade Type")]
     public UpgradeType upgradeType;
 
     [Header("Upgrade Settings")]
