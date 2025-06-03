@@ -84,6 +84,6 @@ public class Upgrade : IDisposable
 
     public void Dispose()
     {
-        OnDestroy();
+        BuyAmountController.OnBuyAmountStrategyChanged -= SetBuyAmountStrategy;
     }
 }

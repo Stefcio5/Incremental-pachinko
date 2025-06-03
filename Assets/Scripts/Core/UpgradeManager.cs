@@ -31,6 +31,11 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
             throw new ArgumentNullException("configs or data is null");
         }
 
+        foreach (var upgrade in upgradeMap.Values)
+        {
+            upgrade.Dispose();
+        }
+
         _upgrades.Clear();
         upgradeMap.Clear();
 
