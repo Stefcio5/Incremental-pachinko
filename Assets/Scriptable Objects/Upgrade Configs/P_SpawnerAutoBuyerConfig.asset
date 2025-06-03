@@ -25,10 +25,17 @@ MonoBehaviour:
     mantissa: 1
     exponent: 0
   upgradePower: {fileID: 11400000, guid: bfb13b2824990114d877d9d2a5aefb51, type: 2}
-  powerFormula: {fileID: 11400000, guid: 6e60f6d21d49c994a8ad9132f1a88a2a, type: 2}
-  hasMaxLevel: 0
+  powerFormula: {fileID: 11400000, guid: 60c59f5a81ed87e4682b007207e807bf, type: 2}
+  useStepMultiplier: 0
+  multiplierInterval:
+    mantissa: 5
+    exponent: 1
+  multiplierBase:
+    mantissa: 2
+    exponent: 0
+  hasMaxLevel: 1
   maxLevel:
-    mantissa: 0
+    mantissa: 1
     exponent: 0
   notationPrecision: 0
   hasTooltip: 0

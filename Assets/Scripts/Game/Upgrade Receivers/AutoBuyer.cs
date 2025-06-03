@@ -38,7 +38,7 @@ public class AutoBuyer : UpgradeReceiver
     {
         foreach (var upgrade in _upgrades)
         {
-            if (upgrade.CanPurchase())
+            if (upgrade.CanPurchaseWithoutCost())
             {
                 PurchaseUpgrade(upgrade);
             }

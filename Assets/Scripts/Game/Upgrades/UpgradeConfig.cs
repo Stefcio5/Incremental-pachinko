@@ -21,6 +21,11 @@ public class UpgradeConfig : ScriptableObject
     public BigDoubleSO upgradePower;
     public UpgradeFormula powerFormula;
 
+    [Header("Optional Power Multiplier")]
+    public bool useStepMultiplier = false;
+    public BigDouble multiplierInterval = 50;
+    public BigDouble multiplierBase = 2;
+
     [Header("Upgrade Limitations")]
     public bool hasMaxLevel;
     public BigDouble maxLevel;

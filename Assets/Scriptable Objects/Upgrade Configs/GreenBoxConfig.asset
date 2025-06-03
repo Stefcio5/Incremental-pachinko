@@ -18,14 +18,21 @@ MonoBehaviour:
   upgradeType: 0
   baseCost:
     mantissa: 1
-    exponent: 2
-  costFormula: {fileID: 11400000, guid: 2428e0a1fb364024bbff32bf02917244, type: 2}
+    exponent: 3
+  costFormula: {fileID: 11400000, guid: 44ec2e979973df74481560ff4b5a4229, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
   basePower:
     mantissa: 2
     exponent: 0
   upgradePower: {fileID: 11400000, guid: 28fe2797405307642978dafea13dba45, type: 2}
   powerFormula: {fileID: 11400000, guid: fcfcd06f7293211458780c9bfb0048af, type: 2}
+  useStepMultiplier: 0
+  multiplierInterval:
+    mantissa: 5
+    exponent: 1
+  multiplierBase:
+    mantissa: 2
+    exponent: 0
   hasMaxLevel: 0
   maxLevel:
     mantissa: 0

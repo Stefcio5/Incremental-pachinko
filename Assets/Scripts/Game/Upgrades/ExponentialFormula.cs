@@ -15,7 +15,7 @@ public class ExponentialFormula : UpgradeFormula
 
     public override BigDouble Calculate(BigDouble baseValue, BigDouble level)
     {
-        var adjustedLevel = (_useLevelOffset && level > 0)
+        var adjustedLevel = _useLevelOffset
             ? level + _levelOffset
             : level;
 

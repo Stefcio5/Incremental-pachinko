@@ -12,6 +12,7 @@ public class Upgrade : IDisposable
     public BigDoubleSO CurrentPower;
     public event Action<Upgrade> OnLevelChanged;
     private IUpgradePurchaseStrategy _purchaseStrategy;
+    private BigDouble _upgradeMultiplier;
 
     private BigDouble _currentPower => Config.powerFormula.Calculate(Config.basePower, CurrentLevel);
 
@@ -31,11 +32,12 @@ public class Upgrade : IDisposable
         _buyAmountStrategy = buyAmountStrategy;
     }
 
+
     public bool CanPurchase()
     {
         return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(CurrentCost);
     }
-    private bool CanPurchaseWithoutCost()
+    public bool CanPurchaseWithoutCost()
     {
         return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(Config.costFormula.Calculate(Config.baseCost, CurrentLevel));
     }
@@ -51,9 +53,16 @@ public class Upgrade : IDisposable
     {
         if (CurrentPower != null)
         {
-            CurrentPower.BaseValue = _currentPower;
-            Debug.Log($"Upgrade {Config.upgradeName} base value {Config.upgradePower.BaseValue} final value {Config.upgradePower.FinalValue}");
+            CurrentPower.BaseValue = _currentPower * GetStepMultiplier(CurrentLevel);
         }
+    }
+
+    public BigDouble GetStepMultiplier(BigDouble level)
+    {
+        if (!Config.useStepMultiplier) return 1;
+
+        int steps = (int)(level / Config.multiplierInterval);
+        return BigDouble.Pow(Config.multiplierBase, steps);
     }
 
     public void Purchase()
