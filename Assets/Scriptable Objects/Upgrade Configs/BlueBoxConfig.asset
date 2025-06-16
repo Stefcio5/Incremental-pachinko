@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BlueBoxConfig
   m_EditorClassIdentifier: 
   upgradeName: Blue Box
-  upgradeDescription: Increases multiplier x
+  upgradeDescription: Increases multiplier
+  descriptionPrefix: x
   descriptionSuffix: 
   upgradeType: 0
   baseCost:
@@ -26,7 +27,7 @@ MonoBehaviour:
     exponent: 0
   upgradePower: {fileID: 11400000, guid: 948089ea146097d458f74abb5a86d370, type: 2}
   powerFormula: {fileID: 11400000, guid: fcfcd06f7293211458780c9bfb0048af, type: 2}
-  useStepMultiplier: 0
+  useStepMultiplier: 1
   multiplierInterval:
     mantissa: 5
     exponent: 1

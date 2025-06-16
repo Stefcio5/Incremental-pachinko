@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: SpawnRangeConfig
   m_EditorClassIdentifier: 
   upgradeName: Spawn Range
-  upgradeDescription: 'Increases spawn range by '
+  upgradeDescription: Increases spawn range
+  descriptionPrefix: 
   descriptionSuffix: 
   upgradeType: 1
   baseCost:

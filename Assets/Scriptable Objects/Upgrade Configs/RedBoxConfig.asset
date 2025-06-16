@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: RedBoxConfig
   m_EditorClassIdentifier: 
   upgradeName: Red Box
-  upgradeDescription: Increases multiplier x
+  upgradeDescription: Increases multiplier
+  descriptionPrefix: x
   descriptionSuffix: 
   upgradeType: 0
   baseCost:
@@ -26,7 +27,7 @@ MonoBehaviour:
     exponent: 1
   upgradePower: {fileID: 11400000, guid: fad70c1f7e9f1c94397afa2d5a7023cd, type: 2}
   powerFormula: {fileID: 11400000, guid: fcfcd06f7293211458780c9bfb0048af, type: 2}
-  useStepMultiplier: 0
+  useStepMultiplier: 1
   multiplierInterval:
     mantissa: 5
     exponent: 1

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: P_PrestigePointsMultiConfig
   m_EditorClassIdentifier: 
   upgradeName: PP Multiplier
-  upgradeDescription: Increases Prestige Points gained x
+  upgradeDescription: Increases Prestige Points gained
+  descriptionPrefix: x
   descriptionSuffix: 
   upgradeType: 2
   baseCost:

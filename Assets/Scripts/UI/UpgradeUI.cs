@@ -63,6 +63,10 @@ public class UpgradeUI : MonoBehaviour
 
     public void AnimateUI()
     {
+        if (_animationSequence != null && _animationSequence.IsActive())
+        {
+            _animationSequence.Kill(true);
+        }
         _animationSequence = DOTween.Sequence();
         _animationSequence.Append(transform.DOPunchScale(Vector3.one * 0.05f, 0.5f, 5, 0f).SetEase(Ease.OutBack));
         _animationSequence.Append(transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InBack));

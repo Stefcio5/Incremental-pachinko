@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BallConfig
   m_EditorClassIdentifier: 
   upgradeName: Ball
-  upgradeDescription: Increases points per ball x
+  upgradeDescription: Increases points per ball
+  descriptionPrefix: x
   descriptionSuffix: 
   upgradeType: 0
   baseCost:

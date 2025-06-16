@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: AutoSpawnConfig
   m_EditorClassIdentifier: 
   upgradeName: Auto Spawn
-  upgradeDescription: 'Spawns ball every '
+  upgradeDescription: Auto spawns balls
+  descriptionPrefix: 
   descriptionSuffix: s
   upgradeType: 1
   baseCost:

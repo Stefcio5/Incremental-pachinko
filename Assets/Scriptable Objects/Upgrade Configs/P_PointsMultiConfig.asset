@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: P_PointsMultiConfig
   m_EditorClassIdentifier: 
   upgradeName: Points Multiplier
-  upgradeDescription: Increases ball multiplier x
+  upgradeDescription: Increases ball multiplier
+  descriptionPrefix: x
   descriptionSuffix: 
   upgradeType: 2
   baseCost:
