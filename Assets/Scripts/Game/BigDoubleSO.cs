@@ -75,6 +75,14 @@ public class BigDoubleSO : ScriptableObject
         onValueChanged?.Invoke();
     }
 
+    public BigDouble GetFinalValueFor(BigDouble baseValue)
+    {
+        var result = baseValue;
+        foreach (var modifier in _modifiers)
+            result *= modifier.FinalValue;
+        return result;
+    }
+
     void OnDisable()
     {
         UnsubscribeFromModifiers();

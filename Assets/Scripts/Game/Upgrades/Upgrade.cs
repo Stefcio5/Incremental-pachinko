@@ -28,7 +28,7 @@ public class Upgrade : IDisposable
         _purchaseStrategy = UpgradePurchaseStrategyFactory.Create(config.upgradeType);
 
         BuyAmountController.OnBuyAmountStrategyChanged += SetBuyAmountStrategy;
-        CalculateBaseValue(CurrentLevel);
+        UpdateCurrentPower();
     }
 
     // --- PUBLIC METHODS ---
@@ -67,14 +67,8 @@ public class Upgrade : IDisposable
     public void UpdateLevel(BigDouble newLevel)
     {
         CurrentLevel = newLevel;
+        UpdateCurrentPower();
         OnLevelChanged?.Invoke(this);
-        CalculateBaseValue(CurrentLevel);
-    }
-
-    public BigDouble GetNextPower()
-    {
-        var nextLevel = CurrentLevel + _buyAmountStrategy.GetBuyAmount(this);
-        return GetPowerAtLevel(nextLevel) * GetStepMultiplier(nextLevel);
     }
 
     public BigDouble GetStepMultiplier(BigDouble level)
@@ -90,6 +84,13 @@ public class Upgrade : IDisposable
         return (float)CurrentLevel % (float)Config.multiplierInterval / (float)Config.multiplierInterval;
     }
 
+    public BigDouble GetNextPower()
+    {
+        var buyAmount = _buyAmountStrategy.GetBuyAmount(this);
+        var nextBase = CalculatePowerAtLevel(CurrentLevel + buyAmount);
+        return CurrentPower.GetFinalValueFor(nextBase);
+    }
+
     public void Dispose()
     {
         BuyAmountController.OnBuyAmountStrategyChanged -= SetBuyAmountStrategy;
@@ -102,23 +103,21 @@ public class Upgrade : IDisposable
 
     // --- PRIVATE METHODS ---
 
-    private BigDouble GetPowerAtLevel(BigDouble level)
+    private BigDouble CalculatePowerAtLevel(BigDouble level)
     {
-        return Config.powerFormula.Calculate(Config.basePower, level);
+        var basePower = Config.powerFormula.Calculate(Config.basePower, level);
+        return basePower * GetStepMultiplier(level);
     }
 
-    private void CalculateBaseValue(BigDouble level)
+    private void UpdateCurrentPower()
     {
-        if (CurrentPower != null)
-        {
-            CurrentPower.BaseValue = GetPowerAtLevel(level) * GetStepMultiplier(level);
-        }
+        CurrentPower.BaseValue = CalculatePowerAtLevel(CurrentLevel);
     }
 
     private void IncreaseLevel(BigDouble amount)
     {
         CurrentLevel += amount;
         OnLevelChanged?.Invoke(this);
-        CalculateBaseValue(CurrentLevel);
+        UpdateCurrentPower();
     }
 }
