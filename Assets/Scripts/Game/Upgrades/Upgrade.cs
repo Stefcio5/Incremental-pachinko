@@ -1,30 +1,37 @@
 using System;
 using BreakInfinity;
-using UnityEngine;
 
 public class Upgrade : IDisposable
 {
-    public UpgradeConfig Config { get; }
-    public BigDouble CurrentLevel { get; set; }
+    // --- FIELDS ---
     private BuyAmountStrategy _buyAmountStrategy;
-    public BuyAmountStrategy BuyAmountStrategy => _buyAmountStrategy;
-    public BigDouble CurrentCost => _buyAmountStrategy.GetCost(this);
-    public BigDoubleSO CurrentPower;
-    public event Action<Upgrade> OnLevelChanged;
     private IUpgradePurchaseStrategy _purchaseStrategy;
 
-    private BigDouble _currentPower => Config.powerFormula.Calculate(Config.basePower, CurrentLevel);
+    // --- PROPERTIES ---
+    public UpgradeConfig Config { get; }
+    public BigDouble CurrentLevel { get; private set; }
+    public BuyAmountStrategy BuyAmountStrategy => _buyAmountStrategy;
+    public BigDouble CurrentCost => _buyAmountStrategy.GetCost(this);
+    public BigDoubleSO CurrentPower { get; private set; }
+    private bool IsMaxLevelReached => Config.hasMaxLevel && CurrentLevel >= Config.maxLevel;
 
+    // --- EVENTS ---
+    public event Action<Upgrade> OnLevelChanged;
+
+    // --- CONSTRUCTOR ---
     public Upgrade(UpgradeConfig config, BigDouble initialLevel)
     {
         Config = config;
         CurrentLevel = initialLevel;
         CurrentPower = config.upgradePower;
         _buyAmountStrategy = config.buyAmountStrategy;
-        BuyAmountController.OnBuyAmountStrategyChanged += SetBuyAmountStrategy;
-        CalculateBaseValue();
         _purchaseStrategy = UpgradePurchaseStrategyFactory.Create(config.upgradeType);
+
+        BuyAmountController.OnBuyAmountStrategyChanged += SetBuyAmountStrategy;
+        CalculateBaseValue(CurrentLevel);
     }
+
+    // --- PUBLIC METHODS ---
 
     public void SetBuyAmountStrategy(BuyAmountStrategy buyAmountStrategy)
     {
@@ -35,25 +42,11 @@ public class Upgrade : IDisposable
     {
         return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(CurrentCost);
     }
-    private bool CanPurchaseWithoutCost()
-    {
-        return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(Config.costFormula.Calculate(Config.baseCost, CurrentLevel));
-    }
 
-    public void UpdateLevel(BigDouble newlevel)
+    public bool CanPurchaseWithoutCost()
     {
-        CurrentLevel = newlevel;
-        OnLevelChanged?.Invoke(this);
-        CalculateBaseValue();
-    }
-
-    public void CalculateBaseValue()
-    {
-        if (CurrentPower != null)
-        {
-            CurrentPower.BaseValue = _currentPower;
-            Debug.Log($"Upgrade {Config.upgradeName} base value {Config.upgradePower.BaseValue} final value {Config.upgradePower.FinalValue}");
-        }
+        var cost = Config.costFormula.Calculate(Config.baseCost, CurrentLevel);
+        return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(cost);
     }
 
     public void Purchase()
@@ -61,29 +54,71 @@ public class Upgrade : IDisposable
         if (!CanPurchase()) return;
 
         _purchaseStrategy.PurchaseUpgrade(CurrentCost);
-        CurrentLevel += _buyAmountStrategy.GetBuyAmount(this);
-        OnLevelChanged?.Invoke(this);
-        CalculateBaseValue();
+        IncreaseLevel(_buyAmountStrategy.GetBuyAmount(this));
     }
 
     public void PurchaseWithoutCost()
     {
         if (!CanPurchaseWithoutCost()) return;
 
-        CurrentLevel++;
-        OnLevelChanged?.Invoke(this);
-        CalculateBaseValue();
+        IncreaseLevel(1);
     }
 
-    private bool IsMaxLevelReached => Config.hasMaxLevel && CurrentLevel >= Config.maxLevel;
-
-    public void OnDestroy()
+    public void UpdateLevel(BigDouble newLevel)
     {
-        BuyAmountController.OnBuyAmountStrategyChanged -= SetBuyAmountStrategy;
+        CurrentLevel = newLevel;
+        OnLevelChanged?.Invoke(this);
+        CalculateBaseValue(CurrentLevel);
+    }
+
+    public BigDouble GetNextPower()
+    {
+        var nextLevel = CurrentLevel + _buyAmountStrategy.GetBuyAmount(this);
+        return GetPowerAtLevel(nextLevel) * GetStepMultiplier(nextLevel);
+    }
+
+    public BigDouble GetStepMultiplier(BigDouble level)
+    {
+        if (!Config.useStepMultiplier) return 1;
+
+        int steps = (int)(level / Config.multiplierInterval);
+        return BigDouble.Pow(Config.multiplierBase, steps);
+    }
+
+    public float GetCurrentStepValue()
+    {
+        return (float)CurrentLevel % (float)Config.multiplierInterval / (float)Config.multiplierInterval;
     }
 
     public void Dispose()
     {
-        OnDestroy();
+        BuyAmountController.OnBuyAmountStrategyChanged -= SetBuyAmountStrategy;
+    }
+
+    public void OnDestroy()
+    {
+        Dispose();
+    }
+
+    // --- PRIVATE METHODS ---
+
+    private BigDouble GetPowerAtLevel(BigDouble level)
+    {
+        return Config.powerFormula.Calculate(Config.basePower, level);
+    }
+
+    private void CalculateBaseValue(BigDouble level)
+    {
+        if (CurrentPower != null)
+        {
+            CurrentPower.BaseValue = GetPowerAtLevel(level) * GetStepMultiplier(level);
+        }
+    }
+
+    private void IncreaseLevel(BigDouble amount)
+    {
+        CurrentLevel += amount;
+        OnLevelChanged?.Invoke(this);
+        CalculateBaseValue(CurrentLevel);
     }
 }

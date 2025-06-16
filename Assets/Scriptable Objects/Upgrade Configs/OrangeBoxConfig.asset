@@ -13,19 +13,27 @@ MonoBehaviour:
   m_Name: OrangeBoxConfig
   m_EditorClassIdentifier: 
   upgradeName: Orange Box
-  upgradeDescription: Increases multiplier x
+  upgradeDescription: Increases multiplier
+  descriptionPrefix: x
   descriptionSuffix: 
   upgradeType: 0
   baseCost:
-    mantissa: 7
-    exponent: 3
-  costFormula: {fileID: 11400000, guid: b44c2973ce8273e44bee4e5ed5984cc4, type: 2}
+    mantissa: 1
+    exponent: 5
+  costFormula: {fileID: 11400000, guid: 6e6080133883c5f4b9712e38bd26f870, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
   basePower:
     mantissa: 1.5
     exponent: 1
   upgradePower: {fileID: 11400000, guid: cb0b8eece19c5604998288174462a698, type: 2}
-  powerFormula: {fileID: 11400000, guid: 19bffeddd545e644ea75395b1e751487, type: 2}
+  powerFormula: {fileID: 11400000, guid: fcfcd06f7293211458780c9bfb0048af, type: 2}
+  useStepMultiplier: 1
+  multiplierInterval:
+    mantissa: 5
+    exponent: 1
+  multiplierBase:
+    mantissa: 2
+    exponent: 0
   hasMaxLevel: 0
   maxLevel:
     mantissa: 0

@@ -7,8 +7,11 @@ public class UpgradeConfig : ScriptableObject
     [Header("Base Settings")]
     public string upgradeName;
     public string upgradeDescription;
+    [Tooltip("Optional text to add before upgradeDescription")]
+    public string descriptionPrefix;
     [Tooltip("Optional text to add after upgradeDescription")]
     public string descriptionSuffix;
+    [Header("Upgrade Type")]
     public UpgradeType upgradeType;
 
     [Header("Upgrade Settings")]
@@ -20,6 +23,11 @@ public class UpgradeConfig : ScriptableObject
     public BigDouble basePower;
     public BigDoubleSO upgradePower;
     public UpgradeFormula powerFormula;
+
+    [Header("Optional Power Multiplier")]
+    public bool useStepMultiplier = false;
+    public BigDouble multiplierInterval = 50;
+    public BigDouble multiplierBase = 2;
 
     [Header("Upgrade Limitations")]
     public bool hasMaxLevel;

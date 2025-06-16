@@ -13,19 +13,27 @@ MonoBehaviour:
   m_Name: P_PointsMultiConfig
   m_EditorClassIdentifier: 
   upgradeName: Points Multiplier
-  upgradeDescription: Increases ball multiplier x
+  upgradeDescription: Increases ball multiplier
+  descriptionPrefix: x
   descriptionSuffix: 
   upgradeType: 2
   baseCost:
     mantissa: 1
     exponent: 0
-  costFormula: {fileID: 11400000, guid: 74046bf5c6260a649a90ef820362c14c, type: 2}
+  costFormula: {fileID: 11400000, guid: ee325c485f296fa44b6e0d79c54a6d99, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
   basePower:
     mantissa: 1
     exponent: 0
   upgradePower: {fileID: 11400000, guid: de9e2e2965921e444a7bdaef098aeb26, type: 2}
-  powerFormula: {fileID: 11400000, guid: 74046bf5c6260a649a90ef820362c14c, type: 2}
+  powerFormula: {fileID: 11400000, guid: e2457489a2ef00d4d84d2e50abdebd31, type: 2}
+  useStepMultiplier: 0
+  multiplierInterval:
+    mantissa: 5
+    exponent: 1
+  multiplierBase:
+    mantissa: 2
+    exponent: 0
   hasMaxLevel: 0
   maxLevel:
     mantissa: 0

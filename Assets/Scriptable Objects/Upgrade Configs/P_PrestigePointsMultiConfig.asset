@@ -13,19 +13,27 @@ MonoBehaviour:
   m_Name: P_PrestigePointsMultiConfig
   m_EditorClassIdentifier: 
   upgradeName: PP Multiplier
-  upgradeDescription: Increases Prestige Points gained x
+  upgradeDescription: Increases Prestige Points gained
+  descriptionPrefix: x
   descriptionSuffix: 
   upgradeType: 2
   baseCost:
     mantissa: 2
     exponent: 0
-  costFormula: {fileID: 11400000, guid: 74046bf5c6260a649a90ef820362c14c, type: 2}
+  costFormula: {fileID: 11400000, guid: ee325c485f296fa44b6e0d79c54a6d99, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
   basePower:
     mantissa: 1
     exponent: 0
   upgradePower: {fileID: 11400000, guid: 94a588dd4af1c1145a34bddfab73a975, type: 2}
-  powerFormula: {fileID: 11400000, guid: 19bffeddd545e644ea75395b1e751487, type: 2}
+  powerFormula: {fileID: 11400000, guid: fcfcd06f7293211458780c9bfb0048af, type: 2}
+  useStepMultiplier: 0
+  multiplierInterval:
+    mantissa: 5
+    exponent: 1
+  multiplierBase:
+    mantissa: 2
+    exponent: 0
   hasMaxLevel: 0
   maxLevel:
     mantissa: 0

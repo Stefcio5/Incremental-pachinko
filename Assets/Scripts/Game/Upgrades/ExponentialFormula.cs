@@ -1,9 +1,13 @@
+using System;
 using BreakInfinity;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ExponentialFormula", menuName = "Upgrades/Formulas/ExponentialFormula")]
 public class ExponentialFormula : UpgradeFormula
 {
+    private enum Mode { PowerLevel, LevelPower };
+
+    [SerializeField] private Mode exponentMode;
     [SerializeField] private BigDouble _exponent = 1.15;
     [SerializeField] public BigDouble Exponent { get => _exponent; private set => _exponent = value; }
     [SerializeField] private bool _useLevelOffset = false;
@@ -11,19 +15,16 @@ public class ExponentialFormula : UpgradeFormula
 
     public override BigDouble Calculate(BigDouble baseValue, BigDouble level)
     {
-        if (_useLevelOffset)
-        {
-            if (level == 0)
-            {
-                return baseValue * BigDouble.Pow(_exponent, level);
-            }
-            else
-            {
-                return baseValue * BigDouble.Pow(_exponent, level + _levelOffset);
-            }
+        var adjustedLevel = _useLevelOffset
+            ? level + _levelOffset
+            : level;
 
-        }
-        else return baseValue * BigDouble.Pow(_exponent, level);
+        return exponentMode switch
+        {
+            Mode.PowerLevel => baseValue * BigDouble.Pow(_exponent, adjustedLevel),
+            Mode.LevelPower => baseValue * BigDouble.Pow(adjustedLevel, _exponent),
+            _ => baseValue
+        };
     }
 }
 

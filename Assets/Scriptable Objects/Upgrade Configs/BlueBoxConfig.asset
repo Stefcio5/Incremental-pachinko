@@ -13,19 +13,27 @@ MonoBehaviour:
   m_Name: BlueBoxConfig
   m_EditorClassIdentifier: 
   upgradeName: Blue Box
-  upgradeDescription: Increases multiplier x
+  upgradeDescription: Increases multiplier
+  descriptionPrefix: x
   descriptionSuffix: 
   upgradeType: 0
   baseCost:
-    mantissa: 6.25
-    exponent: 2
-  costFormula: {fileID: 11400000, guid: 44ec2e979973df74481560ff4b5a4229, type: 2}
+    mantissa: 1
+    exponent: 4
+  costFormula: {fileID: 11400000, guid: b44c2973ce8273e44bee4e5ed5984cc4, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
   basePower:
     mantissa: 5
     exponent: 0
   upgradePower: {fileID: 11400000, guid: 948089ea146097d458f74abb5a86d370, type: 2}
-  powerFormula: {fileID: 11400000, guid: 19bffeddd545e644ea75395b1e751487, type: 2}
+  powerFormula: {fileID: 11400000, guid: fcfcd06f7293211458780c9bfb0048af, type: 2}
+  useStepMultiplier: 1
+  multiplierInterval:
+    mantissa: 5
+    exponent: 1
+  multiplierBase:
+    mantissa: 2
+    exponent: 0
   hasMaxLevel: 0
   maxLevel:
     mantissa: 0

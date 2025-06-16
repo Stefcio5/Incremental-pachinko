@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5d4735d23c8bd64bbe302199eba1110, type: 3}
-  m_Name: BaseLinearFormula
+  m_Script: {fileID: 11500000, guid: 48a3cfaa25d83e44e812b10875eefa9e, type: 3}
+  m_Name: ExponentialFormula 1.6
   m_EditorClassIdentifier: 
-  _multiplier:
-    mantissa: 1
+  exponentMode: 0
+  _exponent:
+    mantissa: 1.6
     exponent: 0
-  _isLinear: 0
-  _isAdditive: 0
+  _useLevelOffset: 0
+  _levelOffset:
+    mantissa: 0
+    exponent: 0
