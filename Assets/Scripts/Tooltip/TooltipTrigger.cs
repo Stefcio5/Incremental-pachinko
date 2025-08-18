@@ -4,10 +4,14 @@ using UnityEngine.EventSystems;
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public string header;
+    [Multiline]
     public string content;
     private bool _isMouseOver;
+    public Transform targetOverride;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
+
         _isMouseOver = true;
         TooltipSystem.Show(content, header);
     }

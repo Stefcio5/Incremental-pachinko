@@ -19,7 +19,7 @@ MonoBehaviour:
   upgradeType: 0
   baseCost:
     mantissa: 1
-    exponent: 3
+    exponent: 2
   costFormula: {fileID: 11400000, guid: 44ec2e979973df74481560ff4b5a4229, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
   basePower:
