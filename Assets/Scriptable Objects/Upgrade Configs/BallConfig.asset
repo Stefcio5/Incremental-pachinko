@@ -18,8 +18,8 @@ MonoBehaviour:
   descriptionSuffix: 
   upgradeType: 0
   baseCost:
-    mantissa: 1
-    exponent: 2
+    mantissa: 2
+    exponent: 1
   costFormula: {fileID: 11400000, guid: cd264eebfde5c9744885a4e2c420b6e2, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
   basePower:
