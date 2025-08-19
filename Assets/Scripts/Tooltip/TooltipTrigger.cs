@@ -6,14 +6,15 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public string header;
     [Multiline]
     public string content;
+
+    public bool followMouse = true;
+    public RectTransform targetOverride;
     private bool _isMouseOver;
-    public Transform targetOverride;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-
         _isMouseOver = true;
-        TooltipSystem.Show(content, header);
+        TooltipSystem.Show(content, header, followMouse, targetOverride);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -26,7 +27,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (_isMouseOver)
         {
-            TooltipSystem.Refresh(content, header);
+            TooltipSystem.Refresh(content, header, followMouse, targetOverride);
         }
     }
 }

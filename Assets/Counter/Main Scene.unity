@@ -8686,6 +8686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   header: 
   content: 
+  followMouse: 1
   targetOverride: {fileID: 0}
 --- !u!222 &200157373
 CanvasRenderer:
@@ -33292,6 +33293,7 @@ MonoBehaviour:
   _contentField: {fileID: 1850054713}
   _layoutElement: {fileID: 912590947}
   _rectTransform: {fileID: 912590945}
+  mouseOffset: {x: 0, y: 0}
 --- !u!114 &912590947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47352,6 +47354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   header: 'How to play:'
   content: Hold space to spawn balls
+  followMouse: 1
   targetOverride: {fileID: 0}
 --- !u!114 &1287484401
 MonoBehaviour:

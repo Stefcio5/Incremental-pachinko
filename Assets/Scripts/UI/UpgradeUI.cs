@@ -55,6 +55,8 @@ public class UpgradeUI : MonoBehaviour
         if (_upgrade.Config.hasTooltip && _tooltipTrigger == null)
         {
             _tooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
+            _tooltipTrigger.followMouse = false;
+            _tooltipTrigger.targetOverride = GetComponent<RectTransform>();
         }
 
         SubscribeToEvents();
