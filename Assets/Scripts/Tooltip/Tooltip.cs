@@ -20,6 +20,7 @@ public class Tooltip : MonoBehaviour
     {
         _rectTransform = GetComponent<RectTransform>();
         _canvas = GetComponentInParent<Canvas>();
+        gameObject.SetActive(false);
     }
 
     public void SetText(string content, string header, bool followMouse, RectTransform target = null)
