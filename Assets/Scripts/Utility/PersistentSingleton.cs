@@ -5,6 +5,12 @@ public class PersistentSingleton<T> : MonoBehaviour where T : Component
     public bool AutoUnaprentOnAwake = true;
     protected static T instance;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void InitializeOnLoad()
+    {
+        instance = null;
+    }
+
     public static bool HasInstance => instance != null;
     public static T TryGetInstance() => HasInstance ? instance : null;
 
@@ -50,6 +56,15 @@ public class PersistentSingleton<T> : MonoBehaviour where T : Component
             {
                 Destroy(gameObject);
             }
+        }
+    }
+
+    protected virtual void OnDestroy()
+    {
+        // Cleanup the instance when the object is destroyed
+        if (instance == this)
+        {
+            instance = null;
         }
     }
 }
