@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ExponentialFormula", menuName = "Upgrades/Formulas/ExponentialFormula")]
 public class ExponentialFormula : UpgradeFormula
 {
-    private enum Mode { PowerLevel, LevelPower };
+    private enum ExponentMode { BaseToExponent, LevelToExponent };
 
-    [SerializeField] private Mode exponentMode;
+    [SerializeField] private ExponentMode exponentMode;
     [SerializeField] private BigDouble _exponent = 1.15;
     [SerializeField] public BigDouble Exponent { get => _exponent; private set => _exponent = value; }
     [SerializeField] private bool _useLevelOffset = false;
@@ -21,8 +21,8 @@ public class ExponentialFormula : UpgradeFormula
 
         return exponentMode switch
         {
-            Mode.PowerLevel => baseValue * BigDouble.Pow(_exponent, adjustedLevel),
-            Mode.LevelPower => baseValue * BigDouble.Pow(adjustedLevel, _exponent),
+            ExponentMode.BaseToExponent => baseValue * BigDouble.Pow(_exponent, adjustedLevel),
+            ExponentMode.LevelToExponent => baseValue * BigDouble.Pow(adjustedLevel, _exponent),
             _ => baseValue
         };
     }
