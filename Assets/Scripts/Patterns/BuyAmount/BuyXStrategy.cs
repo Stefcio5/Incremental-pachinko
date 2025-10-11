@@ -26,6 +26,6 @@ public class BuyXStrategy : BuyAmountStrategy
     {
         var upgradeFormula = upgrade.Config.costFormula as ExponentialFormula;
         var exponent = upgradeFormula.Exponent;
-        return BigMath.SumGeometricSeries(GetBuyAmount(upgrade), upgrade.Config.baseCost, exponent, upgrade.CurrentLevel);
+        return BigMath.SumGeometricSeries(GetBuyAmount(upgrade), upgrade.Config.baseCost, exponent, upgrade.PurchaseLevel);
     }
 }

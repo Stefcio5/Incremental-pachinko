@@ -43,7 +43,7 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
         {
             if (config == null) continue;
 
-            BigDouble initialLevel = data.CurrentGameData.upgradeLevels.GetValueOrDefault(config.upgradeName, 0);
+            BigDouble initialLevel = data.CurrentGameData.upgradeLevels.GetValueOrDefault(config.upgradeName, config.StartingLevel);
             var upgrade = new Upgrade(config, initialLevel);
             upgrade.OnLevelChanged += (u) => SaveUpgrade(config.upgradeName, u.CurrentLevel, data);
 
@@ -89,8 +89,8 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
         {
             if (!IsPrestigeUpgrade(upgrade.Config))
             {
-                upgrade.UpdateLevel(0);
-                Debug.Log("Upgrade level reset: " + upgrade.Config.upgradeName + " to 0");
+                upgrade.UpdateLevel(upgrade.Config.StartingLevel);
+                Debug.Log("Upgrade level reset: " + upgrade.Config.upgradeName + " to " + upgrade.Config.StartingLevel);
             }
         }
     }

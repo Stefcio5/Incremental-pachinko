@@ -11,6 +11,10 @@ public class UpgradeConfig : ScriptableObject
     public string descriptionPrefix;
     [Tooltip("Optional text to add after upgradeDescription")]
     public string descriptionSuffix;
+    [Header("Level Configuration")]
+    [SerializeField] private BigDouble _startingLevel = 0;
+    [Tooltip("Starting level for this upgrade. Useful when you want level 0 to have a base value.")]
+    public BigDouble StartingLevel => _startingLevel;
     [Header("Upgrade Type")]
     public UpgradeType upgradeType;
 
