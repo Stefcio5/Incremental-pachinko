@@ -4,16 +4,30 @@ using DG.Tweening;
 
 public class Spawner : UpgradeReceiver
 {
+    [SerializeField] private InputReader _inputReader;
     [SerializeField] private Transform _holder;
     [SerializeField] private SpawnRange _spawnRangeGO;
     private float _timer;
     private float _manualSpawnTimer;
+    private bool _isManualSpawning;
     [SerializeField] private float _spawnInterval;
     private ColorfulBalls _colorfulBalls;
 
     protected override void Awake()
     {
         _colorfulBalls = GetComponent<ColorfulBalls>();
+    }
+
+    private void OnEnable()
+    {
+        _inputReader.SpawnBallEvent += OnSpawnBall;
+        _inputReader.SpawnBallCancelEvent += OnSpawnBallCancel;
+    }
+
+    private void OnDisable()
+    {
+        _inputReader.SpawnBallEvent -= OnSpawnBall;
+        _inputReader.SpawnBallCancelEvent -= OnSpawnBallCancel;
     }
 
     protected override void OnUpgradeInitialized()
@@ -31,7 +45,8 @@ public class Spawner : UpgradeReceiver
                 SpawnBall(_spawnRangeGO.GetUpgradeValue());
                 _timer = 0f;
             }
-            if (Input.GetKey(KeyCode.Space))
+
+            if (_isManualSpawning)
             {
                 _manualSpawnTimer += Time.deltaTime;
                 if (_manualSpawnTimer >= _spawnInterval)
@@ -40,7 +55,30 @@ public class Spawner : UpgradeReceiver
                     _manualSpawnTimer = 0f;
                 }
             }
+
+            // Obsolete
+            // if (Input.GetKey(KeyCode.Space))
+            // {
+            //     _manualSpawnTimer += Time.deltaTime;
+            //     if (_manualSpawnTimer >= _spawnInterval)
+            //     {
+            //         SpawnBall(_spawnRangeGO.GetUpgradeValue());
+            //         _manualSpawnTimer = 0f;
+            //     }
+            // }
         }
+    }
+
+    private void OnSpawnBall()
+    {
+        _isManualSpawning = true;
+        _manualSpawnTimer = 0f;
+    }
+
+    private void OnSpawnBallCancel()
+    {
+        _isManualSpawning = false;
+        _manualSpawnTimer = 0f;
     }
 
     private void SpawnBall(BigDouble position)
