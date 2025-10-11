@@ -117,7 +117,20 @@ public class DataController : PersistentSingleton<DataController>
         try
         {
             _isSaving = true;
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // Na WebGL użyj batch save
+        if (WebGLOptimizedSaveSystem.Instance != null)
+        {
+            WebGLOptimizedSaveSystem.Instance.ScheduleSave(CurrentGameData);
+        }
+        else
+        {
             _saveSystem.Save(CurrentGameData);
+        }
+#else
+            _saveSystem.Save(CurrentGameData);
+#endif
         }
         catch (Exception e)
         {

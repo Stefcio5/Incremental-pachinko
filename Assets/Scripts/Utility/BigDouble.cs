@@ -404,6 +404,18 @@ namespace BreakInfinity
         /// </summary>
         public bool Equals(BigDouble other, double tolerance) => !IsNaN(this) && !IsNaN(other) && (AreSameInfinity(this, other) || Abs(this - other) <= Max(Abs(this), Abs(other)) * tolerance);
 
+        public static BigDouble SafeParseBigDouble(string value)
+        {
+            try
+            {
+                return string.IsNullOrEmpty(value) ? BigDouble.Zero : BigDouble.Parse(value);
+            }
+            catch (System.Exception)
+            {
+                return BigDouble.Zero;
+            }
+        }
+
         private static bool AreSameInfinity(BigDouble first, BigDouble second) => IsPositiveInfinity(first) && IsPositiveInfinity(second) || IsNegativeInfinity(first) && IsNegativeInfinity(second);
 
         public static bool operator ==(BigDouble left, BigDouble right) => left.Equals(right);
