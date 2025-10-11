@@ -5,6 +5,7 @@ using DG.Tweening;
 public class Spawner : UpgradeReceiver
 {
     [SerializeField] private InputReader _inputReader;
+    [SerializeField] private BallSpawnCounterSO _ballSpawnCounter;
     [SerializeField] private Transform _holder;
     [SerializeField] private SpawnRange _spawnRangeGO;
     private float _timer;
@@ -40,7 +41,7 @@ public class Spawner : UpgradeReceiver
         if (UpgradeManager.Instance.Initialized)
         {
             _timer += Time.deltaTime;
-            if (_timer >= GetUpgradeValue())
+            if (_timer >= GetUpgradeValue() && _ballSpawnCounter.Add())
             {
                 SpawnBall(_spawnRangeGO.GetUpgradeValue());
                 _timer = 0f;
@@ -49,7 +50,7 @@ public class Spawner : UpgradeReceiver
             if (_isManualSpawning)
             {
                 _manualSpawnTimer += Time.deltaTime;
-                if (_manualSpawnTimer >= _spawnInterval)
+                if (_manualSpawnTimer >= _spawnInterval && _ballSpawnCounter.Add())
                 {
                     SpawnBall(_spawnRangeGO.GetUpgradeValue());
                     _manualSpawnTimer = 0f;
