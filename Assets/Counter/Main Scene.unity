@@ -10070,9 +10070,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradePower: {fileID: 11400000, guid: ca2949efe9c02364c985b7fe2b408133, type: 2}
   _inputReader: {fileID: 11400000, guid: 994816529f8a41a43af48f6ef8b9e89d, type: 2}
+  _ballSpawnCounter: {fileID: 11400000, guid: 36512d18a07569d4781783c3f2391c6d, type: 2}
   _holder: {fileID: 2055493377}
   _spawnRangeGO: {fileID: 1709808255}
-  _spawnInterval: 0.5
+  _spawnInterval: 0.8
 --- !u!4 &237142070
 Transform:
   m_ObjectHideFlags: 0
@@ -20137,6 +20138,10 @@ PrefabInstance:
       propertyPath: upgradePower
       value: 
       objectReference: {fileID: 11400000, guid: fad70c1f7e9f1c94397afa2d5a7023cd, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _spawnCounter
+      value: 
+      objectReference: {fileID: 11400000, guid: 36512d18a07569d4781783c3f2391c6d, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
@@ -34062,9 +34067,9 @@ RectTransform:
   - {fileID: 1850054712}
   m_Father: {fileID: 1890153209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 1410, y: 618.67554}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 450, y: 618.67554}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &912590946
@@ -34083,7 +34088,8 @@ MonoBehaviour:
   _contentField: {fileID: 1850054713}
   _layoutElement: {fileID: 912590947}
   _rectTransform: {fileID: 912590945}
-  mouseOffset: {x: 0, y: 0}
+  _mouseOffset: {x: -20, y: -20}
+  _edgePadding: 0
 --- !u!114 &912590947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40023,6 +40029,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: cb0b8eece19c5604998288174462a698, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _spawnCounter
+      value: 
+      objectReference: {fileID: 11400000, guid: 36512d18a07569d4781783c3f2391c6d, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: 8dc8972a748b49c43b245d4906ebd706, type: 2}
@@ -44341,6 +44351,10 @@ PrefabInstance:
       propertyPath: upgradePower
       value: 
       objectReference: {fileID: 11400000, guid: 948089ea146097d458f74abb5a86d370, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _spawnCounter
+      value: 
+      objectReference: {fileID: 11400000, guid: 36512d18a07569d4781783c3f2391c6d, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
@@ -54738,6 +54752,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: fad70c1f7e9f1c94397afa2d5a7023cd, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _spawnCounter
+      value: 
+      objectReference: {fileID: 11400000, guid: 36512d18a07569d4781783c3f2391c6d, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: 18b5b92c09d5f66418db69b3029a513d, type: 2}
@@ -59434,6 +59452,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: cb0b8eece19c5604998288174462a698, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _spawnCounter
+      value: 
+      objectReference: {fileID: 11400000, guid: 36512d18a07569d4781783c3f2391c6d, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: 8dc8972a748b49c43b245d4906ebd706, type: 2}
@@ -61371,6 +61393,142 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642589978}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1645621253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1645621254}
+  - component: {fileID: 1645621256}
+  - component: {fileID: 1645621255}
+  m_Layer: 5
+  m_Name: Points Text (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1645621254
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645621253}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1899638125}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 712, y: -47.5}
+  m_SizeDelta: {x: 420, y: 70}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1645621255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645621253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'Spawned Balls: 0/5'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 15582a0eb19dcb643b8ca6d36c3689e7, type: 2}
+  m_sharedMaterial: {fileID: -7062985092375025189, guid: 15582a0eb19dcb643b8ca6d36c3689e7, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 21
+  m_fontSizeBase: 21
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1645621256
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645621253}
+  m_CullTransparentMesh: 1
 --- !u!1 &1648811350
 GameObject:
   m_ObjectHideFlags: 0
@@ -64273,9 +64431,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pointsText: {fileID: 620298810}
   _prestigePointsText: {fileID: 450164526}
+  _ballCountText: {fileID: 1645621255}
   _pointsToPrestigeText: {fileID: 200157374}
   _prestigeButton: {fileID: 368208107}
   _prestigeUpgradeConfig: {fileID: 11400000, guid: 1e4ac6c6980d2b54da6535739a6cd09c, type: 2}
+  _ballSpawnCounter: {fileID: 11400000, guid: 36512d18a07569d4781783c3f2391c6d, type: 2}
 --- !u!114 &1727927661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68924,6 +69084,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 948089ea146097d458f74abb5a86d370, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _spawnCounter
+      value: 
+      objectReference: {fileID: 11400000, guid: 36512d18a07569d4781783c3f2391c6d, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 
       objectReference: {fileID: 11400000, guid: cc4defbff55c430419f31472a4817f52, type: 2}
@@ -70033,6 +70197,7 @@ RectTransform:
   m_Children:
   - {fileID: 2130490550}
   - {fileID: 1727927658}
+  - {fileID: 1645621254}
   - {fileID: 1287484399}
   - {fileID: 259759041}
   m_Father: {fileID: 0}
@@ -78963,6 +79128,10 @@ PrefabInstance:
       propertyPath: upgradePower
       value: 
       objectReference: {fileID: 11400000, guid: 28fe2797405307642978dafea13dba45, type: 2}
+    - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
+      propertyPath: _spawnCounter
+      value: 
+      objectReference: {fileID: 11400000, guid: 36512d18a07569d4781783c3f2391c6d, type: 2}
     - target: {fileID: 8066926056317877808, guid: 6a80ec5e0c57f6146af533c020f59d9d, type: 3}
       propertyPath: upgradeConfig
       value: 

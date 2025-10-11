@@ -10,7 +10,8 @@ public class Tooltip : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _contentField;
     [SerializeField] private LayoutElement _layoutElement;
     [SerializeField] private RectTransform _rectTransform;
-    [SerializeField] private Vector2 mouseOffset = new Vector2(20f, -20f);
+    [SerializeField] private Vector2 _mouseOffset = new Vector2(-5f, -5f);
+    [SerializeField] private float _edgePadding = 0f;
 
     private Canvas _canvas;
     private bool _followMouse;
@@ -63,16 +64,6 @@ public class Tooltip : MonoBehaviour
 
     private void FollowMouse()
     {
-        // Vector2 localPos;
-        // RectTransformUtility.ScreenPointToLocalPointInRectangle(
-        //     _canvas.transform as RectTransform,
-        //     Input.mousePosition,
-        //     _canvas.worldCamera,
-        //     out localPos
-        // );
-
-        // localPos += mouseOffset;
-        // _rectTransform.localPosition = ClampToCanvas(localPos);
         if (Application.isEditor)
         {
             _layoutElement.enabled = Mathf.Max(_headerField.preferredWidth, _contentField.preferredWidth) >= _layoutElement.preferredWidth;
@@ -84,46 +75,50 @@ public class Tooltip : MonoBehaviour
         float pivotY = mousePos.y / Screen.height;
         _rectTransform.pivot = new Vector2(pivotX, pivotY);
 
-        transform.position = mousePos;
+        transform.position = mousePos + _mouseOffset;
     }
 
     private void FollowTarget()
     {
-        Vector3[] corners = new Vector3[4];
-        _target.GetWorldCorners(corners);
+        if (_canvas == null || _target == null) return;
 
-        // środek targetu
-        Vector3 worldCenter = (corners[0] + corners[2]) / 2f;
+        var canvasRect = (RectTransform)_canvas.transform;
+        var cam = _canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : _canvas.worldCamera;
 
-        // rozmiary w screen space
-        Vector2 tooltipSize = _rectTransform.sizeDelta * _canvas.scaleFactor;
-        float targetWidth = _target.rect.width * _canvas.scaleFactor;
+        // Get target world corners and convert right edge to canvas-local space
+        Vector3[] wc = new Vector3[4];
+        _target.GetWorldCorners(wc); // 0:BL, 1:TL, 2:TR, 3:BR
 
-        // ile miejsca mamy do krawędzi
-        float spaceLeft = worldCenter.x;
-        float spaceRight = Screen.width - worldCenter.x;
+        Vector2 rightTop = WorldToCanvasLocal(canvasRect, cam, wc[2]);
+        Vector2 rightBottom = WorldToCanvasLocal(canvasRect, cam, wc[3]);
+        Vector2 rightCenter = (rightTop + rightBottom) * 0.5f;
 
-        // konwersja na lokalne
-        Vector2 localPos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            _canvas.transform as RectTransform,
-            worldCenter,
-            _canvas.worldCamera,
-            out localPos
-        );
+        // Ensure tooltip size is up to date
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+        Vector2 tooltipSize = _rectTransform.rect.size;
 
-        // domyślnie po prawej
-        Vector2 offset = new Vector2(targetWidth / 2f + tooltipSize.x / 2f + 10f, 0f);
+        // Place tooltip so its left edge sits next to target's right edge
+        _rectTransform.pivot = new Vector2(0f, 0.5f);
+        Vector2 anchored = new Vector2(rightCenter.x + _edgePadding, rightCenter.y);
 
-        if (spaceRight < tooltipSize.x && spaceLeft > spaceRight)
-        {
-            // brak miejsca → po lewej
-            offset = new Vector2(-(targetWidth / 2f + tooltipSize.x / 2f + 10f), 0f);
-        }
+        // Clamp vertically within canvas
+        float halfH = tooltipSize.y * 0.5f;
+        float minY = canvasRect.rect.yMin + halfH;
+        float maxY = canvasRect.rect.yMax - halfH;
+        anchored.y = Mathf.Clamp(anchored.y, minY, maxY);
 
-        // pivot w centrum → tooltip zawsze wyśrodkowany pionowo
-        _rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        _rectTransform.localPosition = ClampToCanvas(localPos + offset);
+        // Clamp horizontally within canvas (keep at right edge, but do not overflow)
+        float maxX = canvasRect.rect.xMax - tooltipSize.x;
+        anchored.x = Mathf.Min(anchored.x, maxX);
+
+        _rectTransform.anchoredPosition = anchored;
+    }
+
+    private static Vector2 WorldToCanvasLocal(RectTransform canvasRect, Camera cam, Vector3 worldPos)
+    {
+        Vector2 screen = RectTransformUtility.WorldToScreenPoint(cam, worldPos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screen, cam, out var local);
+        return local;
     }
 
     private Vector2 ClampToCanvas(Vector2 pos)

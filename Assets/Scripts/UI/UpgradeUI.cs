@@ -115,6 +115,7 @@ public class UpgradeUI : MonoBehaviour
         if (_tooltipTrigger != null)
         {
             _tooltipTrigger.content = _upgrade.Config.tooltipText.tooltipText;
+            _tooltipTrigger.UpdateText();
         }
     }
 
