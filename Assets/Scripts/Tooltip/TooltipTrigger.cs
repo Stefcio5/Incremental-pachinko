@@ -23,11 +23,11 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         TooltipSystem.Hide();
     }
 
-    // private void Update()
-    // {
-    //     if (_isMouseOver && isActiveAndEnabled)
-    //     {
-    //         TooltipSystem.Refresh(content, header, followMouse, targetOverride);
-    //     }
-    // }
+    public void UpdateText()
+    {
+        if (_isMouseOver && isActiveAndEnabled)
+        {
+            TooltipSystem.Refresh(content, header, followMouse, targetOverride);
+        }
+    }
 }
