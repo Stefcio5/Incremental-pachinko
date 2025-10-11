@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48a3cfaa25d83e44e812b10875eefa9e, type: 3}
-  m_Name: LP_ExponentialFormula 2
+  m_Name: Level_ExponentialFormula 2
   m_EditorClassIdentifier: 
   exponentMode: 1
   _exponent:

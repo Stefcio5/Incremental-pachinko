@@ -11,5 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Counter/Main Scene.unity
     guid: c237548c21a57894dae9921c31ea3055
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: d686af682da2ffe4aa398800cd943565, type: 3}
   m_UseUCBPForAssetBundles: 0
