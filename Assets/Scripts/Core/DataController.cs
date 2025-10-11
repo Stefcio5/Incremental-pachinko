@@ -69,15 +69,10 @@ public class DataController : PersistentSingleton<DataController>
     [ContextMenu("Reset Game Data On Prestige")]
     private void ResetGameDataOnPrestige()
     {
-        var prestigeUpgradeKeys = UpgradeManager.Instance.GetPrestigeUpgradeKeys();
-        foreach (var key in CurrentGameData.upgradeLevels.Keys.ToList())
-        {
-            if (!prestigeUpgradeKeys.Contains(key))
-                CurrentGameData.upgradeLevels[key] = 0;
-        }
+        UpgradeManager.Instance.ResetUpgradesExceptPrestige();
+
         CurrentGameData.points = 0;
         CurrentGameData.totalPoints = 0;
-        UpgradeManager.Instance.ResetUpgradesExceptPrestige();
         OnDataChanged?.Invoke();
     }
     public void ResetAllData()
