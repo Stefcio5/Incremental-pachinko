@@ -30,15 +30,22 @@ public class PowerUpUIManager : MonoBehaviour
 
     private void HandleActivated(PowerUpConfig config)
     {
-        if (_activeElements.ContainsKey(config))
+        // if (_activeElements.ContainsKey(config))
+        // {
+        //     Destroy(_activeElements[config].gameObject);
+        //     _activeElements.Remove(config);
+        // }
+        if (!_activeElements.ContainsKey(config))
         {
-            Destroy(_activeElements[config].gameObject);
-            _activeElements.Remove(config);
+            var element = Instantiate(_uiElementPrefab, _uiHolder);
+            element.Initialize(config, config.Duration);
+            _activeElements.Add(config, element);
+        }
+        else
+        {
+            _activeElements[config].Initialize(config, config.Duration);
         }
 
-        var element = Instantiate(_uiElementPrefab, _uiHolder);
-        element.Initialize(config, config.Duration);
-        _activeElements.Add(config, element);
     }
 
     private void HandleDeactivated(PowerUpConfig config)
