@@ -17,6 +17,15 @@ jobs:
           lfs: true
           fetch-depth: 0
 
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache
+          sudo apt-get clean
+          docker system prune -af
+
       - name: Cache Library
         uses: actions/cache@v4
         with:
@@ -42,19 +51,19 @@ jobs:
           path: build/WebGL/WebGL
 
   deploy:
-     name: Deploy to GitHub Pages
-     needs: build
-     runs-on: ubuntu-latest
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
 
-     steps:
-       - name: Download build artifact
-         uses: actions/download-artifact@v4
-         with:
-           name: WebGLBuild
-           path: webgl-build
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: WebGLBuild
+          path: webgl-build
 
-       - name: Deploy to GitHub Pages
-         uses: peaceiris/actions-gh-pages@v4
-         with:
-           github_token: ${{ secrets.GITHUB_TOKEN }}
-           publish_dir: webgl-build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: webgl-build
