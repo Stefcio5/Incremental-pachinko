@@ -8954,7 +8954,6 @@ MonoBehaviour:
   header: 
   content: 
   followMouse: 1
-  followMouse: 1
   targetOverride: {fileID: 0}
 --- !u!222 &200157373
 CanvasRenderer:
