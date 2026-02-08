@@ -99,8 +99,8 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
     {
         foreach (var upgrade in upgradeMap.Values)
         {
-            upgrade.UpdateLevel(0);
-            Debug.Log("Upgrade level reset: " + upgrade.Config.upgradeName + " to 0");
+            upgrade.UpdateLevel(upgrade.Config.StartingLevel);
+            Debug.Log("Upgrade level reset: " + upgrade.Config.upgradeName + " to " + upgrade.Config.StartingLevel);
         }
     }
 

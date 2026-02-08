@@ -16,6 +16,24 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
     public event Action<PowerUpConfig> OnPowerUpActivated;
     public event Action<PowerUpConfig> OnPowerUpDeactivated;
 
+    private void OnEnable()
+    {
+        var dataController = DataController.TryGetInstance();
+        if (dataController != null)
+        {
+            dataController.OnGameReset += HandleGameReset;
+        }
+    }
+
+    private void OnDisable()
+    {
+        var dataController = DataController.TryGetInstance();
+        if (dataController != null)
+        {
+            dataController.OnGameReset -= HandleGameReset;
+        }
+    }
+
     public bool TrySpawnPowerUpPrefab()
     {
         float roll = UnityEngine.Random.Range(0f, 1f);
@@ -110,6 +128,30 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
     private void RefreshDuration(PowerUpConfig config)
     {
         StartDurationCoroutine(config);
+    }
+
+    private void HandleGameReset()
+    {
+        ClearActivePowerUps();
+        ClearAllPickups();
+    }
+
+    private void ClearActivePowerUps()
+    {
+        var activeConfigs = new List<PowerUpConfig>(_durationCoroutines.Keys);
+        foreach (var config in activeConfigs)
+        {
+            RemovePowerUp(config);
+        }
+    }
+
+    private void ClearAllPickups()
+    {
+        var pickups = FindObjectsByType<PowerUpPickup>(FindObjectsSortMode.None);
+        foreach (var pickup in pickups)
+        {
+            Destroy(pickup.gameObject);
+        }
     }
 
     protected override void OnDestroy()
