@@ -93,7 +93,7 @@ public class UpgradeUI : MonoBehaviour
         _upgradeNameText.text = _upgrade.Config.upgradeName;
 
         _upgradeDescriptionText.text =
-            $"{_upgrade.Config.descriptionPrefix}{_upgrade.CurrentPower.FinalValue.Notate(_upgrade.Config.notationPrecision)}" +
+            $"{_upgrade.Config.descriptionPrefix}{_upgrade.CurrentPower.DisplayValue.Notate(_upgrade.Config.notationPrecision)}" +
             $"{_upgrade.Config.descriptionSuffix} <voffset=0.2em>→</voffset> " +
             $"{_upgrade.Config.descriptionPrefix}{_upgrade.GetNextPower().Notate(_upgrade.Config.notationPrecision)}" +
             $"{_upgrade.Config.descriptionSuffix}";

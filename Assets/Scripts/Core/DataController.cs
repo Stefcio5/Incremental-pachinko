@@ -58,10 +58,10 @@ public class DataController : PersistentSingleton<DataController>
     }
 
     //TODO: Change magic numbers
-    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.totalPoints / 1000000000)) * _prestigePointsMultiplier.FinalValue;
+    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.totalPoints / 1000000000)) * _prestigePointsMultiplier.DisplayValue;
     public BigDouble PointsToNextPrestige()
     {
-        BigDouble prestigePointsToAdd = CalculatePrestige() / _prestigePointsMultiplier.FinalValue;
+        BigDouble prestigePointsToAdd = CalculatePrestige() / _prestigePointsMultiplier.DisplayValue;
         return BigDouble.Pow(prestigePointsToAdd + 1, 2) * 1000000000 - CurrentGameData.totalPoints;
     }
 

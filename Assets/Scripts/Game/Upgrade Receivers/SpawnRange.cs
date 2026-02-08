@@ -16,7 +16,7 @@ public class SpawnRange : UpgradeReceiver
 
     public Vector3 GetCurrentScale()
     {
-        return new Vector3(1f, 1f, (float)upgradePower.FinalValue * 2);
+        return new Vector3(1f, 1f, (float)upgradePower.DisplayValue * 2);
     }
 
     protected override void Awake()
@@ -44,7 +44,7 @@ public class SpawnRange : UpgradeReceiver
 
     public void AnimateSpawnRange()
     {
-        _spawnRangeObject.transform.DOScaleZ((float)upgradePower.FinalValue * 2, 0.5f).SetEase(Ease.OutBack);
+        _spawnRangeObject.transform.DOScaleZ((float)upgradePower.DisplayValue * 2, 0.5f).SetEase(Ease.OutBack);
     }
 
     public void ChangeSpawnRangeColor(Color color)
