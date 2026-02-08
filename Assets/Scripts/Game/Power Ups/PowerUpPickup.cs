@@ -29,4 +29,9 @@ public class PowerUpPickup : MonoBehaviour
         yield return new WaitForSeconds(30f);
         Destroy(gameObject);
     }
+
+    void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
 }

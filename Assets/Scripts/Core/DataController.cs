@@ -11,6 +11,7 @@ public class DataController : PersistentSingleton<DataController>
     private SaveSystem _saveSystem;
     public event Action OnDataChanged;
     public event Action OnPrestige;
+    public event Action OnGameReset;
     private bool _isSaving;
 
     [SerializeField] private FlyweightRuntimeSetSO _flyweightRuntimeSet;
@@ -65,6 +66,7 @@ public class DataController : PersistentSingleton<DataController>
         CurrentGameData.points = 0;
         OnPrestige?.Invoke();
         ResetGameDataOnPrestige();
+        OnGameReset?.Invoke();
     }
 
     //TODO: Change magic numbers
@@ -87,10 +89,11 @@ public class DataController : PersistentSingleton<DataController>
     }
     public void ResetAllData()
     {
+        PlayerPrefs.DeleteAll();
         _flyweightRuntimeSet.ReturnAllFlyweightsToPool();
         CurrentGameData = new GameData();
-        PlayerPrefs.DeleteAll();
         UpgradeManager.Instance.ResetAllUpgrades();
+        OnGameReset?.Invoke();
         OnDataChanged?.Invoke();
     }
 
