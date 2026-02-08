@@ -33,6 +33,14 @@ public class DataController : PersistentSingleton<DataController>
         OnDataChanged?.Invoke();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            AddPoints(1000000);
+        }
+    }
+
     public bool SpendPoints(BigDouble amount)
     {
         if (CurrentGameData.points < amount) return false;
