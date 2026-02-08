@@ -22,7 +22,7 @@ public class ColorfulBalls : UpgradeReceiver
     {
         foreach (var ballFlyweightSetting in _ballFlyweightSettings)
         {
-            ballFlyweightSetting.spawnChance = ballFlyweightSetting.spawnChanceincrement * (float)upgradePower.FinalValue;
+            ballFlyweightSetting.spawnChance = ballFlyweightSetting.spawnChanceincrement * (float)upgradePower.DisplayValue;
         }
         UpdateTooltip();
     }

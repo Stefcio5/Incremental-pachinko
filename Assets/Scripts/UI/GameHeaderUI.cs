@@ -40,7 +40,7 @@ public class GameHeaderUI : MonoBehaviour
 
     private void UpdateBallCountUI(BigDouble currentCount)
     {
-        _ballCountText.text = $"Balls: {currentCount.Notate()} / {_ballSpawnCounter.MaxCount.FinalValue.Notate()}";
+        _ballCountText.text = $"Balls: {currentCount.Notate()} / {_ballSpawnCounter.MaxCount.DisplayValue.Notate()}";
     }
     private void OnDestroy()
     {

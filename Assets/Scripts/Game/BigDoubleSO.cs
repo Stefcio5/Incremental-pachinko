@@ -7,8 +7,10 @@ using UnityEngine;
 public class BigDoubleSO : ScriptableObject
 {
     [SerializeField] private BigDouble _baseValue;
-    [SerializeField] private BigDouble _finalValue;
+    [SerializeField] private BigDouble _displayValue;
     [SerializeField] private List<BigDoubleSO> _modifiers;
+    [SerializeField] private List<PowerUpConfig> _powerUpConfigs = new();
+    private BigDouble _powerUpModifier = 1;
     public event Action onValueChanged;
 
     public BigDouble BaseValue
@@ -20,7 +22,8 @@ public class BigDoubleSO : ScriptableObject
             RecalculateFinalValue();
         }
     }
-    public BigDouble FinalValue => _finalValue;
+    public BigDouble DisplayValue => _displayValue;
+    public BigDouble FinalValue => _displayValue * _powerUpModifier;
 
 
     void OnEnable()
@@ -29,6 +32,32 @@ public class BigDoubleSO : ScriptableObject
         RecalculateFinalValue();
     }
 
+    public void AddPowerUp(PowerUpConfig config)
+    {
+        if (config == null) return;
+        _powerUpConfigs.Add(config);
+        ApplyPowerUps();
+    }
+    private void ApplyPowerUps()
+    {
+        _powerUpModifier = 1;
+        foreach (var powerUp in _powerUpConfigs)
+        {
+            _powerUpModifier *= powerUp.Multiplier;
+        }
+        onValueChanged?.Invoke();
+    }
+
+    public void RemovePowerUp(PowerUpConfig config)
+    {
+        if (config == null) return;
+        _powerUpConfigs.Remove(config);
+        ApplyPowerUps();
+    }
+    public bool HasPowerUp(PowerUpConfig config)
+    {
+        return _powerUpConfigs.Contains(config);
+    }
 
     public void AddModifier(BigDoubleSO modifier)
     {
@@ -63,14 +92,14 @@ public class BigDoubleSO : ScriptableObject
 
     private void RecalculateFinalValue()
     {
-        _finalValue = _baseValue;
+        _displayValue = _baseValue;
         onValueChanged?.Invoke();
         if (_modifiers.Count == 0) return;
 
         foreach (var modifier in _modifiers)
         {
-            if (modifier.FinalValue == 0) continue;
-            _finalValue *= modifier.FinalValue;
+            if (modifier.DisplayValue == 0) continue;
+            _displayValue *= modifier.DisplayValue;
         }
         onValueChanged?.Invoke();
     }
@@ -79,7 +108,7 @@ public class BigDoubleSO : ScriptableObject
     {
         var result = baseValue;
         foreach (var modifier in _modifiers)
-            result *= modifier.FinalValue;
+            result *= modifier.DisplayValue;
         return result;
     }
 

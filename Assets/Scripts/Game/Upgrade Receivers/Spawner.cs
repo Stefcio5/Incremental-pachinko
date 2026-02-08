@@ -96,4 +96,8 @@ public class Spawner : UpgradeReceiver
         flyweight.Init();
     }
 
+    public override BigDouble GetUpgradeValue()
+    {
+        return upgradePower.FinalValue;
+    }
 }

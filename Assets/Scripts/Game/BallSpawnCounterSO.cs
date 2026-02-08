@@ -36,7 +36,7 @@ public class BallSpawnCounterSO : ScriptableObject
 
     public bool Add()
     {
-        if (_currentCount < _maxCount.FinalValue)
+        if (_currentCount < _maxCount.DisplayValue)
         {
             _currentCount++;
             OnCountChanged?.Invoke(_currentCount);
