@@ -24,6 +24,7 @@ public class Counter : UpgradeReceiver
         {
             flyweight.Despawn();
             _spawnCounter.Remove(1);
+            PowerUpController.Instance.TrySpawnPowerUpPrefab();
         }
     }
 
