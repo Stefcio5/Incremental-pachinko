@@ -10,6 +10,7 @@ public class DataController : PersistentSingleton<DataController>
     public GameData CurrentGameData { get; private set; }
     private SaveSystem _saveSystem;
     public event Action OnDataChanged;
+    public event Action OnPrestige;
     private bool _isSaving;
 
     [SerializeField] private FlyweightRuntimeSetSO _flyweightRuntimeSet;
@@ -62,6 +63,7 @@ public class DataController : PersistentSingleton<DataController>
         _flyweightRuntimeSet.ReturnAllFlyweightsToPool();
         CurrentGameData.prestigePoints += CalculatePrestige();
         CurrentGameData.points = 0;
+        OnPrestige?.Invoke();
         ResetGameDataOnPrestige();
     }
 
