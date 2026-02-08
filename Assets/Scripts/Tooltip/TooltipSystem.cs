@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TooltipSystem : MonoBehaviour
@@ -17,9 +18,9 @@ public class TooltipSystem : MonoBehaviour
         }
     }
 
-    public static void Show(string content, string header = "")
+    public static void Show(string content, string header = "", bool followMouse = true, RectTransform target = null)
     {
-        _instance.tooltip.SetText(content, header);
+        _instance.tooltip.SetText(content, header, followMouse, target);
         _instance.tooltip.gameObject.SetActive(true);
     }
     public static void Hide()
@@ -27,8 +28,8 @@ public class TooltipSystem : MonoBehaviour
         _instance.tooltip.gameObject.SetActive(false);
     }
 
-    public static void Refresh(string content, string header = "")
+    public static void Refresh(string content, string header = "", bool followMouse = true, RectTransform target = null)
     {
-        _instance.tooltip.SetText(content, header);
+        _instance.tooltip.SetText(content, header, followMouse, target);
     }
 }

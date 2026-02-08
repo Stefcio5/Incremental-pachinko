@@ -26,7 +26,7 @@ public class AutoBuyer : UpgradeReceiver
         {
 
             _timer += Time.deltaTime;
-            if (_timer >= upgradePower.FinalValue)
+            if (_timer >= upgradePower.DisplayValue)
             {
                 _timer = 0f;
                 TryPurchaseUpgrades();

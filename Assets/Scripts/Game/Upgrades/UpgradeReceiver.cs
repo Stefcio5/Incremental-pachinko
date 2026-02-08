@@ -31,6 +31,6 @@ public abstract class UpgradeReceiver : MonoBehaviour
 
     public virtual BigDouble GetUpgradeValue()
     {
-        return upgradePower.FinalValue;
+        return upgradePower.DisplayValue;
     }
 }

@@ -55,6 +55,8 @@ public class UpgradeUI : MonoBehaviour
         if (_upgrade.Config.hasTooltip && _tooltipTrigger == null)
         {
             _tooltipTrigger = gameObject.AddComponent<TooltipTrigger>();
+            _tooltipTrigger.followMouse = false;
+            _tooltipTrigger.targetOverride = GetComponent<RectTransform>();
         }
 
         SubscribeToEvents();
@@ -91,7 +93,7 @@ public class UpgradeUI : MonoBehaviour
         _upgradeNameText.text = _upgrade.Config.upgradeName;
 
         _upgradeDescriptionText.text =
-            $"{_upgrade.Config.descriptionPrefix}{_upgrade.CurrentPower.FinalValue.Notate(_upgrade.Config.notationPrecision)}" +
+            $"{_upgrade.Config.descriptionPrefix}{_upgrade.CurrentPower.DisplayValue.Notate(_upgrade.Config.notationPrecision)}" +
             $"{_upgrade.Config.descriptionSuffix} <voffset=0.2em>→</voffset> " +
             $"{_upgrade.Config.descriptionPrefix}{_upgrade.GetNextPower().Notate(_upgrade.Config.notationPrecision)}" +
             $"{_upgrade.Config.descriptionSuffix}";
@@ -113,6 +115,7 @@ public class UpgradeUI : MonoBehaviour
         if (_tooltipTrigger != null)
         {
             _tooltipTrigger.content = _upgrade.Config.tooltipText.tooltipText;
+            _tooltipTrigger.UpdateText();
         }
     }
 

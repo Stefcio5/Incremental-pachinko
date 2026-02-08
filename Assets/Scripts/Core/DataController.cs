@@ -33,6 +33,14 @@ public class DataController : PersistentSingleton<DataController>
         OnDataChanged?.Invoke();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            AddPoints(1000000);
+        }
+    }
+
     public bool SpendPoints(BigDouble amount)
     {
         if (CurrentGameData.points < amount) return false;
@@ -58,10 +66,10 @@ public class DataController : PersistentSingleton<DataController>
     }
 
     //TODO: Change magic numbers
-    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.totalPoints / 1000000000)) * _prestigePointsMultiplier.FinalValue;
+    public BigDouble CalculatePrestige() => BigDouble.Floor(BigDouble.Sqrt(CurrentGameData.totalPoints / 1000000000)) * _prestigePointsMultiplier.DisplayValue;
     public BigDouble PointsToNextPrestige()
     {
-        BigDouble prestigePointsToAdd = CalculatePrestige() / _prestigePointsMultiplier.FinalValue;
+        BigDouble prestigePointsToAdd = CalculatePrestige() / _prestigePointsMultiplier.DisplayValue;
         return BigDouble.Pow(prestigePointsToAdd + 1, 2) * 1000000000 - CurrentGameData.totalPoints;
     }
 
@@ -69,15 +77,10 @@ public class DataController : PersistentSingleton<DataController>
     [ContextMenu("Reset Game Data On Prestige")]
     private void ResetGameDataOnPrestige()
     {
-        var prestigeUpgradeKeys = UpgradeManager.Instance.GetPrestigeUpgradeKeys();
-        foreach (var key in CurrentGameData.upgradeLevels.Keys.ToList())
-        {
-            if (!prestigeUpgradeKeys.Contains(key))
-                CurrentGameData.upgradeLevels[key] = 0;
-        }
+        UpgradeManager.Instance.ResetUpgradesExceptPrestige();
+
         CurrentGameData.points = 0;
         CurrentGameData.totalPoints = 0;
-        UpgradeManager.Instance.ResetUpgradesExceptPrestige();
         OnDataChanged?.Invoke();
     }
     public void ResetAllData()
@@ -117,7 +120,20 @@ public class DataController : PersistentSingleton<DataController>
         try
         {
             _isSaving = true;
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // Na WebGL użyj batch save
+        if (WebGLOptimizedSaveSystem.Instance != null)
+        {
+            WebGLOptimizedSaveSystem.Instance.ScheduleSave(CurrentGameData);
+        }
+        else
+        {
             _saveSystem.Save(CurrentGameData);
+        }
+#else
+            _saveSystem.Save(CurrentGameData);
+#endif
         }
         catch (Exception e)
         {

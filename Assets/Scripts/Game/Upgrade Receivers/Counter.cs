@@ -4,6 +4,7 @@ using UnityEngine;
 public class Counter : UpgradeReceiver
 {
     [SerializeField] private FloatingTextFlyweightSettings _floatingTextSettings;
+    [SerializeField] private BallSpawnCounterSO _spawnCounter;
 
     protected override void Start()
     {
@@ -22,6 +23,8 @@ public class Counter : UpgradeReceiver
         if (collider.gameObject.TryGetComponent<Flyweight>(out var flyweight))
         {
             flyweight.Despawn();
+            _spawnCounter.Remove(1);
+            PowerUpController.Instance.TrySpawnPowerUpPrefab();
         }
     }
 

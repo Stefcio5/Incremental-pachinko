@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 788d3a2f4c0b20d41ae5fc88b75009a8, type: 3}
+  m_Name: MaxBallAmountConfig
+  m_EditorClassIdentifier: 
+  upgradeName: Max Balls
+  upgradeDescription: Increases maximum number of balls
+  descriptionPrefix: 
+  descriptionSuffix: 
+  _startingLevel:
+    mantissa: 1
+    exponent: 0
+  upgradeType: 1
+  baseCost:
+    mantissa: 5
+    exponent: 2
+  costFormula: {fileID: 11400000, guid: e8595ad0cfe0bdc449946f9d1a8cbde7, type: 2}
+  buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
+  basePower:
+    mantissa: 1
+    exponent: 0
+  upgradePower: {fileID: 11400000, guid: afb4b658772bf354e8d615055e3949d9, type: 2}
+  powerFormula: {fileID: 11400000, guid: 60c59f5a81ed87e4682b007207e807bf, type: 2}
+  useStepMultiplier: 0
+  multiplierInterval:
+    mantissa: 5
+    exponent: 1
+  multiplierBase:
+    mantissa: 2
+    exponent: 0
+  hasMaxLevel: 0
+  maxLevel:
+    mantissa: 8.5
+    exponent: 1
+  notationPrecision: 0
+  hasTooltip: 0
+  tooltipText: {fileID: 0}

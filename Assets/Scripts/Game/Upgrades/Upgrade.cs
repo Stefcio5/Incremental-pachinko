@@ -10,6 +10,7 @@ public class Upgrade : IDisposable
     // --- PROPERTIES ---
     public UpgradeConfig Config { get; }
     public BigDouble CurrentLevel { get; private set; }
+    public BigDouble PurchaseLevel => CurrentLevel - Config.StartingLevel;
     public BuyAmountStrategy BuyAmountStrategy => _buyAmountStrategy;
     public BigDouble CurrentCost => _buyAmountStrategy.GetCost(this);
     public BigDoubleSO CurrentPower { get; private set; }
@@ -45,7 +46,7 @@ public class Upgrade : IDisposable
 
     public bool CanPurchaseWithoutCost()
     {
-        var cost = Config.costFormula.Calculate(Config.baseCost, CurrentLevel);
+        var cost = Config.costFormula.Calculate(Config.baseCost, PurchaseLevel);
         return !IsMaxLevelReached && _purchaseStrategy.CanPurchase(cost);
     }
 
