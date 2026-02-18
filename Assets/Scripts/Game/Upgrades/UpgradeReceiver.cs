@@ -5,21 +5,48 @@ public abstract class UpgradeReceiver : MonoBehaviour
 {
     [SerializeField] protected BigDoubleSO upgradePower;
 
+    private bool _isInitialized;
+
     protected virtual void Awake()
     {
     }
-    protected virtual void Start()
+
+    protected virtual void OnEnable()
     {
-        Initialize();
+        SubscribeToUpgradeManager();
+        TryInitialize();
     }
 
-    protected void Initialize()
+    protected virtual void Start()
     {
-        if (upgradePower == null)
+        TryInitialize();
+    }
+
+    protected virtual void OnDisable()
+    {
+        UnsubscribeFromUpgradeManager();
+    }
+
+    private void TryInitialize()
+    {
+        if (_isInitialized)
         {
-            Debug.LogError("[UpgradeReceiver] UpgradeConfig is not assigned!");
             return;
         }
+
+        if (upgradePower is null)
+        {
+            Debug.LogError($"[{nameof(UpgradeReceiver)}] {nameof(upgradePower)} is not assigned!");
+            return;
+        }
+
+        var manager = UpgradeManager.Instance;
+        if (manager is null || !manager.IsInitialized)
+        {
+            return;
+        }
+
+        _isInitialized = true;
 
         OnUpgradeInitialized();
     }
@@ -28,9 +55,37 @@ public abstract class UpgradeReceiver : MonoBehaviour
     {
     }
 
-
     public virtual BigDouble GetUpgradeValue()
     {
         return upgradePower.DisplayValue;
+    }
+
+    private void SubscribeToUpgradeManager()
+    {
+        var manager = UpgradeManager.Instance;
+        if (manager is null)
+        {
+            Debug.LogWarning($"[{nameof(UpgradeReceiver)}] {nameof(UpgradeManager)} instance not available yet.");
+            return;
+        }
+
+        manager.OnSystemInitialized -= HandleUpgradeManagerInitialized;
+        manager.OnSystemInitialized += HandleUpgradeManagerInitialized;
+    }
+
+    private void UnsubscribeFromUpgradeManager()
+    {
+        var manager = UpgradeManager.Instance;
+        if (manager is null)
+        {
+            return;
+        }
+
+        manager.OnSystemInitialized -= HandleUpgradeManagerInitialized;
+    }
+
+    private void HandleUpgradeManagerInitialized()
+    {
+        TryInitialize();
     }
 }
