@@ -1,30 +1,80 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using BreakInfinity;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class DataController : PersistentSingleton<DataController>
+public class DataController : PersistentSingleton<DataController>, IGameSystem
 {
     [field: SerializeField]
     public GameData CurrentGameData { get; private set; }
+
     private SaveSystem _saveSystem;
+
     public event Action OnDataChanged;
     public event Action OnPrestige;
     public event Action OnGameReset;
+    public event Action OnSystemInitialized;
+
     private bool _isSaving;
+    private bool _isInitialized;
 
     [SerializeField] private FlyweightRuntimeSetSO _flyweightRuntimeSet;
     [SerializeField] private BigDoubleSO _prestigePointsMultiplier;
+
+    public string SystemName => "DataController";
+    public bool IsInitialized => _isInitialized;
 
     protected override void Awake()
     {
         base.Awake();
         _saveSystem = new SaveSystem(new PlayerPrefsDataRepository());
     }
-    private void Start()
+
+    public async UniTask InitializeAsync(IProgress<float> progress = null, CancellationToken cancellationToken = default)
     {
-        LoadData();
+        if (_isInitialized)
+        {
+            Debug.LogWarning($"[{SystemName}] Already initialized");
+            return;
+        }
+
+        progress?.Report(0f);
+
+        await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+
+        progress?.Report(0.3f);
+
+        await LoadDataAsync(cancellationToken);
+
+        progress?.Report(1f);
+
+        _isInitialized = true;
+        OnSystemInitialized?.Invoke();
+
+        Debug.Log($"[{SystemName}] Initialization complete");
+    }
+
+    private async UniTask LoadDataAsync(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+
+            CurrentGameData = _saveSystem.Load();
+            ValidateLoadedData();
+
+            Debug.Log($"[{SystemName}] Data loaded successfully");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[{SystemName}] Failed to load data: {e.Message}, using default data");
+            CurrentGameData = new GameData();
+        }
+
+        OnDataChanged?.Invoke();
     }
 
     public void AddPoints(BigDouble amount)
@@ -97,21 +147,6 @@ public class DataController : PersistentSingleton<DataController>
         OnDataChanged?.Invoke();
     }
 
-    private void LoadData()
-    {
-        try
-        {
-            CurrentGameData = _saveSystem.Load();
-            ValidateLoadedData();
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed to load data: {e.Message}, using default data");
-            CurrentGameData = new GameData();
-        }
-        OnDataChanged?.Invoke();
-    }
-
     private void ValidateLoadedData()
     {
         if (CurrentGameData.points < 0) CurrentGameData.points = 0;
@@ -119,9 +154,14 @@ public class DataController : PersistentSingleton<DataController>
         CurrentGameData.upgradeLevels ??= new Dictionary<string, BigDouble>();
     }
 
+    /// <summary>
+    /// Save game data synchronously.
+    /// Consider using SaveDataAsync for better performance.
+    /// </summary>
     public void SaveData()
     {
         if (_isSaving) return;
+
         try
         {
             _isSaving = true;
@@ -129,7 +169,7 @@ public class DataController : PersistentSingleton<DataController>
         }
         catch (Exception e)
         {
-            Debug.LogError($"Failed to save data: {e.Message}");
+            Debug.LogError($"[{SystemName}] Failed to save data: {e.Message}");
         }
         finally
         {
@@ -137,8 +177,39 @@ public class DataController : PersistentSingleton<DataController>
         }
     }
 
-    void OnApplicationQuit()
+    /// <summary>
+    /// Save game data asynchronously (recommended).
+    /// </summary>
+    public async UniTask SaveDataAsync(CancellationToken cancellationToken = default)
     {
-        _saveSystem.Save(CurrentGameData);
+        if (_isSaving) return;
+
+        try
+        {
+            _isSaving = true;
+
+            // Move to background thread for serialization if needed
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+
+            _saveSystem.Save(CurrentGameData);
+
+            Debug.Log($"[{SystemName}] Data saved successfully");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[{SystemName}] Failed to save data: {e.Message}");
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (_isInitialized)
+        {
+            _saveSystem.Save(CurrentGameData);
+        }
     }
 }
