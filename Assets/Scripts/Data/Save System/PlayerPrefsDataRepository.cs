@@ -16,7 +16,9 @@ public class PlayerPrefsDataRepository : IDataRepository
     private bool _hasCachedData;
 
     // Modular save system
-    private readonly List<ISaveModule> _saveModules = new List<ISaveModule>(); public PlayerPrefsDataRepository()
+    private readonly List<ISaveModule> _saveModules = new List<ISaveModule>();
+
+    public PlayerPrefsDataRepository()
     {
         // Register save modules
         RegisterSaveModule(new CoreGameDataModule());

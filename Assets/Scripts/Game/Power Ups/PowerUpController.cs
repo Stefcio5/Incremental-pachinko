@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class PowerUpController : PersistentSingleton<PowerUpController>
@@ -11,7 +12,7 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
     [SerializeField] private float _spawnChance = 0.1f;
     [SerializeField] private PowerUpSpawnPositionFinder _spawnPositionFinder;
 
-    private readonly Dictionary<PowerUpConfig, Coroutine> _durationCoroutines = new();
+    private readonly Dictionary<PowerUpConfig, CancellationTokenSource> _durationTokens = new();
 
     public event Action<PowerUpConfig> OnPowerUpActivated;
     public event Action<PowerUpConfig> OnPowerUpDeactivated;
@@ -84,19 +85,19 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
         Debug.Log($"New Target Value: {config.Target.FinalValue}");
 
         OnPowerUpActivated?.Invoke(config);
-        StartDurationCoroutine(config);
+        StartDurationTask(config);
     }
 
-    private IEnumerator PowerUpDurationCoroutine(PowerUpConfig config)
+    private async UniTask PowerUpDurationTask(PowerUpConfig config, CancellationToken cancellationToken)
     {
-        yield return new WaitForSeconds(config.Duration);
+        await UniTask.WaitForSeconds(config.Duration, cancellationToken: cancellationToken);
         RemovePowerUp(config);
     }
 
     private void RemovePowerUp(PowerUpConfig config)
     {
         if (config is null || config.Target is null) return;
-        StopDurationCoroutine(config);
+        StopDurationTask(config);
         config.Target.RemovePowerUp(config);
         Debug.Log($"Deactivated PowerUp: {config.Name}");
         Debug.Log($"New Target Value: {config.Target.FinalValue}");
@@ -104,30 +105,32 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
         OnPowerUpDeactivated?.Invoke(config);
     }
 
-    private void StartDurationCoroutine(PowerUpConfig config)
+    private void StartDurationTask(PowerUpConfig config)
     {
-        StopDurationCoroutine(config);
-        Coroutine coroutine = StartCoroutine(PowerUpDurationCoroutine(config));
-        _durationCoroutines[config] = coroutine;
+        StopDurationTask(config);
+        var cts = new CancellationTokenSource();
+        _ = PowerUpDurationTask(config, cts.Token);
+        _durationTokens[config] = cts;
     }
 
-    private void StopDurationCoroutine(PowerUpConfig config)
+    private void StopDurationTask(PowerUpConfig config)
     {
         if (config is null) return;
 
-        if (_durationCoroutines.TryGetValue(config, out Coroutine coroutine))
+        if (_durationTokens.TryGetValue(config, out var cts))
         {
-            if (coroutine is not null)
+            if (cts is not null)
             {
-                StopCoroutine(coroutine);
+                cts.Cancel();
+                cts.Dispose();
             }
-            _durationCoroutines.Remove(config);
+            _durationTokens.Remove(config);
         }
     }
 
     private void RefreshDuration(PowerUpConfig config)
     {
-        StartDurationCoroutine(config);
+        StartDurationTask(config);
     }
 
     private void HandleGameReset()
@@ -138,7 +141,7 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
 
     private void ClearActivePowerUps()
     {
-        var activeConfigs = new List<PowerUpConfig>(_durationCoroutines.Keys);
+        var activeConfigs = new List<PowerUpConfig>(_durationTokens.Keys);
         foreach (var config in activeConfigs)
         {
             RemovePowerUp(config);
@@ -158,6 +161,6 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
     {
         base.OnDestroy();
         StopAllCoroutines();
-        _durationCoroutines.Clear();
+        _durationTokens.Clear();
     }
 }
