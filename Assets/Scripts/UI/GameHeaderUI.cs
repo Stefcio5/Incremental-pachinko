@@ -20,7 +20,13 @@ public class GameHeaderUI : MonoBehaviour
         UpdateUI();
         DataController.Instance.OnDataChanged += UpdateUI;
         _prestigeButton.onClick.AddListener(OnPrestigeButtonClicked);
-        _prestigeUpgradeConfig.upgradePower.onValueChanged += () => UpdateUI();
+
+        // Subscribe to the prestige upgrade's primary stat so the header refreshes when the threshold changes.
+        if (_prestigeUpgradeConfig.Effects is { Count: > 0 } && _prestigeUpgradeConfig.Effects[0].Target != null)
+        {
+            _prestigeUpgradeConfig.Effects[0].Target.onValueChanged += UpdateUI;
+        }
+
         _ballSpawnCounter.OnCountChanged.AddListener(UpdateBallCountUI);
         UpdateBallCountUI(_ballSpawnCounter.CurrentCount);
     }
@@ -46,7 +52,12 @@ public class GameHeaderUI : MonoBehaviour
     {
         DataController.Instance.OnDataChanged -= UpdateUI;
         _prestigeButton.onClick.RemoveListener(OnPrestigeButtonClicked);
-        _prestigeUpgradeConfig.upgradePower.onValueChanged -= () => UpdateUI();
+
+        if (_prestigeUpgradeConfig.Effects is { Count: > 0 } && _prestigeUpgradeConfig.Effects[0].Target != null)
+        {
+            _prestigeUpgradeConfig.Effects[0].Target.onValueChanged -= UpdateUI;
+        }
+
         _ballSpawnCounter.OnCountChanged.RemoveListener(UpdateBallCountUI);
     }
 

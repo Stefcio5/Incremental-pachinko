@@ -20,7 +20,7 @@ public class PowerUpUIElement : MonoBehaviour
         _endTime = Time.time + duration;
 
         _nameText.text = config.Name;
-        _multiplierText.text = $"x{config.Multiplier}";
+        _multiplierText.text = BuildEffectSummary(config);
 
         if (_updateRoutine != null) StopCoroutine(_updateRoutine);
         _updateRoutine = StartCoroutine(UpdateTimerRoutine());
@@ -44,6 +44,28 @@ public class PowerUpUIElement : MonoBehaviour
 
         _timerText.text = "0.0s";
         if (_fillImage != null) _fillImage.fillAmount = 0f;
+    }
+
+    private static string BuildEffectSummary(PowerUpConfig config)
+    {
+        if (config.Effects == null || config.Effects.Count == 0)
+            return string.Empty;
+
+        if (config.Effects.Count == 1)
+        {
+            var e = config.Effects[0];
+            return e.ModifierType == ModifierType.Multiplicative
+                ? $"x{e.Value}"
+                : $"+{e.Value}";
+        }
+
+        var parts = new System.Text.StringBuilder();
+        foreach (var e in config.Effects)
+        {
+            if (parts.Length > 0) parts.Append(", ");
+            parts.Append(e.ModifierType == ModifierType.Multiplicative ? $"x{e.Value}" : $"+{e.Value}");
+        }
+        return parts.ToString();
     }
 
     private void OnDestroy()

@@ -39,8 +39,8 @@ public class UpgradeUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (_upgrade?.CurrentPower != null)
-            _upgrade.CurrentPower.onValueChanged -= UpdateVisuals;
+        if (_upgrade?.PrimaryTarget != null)
+            _upgrade.PrimaryTarget.onValueChanged -= UpdateVisuals;
 
         DataController.Instance.OnDataChanged -= UpdateVisuals;
         BuyAmountController.OnBuyAmountStrategyChanged -= OnBuyAmountStrategyChanged;
@@ -79,8 +79,8 @@ public class UpgradeUI : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        if (_upgrade?.CurrentPower != null)
-            _upgrade.CurrentPower.onValueChanged += UpdateVisuals;
+        if (_upgrade?.PrimaryTarget != null)
+            _upgrade.PrimaryTarget.onValueChanged += UpdateVisuals;
 
         DataController.Instance.OnDataChanged += UpdateVisuals;
         BuyAmountController.OnBuyAmountStrategyChanged += OnBuyAmountStrategyChanged;
@@ -93,7 +93,7 @@ public class UpgradeUI : MonoBehaviour
         _upgradeNameText.text = _upgrade.Config.upgradeName;
 
         _upgradeDescriptionText.text =
-            $"{_upgrade.Config.descriptionPrefix}{_upgrade.CurrentPower.DisplayValue.Notate(_upgrade.Config.notationPrecision)}" +
+            $"{_upgrade.Config.descriptionPrefix}{_upgrade.PrimaryTarget?.DisplayValue.Notate(_upgrade.Config.notationPrecision)}" +
             $"{_upgrade.Config.descriptionSuffix} <voffset=0.2em>→</voffset> " +
             $"{_upgrade.Config.descriptionPrefix}{_upgrade.GetNextPower().Notate(_upgrade.Config.notationPrecision)}" +
             $"{_upgrade.Config.descriptionSuffix}";

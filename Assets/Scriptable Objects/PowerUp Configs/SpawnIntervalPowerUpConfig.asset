@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: SpawnIntervalPowerUpConfig
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpConfig
   Name: Spawn Interval PowerUp
-  Multiplier:
-    mantissa: 5
-    exponent: -1
   Duration: 5
-  Target: {fileID: 11400000, guid: ca2949efe9c02364c985b7fe2b408133, type: 2}
+  Effects:
+  - Target: {fileID: 11400000, guid: ca2949efe9c02364c985b7fe2b408133, type: 2}
+    ModifierType: 1
+    Value:
+      mantissa: 5
+      exponent: -1

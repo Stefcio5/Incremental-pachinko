@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: PointsPowerUpConfig
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpConfig
   Name: Points PowerUp
-  Multiplier:
-    mantissa: 2
-    exponent: 0
   Duration: 5
-  Target: {fileID: 11400000, guid: 6cb1ad2909e0cbf4e9e96965f3214544, type: 2}
+  Effects:
+  - Target: {fileID: 11400000, guid: 6cb1ad2909e0cbf4e9e96965f3214544, type: 2}
+    ModifierType: 1
+    Value:
+      mantissa: 2
+      exponent: 0
