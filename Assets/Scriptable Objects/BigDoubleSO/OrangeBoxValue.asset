@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: OrangeBoxValue
   m_EditorClassIdentifier: 
   _baseValue:
-    mantissa: 1
+    mantissa: 1.5
     exponent: 1
   _soModifiers: []

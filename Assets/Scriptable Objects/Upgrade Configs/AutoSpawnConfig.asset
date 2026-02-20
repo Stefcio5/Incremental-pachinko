@@ -25,11 +25,13 @@ MonoBehaviour:
     exponent: 3
   costFormula: {fileID: 11400000, guid: 74046bf5c6260a649a90ef820362c14c, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
-  basePower:
-    mantissa: 0
-    exponent: 0
-  upgradePower: {fileID: 0}
-  powerFormula: {fileID: 0}
+  Effects:
+  - Target: {fileID: 11400000, guid: ca2949efe9c02364c985b7fe2b408133, type: 2}
+    Formula: {fileID: 11400000, guid: 552f95d2c210af0449bfdf4b16b39758, type: 2}
+    BasePower:
+      mantissa: 1
+      exponent: 0
+    ModifierType: 1
   useStepMultiplier: 0
   multiplierInterval:
     mantissa: 5

@@ -14,18 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: Colorful Balls
   upgradeDescription: 'Chance to spawn better balls: '
+  descriptionPrefix: 
   descriptionSuffix: '%'
+  _startingLevel:
+    mantissa: 0
+    exponent: 0
   upgradeType: 1
   baseCost:
     mantissa: 1
     exponent: 3
   costFormula: {fileID: 11400000, guid: c7397cbac81ee164cbffac5695547f2d, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
-  basePower:
-    mantissa: 1
+  Effects:
+  - Target: {fileID: 11400000, guid: 5b66576cb362d784abed9b4edeb3dfbb, type: 2}
+    Formula: {fileID: 11400000, guid: 60c59f5a81ed87e4682b007207e807bf, type: 2}
+    BasePower:
+      mantissa: 1
+      exponent: 0
+    ModifierType: 0
+  useStepMultiplier: 0
+  multiplierInterval:
+    mantissa: 5
+    exponent: 1
+  multiplierBase:
+    mantissa: 2
     exponent: 0
-  upgradePower: {fileID: 11400000, guid: 5b66576cb362d784abed9b4edeb3dfbb, type: 2}
-  powerFormula: {fileID: 11400000, guid: 60c59f5a81ed87e4682b007207e807bf, type: 2}
   hasMaxLevel: 0
   maxLevel:
     mantissa: 0

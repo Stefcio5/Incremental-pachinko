@@ -15,8 +15,5 @@ MonoBehaviour:
   _baseValue:
     mantissa: 1
     exponent: 0
-  _displayValue:
-    mantissa: 1
-    exponent: 0
-  _modifiers: []
-  _powerUpConfigs: []
+  _soModifiers:
+  - {fileID: 11400000, guid: de9e2e2965921e444a7bdaef098aeb26, type: 2}
