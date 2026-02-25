@@ -4,32 +4,23 @@ using BreakInfinity;
 
 public class Upgrade : IDisposable
 {
-    // --- FIELDS ---
     private BuyAmountStrategy _buyAmountStrategy;
     private IUpgradePurchaseStrategy _purchaseStrategy;
 
     private readonly List<(BigDoubleSO target, StatModifier modifier)> _effectModifiers = new();
 
-    // --- PROPERTIES ---
     public UpgradeConfig Config { get; }
     public BigDouble CurrentLevel { get; private set; }
     public BigDouble PurchaseLevel => CurrentLevel - Config.StartingLevel;
     public BuyAmountStrategy BuyAmountStrategy => _buyAmountStrategy;
     public BigDouble CurrentCost => _buyAmountStrategy.GetCost(this);
 
-    /// <summary>
-    /// The primary stat targeted by this upgrade (first effect).
-    /// Used by UI to subscribe to value-changed events and display the current stat value.
-    /// Returns null if no effects are defined.
-    /// </summary>
     public BigDoubleSO PrimaryTarget => Config.Effects is { Count: > 0 } ? Config.Effects[0].Target : null;
 
     private bool IsMaxLevelReached => Config.hasMaxLevel && CurrentLevel >= Config.maxLevel;
 
-    // --- EVENTS ---
     public event Action<Upgrade> OnLevelChanged;
 
-    // --- CONSTRUCTOR ---
     public Upgrade(UpgradeConfig config, BigDouble initialLevel)
     {
         Config = config;
@@ -43,7 +34,6 @@ public class Upgrade : IDisposable
         BuyAmountController.OnBuyAmountStrategyChanged += SetBuyAmountStrategy;
     }
 
-    // --- PUBLIC METHODS ---
 
     public void SetBuyAmountStrategy(BuyAmountStrategy buyAmountStrategy)
     {
@@ -155,7 +145,6 @@ public class Upgrade : IDisposable
         Dispose();
     }
 
-    // --- PRIVATE METHODS ---
 
     /// <summary>
     /// Creates one dynamic <see cref="StatModifier"/> per effect and registers it with the target stat.

@@ -6,7 +6,7 @@ using BreakInfinity;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class DataController : PersistentSingleton<DataController>, IGameSystem
+public class DataController : PersistentSingleton<DataController>, IGameDataManager
 {
     [field: SerializeField]
     public GameData CurrentGameData { get; private set; }
@@ -17,6 +17,8 @@ public class DataController : PersistentSingleton<DataController>, IGameSystem
     public event Action OnPrestige;
     public event Action OnGameReset;
     public event Action OnSystemInitialized;
+    public event Action OnShutdown;
+    public event Action OnReset;
 
     private bool _isSaving;
     private bool _isInitialized;
@@ -57,7 +59,7 @@ public class DataController : PersistentSingleton<DataController>, IGameSystem
         Debug.Log($"[{SystemName}] Initialization complete");
     }
 
-    private async UniTask LoadDataAsync(CancellationToken cancellationToken = default)
+    public async UniTask LoadDataAsync(CancellationToken cancellationToken = default)
     {
         try
         {
@@ -80,9 +82,12 @@ public class DataController : PersistentSingleton<DataController>, IGameSystem
     public void AddPoints(BigDouble amount)
     {
         if (amount <= 0) return;
-        CurrentGameData.points += amount;
-        CurrentGameData.totalPoints += amount;
-        OnDataChanged?.Invoke();
+
+        ModifyData(() =>
+        {
+            CurrentGameData.points += amount;
+            CurrentGameData.totalPoints += amount;
+        });
     }
 
     private void Update()
@@ -96,24 +101,29 @@ public class DataController : PersistentSingleton<DataController>, IGameSystem
     public bool SpendPoints(BigDouble amount)
     {
         if (CurrentGameData.points < amount) return false;
-        CurrentGameData.points -= amount;
-        OnDataChanged?.Invoke();
+
+        ModifyData(() => CurrentGameData.points -= amount);
         return true;
     }
 
     public bool SpendPrestigePoints(BigDouble amount)
     {
         if (CurrentGameData.prestigePoints < amount) return false;
-        CurrentGameData.prestigePoints -= amount;
-        OnDataChanged?.Invoke();
+
+        ModifyData(() => CurrentGameData.prestigePoints -= amount);
         return true;
     }
 
     public void PrestigeGame()
     {
         _flyweightRuntimeSet.ReturnAllFlyweightsToPool();
-        CurrentGameData.prestigePoints += CalculatePrestige();
-        CurrentGameData.points = 0;
+
+        ModifyData(() =>
+        {
+            CurrentGameData.prestigePoints += CalculatePrestige();
+            CurrentGameData.points = 0;
+        });
+
         OnPrestige?.Invoke();
         ResetGameDataOnPrestige();
         OnGameReset?.Invoke();
@@ -133,18 +143,41 @@ public class DataController : PersistentSingleton<DataController>, IGameSystem
     {
         UpgradeManager.Instance.ResetUpgradesExceptPrestige();
 
-        CurrentGameData.points = 0;
-        CurrentGameData.totalPoints = 0;
-        OnDataChanged?.Invoke();
+        ModifyData(() =>
+        {
+            CurrentGameData.points = 0;
+            CurrentGameData.totalPoints = 0;
+        });
     }
     public void ResetAllData()
     {
         PlayerPrefs.DeleteAll();
         _flyweightRuntimeSet.ReturnAllFlyweightsToPool();
+
         CurrentGameData = new GameData();
         UpgradeManager.Instance.ResetAllUpgrades();
+
+        _saveSystem.ClearCache();
+
         OnGameReset?.Invoke();
         OnDataChanged?.Invoke();
+    }
+
+    public void Shutdown()
+    {
+        if (!_isInitialized) return;
+
+        SaveData();
+        _isInitialized = false;
+        OnShutdown?.Invoke();
+
+        Debug.Log($"[{SystemName}] Shutdown complete");
+    }
+
+    public void Reset()
+    {
+        ResetAllData();
+        OnReset?.Invoke();
     }
 
     private void ValidateLoadedData()
@@ -154,10 +187,12 @@ public class DataController : PersistentSingleton<DataController>, IGameSystem
         CurrentGameData.upgradeLevels ??= new Dictionary<string, BigDouble>();
     }
 
-    /// <summary>
-    /// Save game data synchronously.
-    /// Consider using SaveDataAsync for better performance.
-    /// </summary>
+    private void ModifyData(Action modification)
+    {
+        modification?.Invoke();
+        OnDataChanged?.Invoke();
+    }
+
     public void SaveData()
     {
         if (_isSaving) return;
@@ -177,9 +212,6 @@ public class DataController : PersistentSingleton<DataController>, IGameSystem
         }
     }
 
-    /// <summary>
-    /// Save game data asynchronously (recommended).
-    /// </summary>
     public async UniTask SaveDataAsync(CancellationToken cancellationToken = default)
     {
         if (_isSaving) return;
@@ -207,9 +239,6 @@ public class DataController : PersistentSingleton<DataController>, IGameSystem
 
     private void OnApplicationQuit()
     {
-        if (_isInitialized)
-        {
-            _saveSystem.Save(CurrentGameData);
-        }
+        Shutdown();
     }
 }

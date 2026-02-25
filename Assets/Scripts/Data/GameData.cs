@@ -39,4 +39,5 @@ public interface IDataRepository
 {
     void Save(GameData data);
     GameData Load();
+    void ClearCache();
 }
