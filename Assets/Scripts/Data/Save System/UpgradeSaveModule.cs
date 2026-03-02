@@ -40,7 +40,7 @@ public class UpgradeSaveModule : ISaveModule
             {
                 if (!string.IsNullOrEmpty(upgrade.id))
                 {
-                    upgradeDict[upgrade.id] = SafeParseBigDouble(upgrade.level);
+                    upgradeDict[upgrade.id] = BigDouble.SafeParseBigDouble(upgrade.level);
                 }
             }
 
@@ -51,18 +51,6 @@ public class UpgradeSaveModule : ISaveModule
     public void OnMigrate(int fromVersion, int toVersion)
     {
         // Handle upgrade data migrations
-    }
-
-    private static BigDouble SafeParseBigDouble(string value)
-    {
-        try
-        {
-            return string.IsNullOrEmpty(value) ? BigDouble.Zero : BigDouble.Parse(value);
-        }
-        catch (Exception)
-        {
-            return BigDouble.Zero;
-        }
     }
 }
 

@@ -24,27 +24,15 @@ public class CoreGameDataModule : ISaveModule
         var moduleData = JsonUtility.FromJson<CoreGameModuleData>(data);
         if (moduleData != null)
         {
-            DataController.Instance.CurrentGameData.points = SafeParseBigDouble(moduleData.points);
-            DataController.Instance.CurrentGameData.totalPoints = SafeParseBigDouble(moduleData.totalPoints);
-            DataController.Instance.CurrentGameData.prestigePoints = SafeParseBigDouble(moduleData.prestigePoints);
+            DataController.Instance.CurrentGameData.points = BigDouble.SafeParseBigDouble(moduleData.points);
+            DataController.Instance.CurrentGameData.totalPoints = BigDouble.SafeParseBigDouble(moduleData.totalPoints);
+            DataController.Instance.CurrentGameData.prestigePoints = BigDouble.SafeParseBigDouble(moduleData.prestigePoints);
         }
     }
 
     public void OnMigrate(int fromVersion, int toVersion)
     {
         // Handle migrations for core data if needed
-    }
-
-    private static BigDouble SafeParseBigDouble(string value)
-    {
-        try
-        {
-            return string.IsNullOrEmpty(value) ? BigDouble.Zero : BigDouble.Parse(value);
-        }
-        catch (Exception)
-        {
-            return BigDouble.Zero;
-        }
     }
 }
 
