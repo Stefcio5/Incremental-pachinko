@@ -16,17 +16,22 @@ MonoBehaviour:
   upgradeDescription: Buys Spawner Upgrades
   descriptionPrefix: 
   descriptionSuffix: s
+  _startingLevel:
+    mantissa: 0
+    exponent: 0
   upgradeType: 2
   baseCost:
     mantissa: 1
     exponent: 3
   costFormula: {fileID: 11400000, guid: 74046bf5c6260a649a90ef820362c14c, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
-  basePower:
-    mantissa: 1
-    exponent: 0
-  upgradePower: {fileID: 11400000, guid: bfb13b2824990114d877d9d2a5aefb51, type: 2}
-  powerFormula: {fileID: 11400000, guid: 60c59f5a81ed87e4682b007207e807bf, type: 2}
+  Effects:
+  - Target: {fileID: 11400000, guid: bfb13b2824990114d877d9d2a5aefb51, type: 2}
+    Formula: {fileID: 11400000, guid: 60c59f5a81ed87e4682b007207e807bf, type: 2}
+    BasePower:
+      mantissa: 1
+      exponent: 0
+    ModifierType: 0
   useStepMultiplier: 0
   multiplierInterval:
     mantissa: 5

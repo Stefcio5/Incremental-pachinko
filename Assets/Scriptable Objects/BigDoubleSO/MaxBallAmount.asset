@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: MaxBallAmount
   m_EditorClassIdentifier: 
   _baseValue:
-    mantissa: 0
+    mantissa: 1
     exponent: 0
-  _finalValue:
-    mantissa: 0
-    exponent: 0
-  _modifiers: []
+  _soModifiers: []

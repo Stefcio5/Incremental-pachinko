@@ -6,20 +6,17 @@ public class Counter : UpgradeReceiver
     [SerializeField] private FloatingTextFlyweightSettings _floatingTextSettings;
     [SerializeField] private BallSpawnCounterSO _spawnCounter;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
     private void OnTriggerEnter(Collider collider)
     {
+        // Handle regular balls
         if (collider.gameObject.TryGetComponent<Ball>(out var ball))
         {
             BigDouble finalValue = GetFinalValue(ball);
-
             DataController.Instance.AddPoints(finalValue);
             ShowFloatingText(collider, ball.BallColor, finalValue, ball.BallID);
         }
+
+        // Handle pooled flyweight objects
         if (collider.gameObject.TryGetComponent<Flyweight>(out var flyweight))
         {
             flyweight.Despawn();
@@ -35,7 +32,7 @@ public class Counter : UpgradeReceiver
 
     private void ShowFloatingText(Collider collider, Color color, BigDouble value, int size)
     {
-        FloatingTextFlyweight floatingText = (FloatingTextFlyweight)FlyweightFactory.Spawn(_floatingTextSettings);
+        var floatingText = (FloatingTextFlyweight)FlyweightFactory.Spawn(_floatingTextSettings);
         var spawnLocation = collider.transform.position;
         floatingText.SetText(value.Notate(), color);
         floatingText.AnimateFloatingText(spawnLocation, size);

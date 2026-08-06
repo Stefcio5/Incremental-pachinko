@@ -7,30 +7,46 @@ public class AutoBuyer : UpgradeReceiver
 {
     [SerializeField] private UpgradeConfig _upgradeConfig;
     [SerializeField] private UpgradeType _upgradeType;
-    private List<Upgrade> _upgrades;
-    private float _timer;
 
-    protected override void Start()
+    private List<Upgrade> _upgrades = new();
+    private float _timer;
+    private bool _isReady;
+
+    protected override void OnUpgradeInitialized()
     {
-        base.Start();
+        base.OnUpgradeInitialized();
+        InitializeUpgrades();
+        _isReady = true;
+    }
+
+    private void InitializeUpgrades()
+    {
         _upgrades = UpgradeManager.Instance.GetUpgrades(_upgradeType).ToList();
-        if (_upgrades == null || _upgrades.Count == 0)
+
+        if (_upgrades is null || _upgrades.Count == 0)
         {
-            Debug.LogWarning($"AutoBuyer: No upgrades found for type {_upgradeType}");
+            Debug.LogWarning($"[{nameof(AutoBuyer)}] No upgrades found for type {_upgradeType}");
         }
     }
 
     private void Update()
     {
-        if (GetUpgradeLevel(_upgradeConfig) > 0)
+        if (!_isReady || _upgrades is null || _upgrades.Count == 0)
         {
+            return;
+        }
 
-            _timer += Time.deltaTime;
-            if (_timer >= upgradePower.DisplayValue)
-            {
-                _timer = 0f;
-                TryPurchaseUpgrades();
-            }
+        if (GetUpgradeLevel(_upgradeConfig) <= 0)
+        {
+            return;
+        }
+
+        _timer += Time.deltaTime;
+
+        if (_timer >= upgradePower.DisplayValue)
+        {
+            _timer = 0f;
+            TryPurchaseUpgrades();
         }
     }
 
@@ -40,19 +56,13 @@ public class AutoBuyer : UpgradeReceiver
         {
             if (upgrade.CanPurchaseWithoutCost())
             {
-                PurchaseUpgrade(upgrade);
+                upgrade.PurchaseWithoutCost();
             }
         }
-    }
-
-    private void PurchaseUpgrade(Upgrade upgrade)
-    {
-        upgrade.PurchaseWithoutCost();
     }
 
     private BigDouble GetUpgradeLevel(UpgradeConfig config)
     {
         return UpgradeManager.Instance.GetUpgradeLevel(config);
     }
-
 }

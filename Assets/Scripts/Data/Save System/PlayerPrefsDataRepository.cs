@@ -1,361 +1,107 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BreakInfinity;
 using UnityEngine;
 
 public class PlayerPrefsDataRepository : IDataRepository
 {
     private const string SaveKey = "GameData";
-    private const string BackupSaveKey = "GameData_Backup";
-    private const int CurrentVersion = 3;
 
-    // Cache to avoid multiple deserialization
-    private GameData _cachedData;
-    private bool _hasCachedData;
+    private readonly ISaveSerializer _serializer;
+    private readonly ISaveCompressor _compressor;
+    private readonly PlatformSaveConfiguration _platformConfig;
+    private readonly SaveBackupManager _backupManager;
+    private readonly SaveDataCache _cache;
+    private readonly SaveDataValidator _validator;
+    private readonly SaveModuleCoordinator _moduleCoordinator;
 
-    // Modular save system
-    private readonly List<ISaveModule> _saveModules = new List<ISaveModule>(); public PlayerPrefsDataRepository()
+    public PlayerPrefsDataRepository()
     {
-        // Register save modules
+        _platformConfig = new PlatformSaveConfiguration();
+        _compressor = _platformConfig.CreateCompressor();
+        _serializer = _platformConfig.CreateSerializer();
+
+        _cache = new SaveDataCache();
+        _validator = new SaveDataValidator();
+        _moduleCoordinator = new SaveModuleCoordinator();
+        _backupManager = new SaveBackupManager(_serializer, _compressor, _moduleCoordinator);
+
         RegisterSaveModule(new CoreGameDataModule());
         RegisterSaveModule(new UpgradeSaveModule());
-        // RegisterSaveModule(new SkillTreeSaveModule()); // Easy to add new modules
     }
 
     public void RegisterSaveModule(ISaveModule module)
     {
-        if (!_saveModules.Any(m => m.ModuleName == module.ModuleName))
-        {
-            _saveModules.Add(module);
-        }
+        _moduleCoordinator.RegisterModule(module);
     }
 
     public void Save(GameData data)
     {
         try
         {
-            // First save backup of current data
-            if (PlayerPrefs.HasKey(SaveKey))
+            _backupManager.CreateBackup();
+
+            var saveContainer = _moduleCoordinator.SerializeModules();
+            string json = _serializer.Serialize(saveContainer);
+            string compressed = _compressor.Compress(json);
+
+            PlayerPrefs.SetString(SaveKey, compressed);
+
+            _validator.ValidateSave(compressed);
+            _cache.Set(data);
+
+            if (_platformConfig.ShouldCallPlayerPrefsSave)
             {
-                string currentData = PlayerPrefs.GetString(SaveKey);
-                PlayerPrefs.SetString(BackupSaveKey, currentData);
+                PlayerPrefs.Save();
             }
-
-            // Use modular save system
-            var moduleDataList = new List<ModuleSaveData>();
-
-            foreach (var module in _saveModules)
-            {
-                try
-                {
-                    var moduleData = new ModuleSaveData
-                    {
-                        moduleName = module.ModuleName,
-                        version = module.Version,
-                        data = module.Serialize()
-                    };
-                    moduleDataList.Add(moduleData);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"Failed to serialize module {module.ModuleName}: {e.Message}");
-                }
-            }
-
-            var saveContainer = new SaveContainer
-            {
-                version = CurrentVersion,
-                modules = moduleDataList.ToArray()
-            };
-
-            string json = JsonUtility.ToJson(saveContainer);
-
-            // Compression for WebGL
-#if UNITY_WEBGL && !UNITY_EDITOR
-            json = CompressString(json);
-#endif
-
-            PlayerPrefs.SetString(SaveKey, json);
-
-            // Save validation
-            if (PlayerPrefs.GetString(SaveKey) != json)
-            {
-                throw new Exception("Save validation failed");
-            }
-
-            // Cache new data
-            _cachedData = data;
-            _hasCachedData = true;
-
-            // Batch save for WebGL - will be called automatically
-#if !UNITY_WEBGL || UNITY_EDITOR
-            PlayerPrefs.Save();
-#endif
         }
         catch (Exception e)
         {
-            Debug.LogError($"Failed to save data: {e.Message}");
-
-            // Restore backup if failed
-            if (PlayerPrefs.HasKey(BackupSaveKey))
-            {
-                PlayerPrefs.SetString(SaveKey, PlayerPrefs.GetString(BackupSaveKey));
-            }
+            Debug.LogError($"Save failed: {e.Message}\n{e.StackTrace}");
+            _backupManager.RestoreFromBackup();
             throw;
         }
     }
 
     public GameData Load()
     {
-        // Return cache if available
-        if (_hasCachedData)
-        {
-            return new GameData(_cachedData.points, _cachedData.totalPoints,
-                              _cachedData.prestigePoints, new Dictionary<string, BigDouble>(_cachedData.upgradeLevels));
-        }
+        if (_cache.HasCached)
+            return _cache.Get();
 
         if (!PlayerPrefs.HasKey(SaveKey))
-        {
-            var defaultData = new GameData();
-            _cachedData = defaultData;
-            _hasCachedData = true;
-            return defaultData;
-        }
+            return CreateDefaultData();
 
         try
         {
-            string json = PlayerPrefs.GetString(SaveKey);
+            string compressed = PlayerPrefs.GetString(SaveKey);
+            string json = _compressor.Decompress(compressed);
 
-            // Decompression for WebGL
-#if UNITY_WEBGL && !UNITY_EDITOR
-            json = DecompressString(json);
-#endif
+            var saveContainer = _serializer.Deserialize<SaveContainer>(json);
+            if (saveContainer?.modules == null)
+                throw new Exception("Invalid save data format");
 
-            // Try new modular format first
-            try
-            {
-                var saveContainer = JsonUtility.FromJson<SaveContainer>(json);
-                if (saveContainer?.modules != null)
-                {
-                    return LoadModularData(saveContainer);
-                }
-            }
-            catch
-            {
-                // Fall back to legacy format
-                Debug.LogWarning("Failed to load modular save format, trying legacy format");
-            }
+            _moduleCoordinator.DeserializeModules(saveContainer);
+            GameData gameData = DataController.Instance.CurrentGameData;
 
-            // Legacy format fallback
-            var serializableData = JsonUtility.FromJson<SerializableGameData>(json);
-            if (serializableData == null)
-                throw new Exception("Deserialized data is null");
-
-            var gameData = serializableData.ToGameData();
-            ValidateLoadedData(gameData);
-
-            // Cache loaded data
-            _cachedData = gameData;
-            _hasCachedData = true;
+            _validator.ValidateLoadedData(gameData);
+            _cache.Set(gameData);
 
             return gameData;
         }
         catch (Exception e)
         {
-            Debug.LogError($"Failed to load data: {e.Message}");
-
-            // Attempt to restore from backup
-            if (PlayerPrefs.HasKey(BackupSaveKey))
-            {
-                try
-                {
-                    Debug.LogWarning("Attempting to restore from backup");
-                    string backupJson = PlayerPrefs.GetString(BackupSaveKey);
-                    var backupData = JsonUtility.FromJson<SerializableGameData>(backupJson);
-                    return backupData.ToGameData();
-                }
-                catch (Exception backupException)
-                {
-                    Debug.LogError($"Backup restore failed: {backupException.Message}");
-                }
-            }
-
-            return new GameData();
+            Debug.LogError($"Load failed: {e.Message}");
+            return _backupManager.TryRestoreFromBackup() ?? CreateDefaultData();
         }
     }
-
-    private GameData LoadModularData(SaveContainer saveContainer)
-    {
-        var gameData = new GameData();
-
-        foreach (var moduleData in saveContainer.modules)
-        {
-            var module = _saveModules.FirstOrDefault(m => m.ModuleName == moduleData.moduleName);
-            if (module != null)
-            {
-                try
-                {
-                    // Handle version migration if needed
-                    if (moduleData.version != module.Version)
-                    {
-                        module.OnMigrate(moduleData.version, module.Version);
-                    }
-
-                    module.Deserialize(moduleData.data);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"Failed to deserialize module {moduleData.moduleName}: {e.Message}");
-                }
-            }
-            else
-            {
-                Debug.LogWarning($"Unknown save module: {moduleData.moduleName}");
-            }
-        }
-
-        // Return the loaded data from DataController
-        return DataController.Instance.CurrentGameData;
-    }
-
-    private void ValidateLoadedData(GameData data)
-    {
-        if (data.points < 0) data.points = 0;
-        if (data.totalPoints < 0) data.totalPoints = 0;
-        if (data.prestigePoints < 0) data.prestigePoints = 0;
-        data.upgradeLevels ??= new Dictionary<string, BigDouble>();
-    }
-
-    private SerializableGameData MigrateData(SerializableGameData oldData)
-    {
-        // Example migration from version 1 to 2
-        if (oldData.version == 1)
-        {
-            // Add new fields or transform existing ones
-            oldData.version = 2;
-        }
-        return oldData;
-    }
-
-#if UNITY_WEBGL && !UNITY_EDITOR
-    private string CompressString(string text)
-    {
-        try
-        {
-            byte[] data = Encoding.UTF8.GetBytes(text);
-            // Simple compression algorithm - in reality use GZip
-            return Convert.ToBase64String(data);
-        }
-        catch
-        {
-            return text; // Fallback without compression
-        }
-    }
-
-    private string DecompressString(string compressedText)
-    {
-        try
-        {
-            byte[] data = Convert.FromBase64String(compressedText);
-            return Encoding.UTF8.GetString(data);
-        }
-        catch
-        {
-            return compressedText; // Fallback - probably uncompressed
-        }
-    }
-#endif
 
     public void ClearCache()
     {
-        _hasCachedData = false;
-        _cachedData = null;
+        _cache.Clear();
     }
-}
 
-[System.Serializable]
-public class SerializableGameData
-{
-    public string points;
-    public string totalPoints;
-    public string prestigePoints;
-    public UpgradeLevelData[] upgradeLevels;
-    public int version;
-    public long timestamp; // Unix timestamp
-
-    [System.Serializable]
-    public struct UpgradeLevelData
+    private GameData CreateDefaultData()
     {
-        public string id;
-        public string level;
+        var defaultData = new GameData();
+        _cache.Set(defaultData);
+        return defaultData;
     }
-
-    public SerializableGameData()
-    {
-        timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-    }
-
-    public SerializableGameData(GameData data)
-    {
-        points = data.points.ToString();
-        totalPoints = data.totalPoints.ToString();
-        prestigePoints = data.prestigePoints.ToString();
-
-        // Conversion of dictionary to array for better serialization
-        upgradeLevels = new UpgradeLevelData[data.upgradeLevels.Count];
-        int index = 0;
-        foreach (var kvp in data.upgradeLevels)
-        {
-            upgradeLevels[index] = new UpgradeLevelData
-            {
-                id = kvp.Key,
-                level = kvp.Value.ToString()
-            };
-            index++;
-        }
-
-        version = 2;
-        timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-    }
-
-    public GameData ToGameData()
-    {
-        var upgradeDict = new Dictionary<string, BigDouble>();
-
-        if (upgradeLevels != null)
-        {
-            foreach (var upgrade in upgradeLevels)
-            {
-                if (!string.IsNullOrEmpty(upgrade.id))
-                {
-                    upgradeDict[upgrade.id] = BigDouble.SafeParseBigDouble(upgrade.level);
-                }
-            }
-        }
-
-        return new GameData(
-            BigDouble.SafeParseBigDouble(points),
-            BigDouble.SafeParseBigDouble(totalPoints),
-            BigDouble.SafeParseBigDouble(prestigePoints),
-            upgradeDict
-        );
-    }
-}
-
-// Data structures for modular save system
-[System.Serializable]
-public class SaveContainer
-{
-    public int version;
-    public ModuleSaveData[] modules;
-}
-
-[System.Serializable]
-public class ModuleSaveData
-{
-    public string moduleName;
-    public int version;
-    public string data;
 }

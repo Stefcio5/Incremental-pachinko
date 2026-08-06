@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13ffed52c15bfa4b929b708e804ed71, type: 3}
   m_Name: RedBoxValue
   m_EditorClassIdentifier: 
-  baseValue:
-    mantissa: 1
-    exponent: 0
-  cachedFinalValue:
-    mantissa: 0
-    exponent: 0
-  isDirty: 1
-  modifiers: []
+  _baseValue:
+    mantissa: 5
+    exponent: 1
+  _displayValue:
+    mantissa: 5
+    exponent: 1
+  _modifiers: []
+  _powerUpConfigs: []

@@ -1,38 +1,93 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using BreakInfinity;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class DataController : PersistentSingleton<DataController>
+public class DataController : PersistentSingleton<DataController>, IGameDataManager
 {
     [field: SerializeField]
     public GameData CurrentGameData { get; private set; }
+
     private SaveSystem _saveSystem;
+
     public event Action OnDataChanged;
     public event Action OnPrestige;
     public event Action OnGameReset;
+    public event Action OnSystemInitialized;
+    public event Action OnShutdown;
+    public event Action OnReset;
+
     private bool _isSaving;
+    private bool _isInitialized;
 
     [SerializeField] private FlyweightRuntimeSetSO _flyweightRuntimeSet;
     [SerializeField] private BigDoubleSO _prestigePointsMultiplier;
+
+    public string SystemName => "DataController";
+    public bool IsInitialized => _isInitialized;
 
     protected override void Awake()
     {
         base.Awake();
         _saveSystem = new SaveSystem(new PlayerPrefsDataRepository());
     }
-    private void Start()
+
+    public async UniTask InitializeAsync(IProgress<float> progress = null, CancellationToken cancellationToken = default)
     {
-        LoadData();
+        if (_isInitialized)
+        {
+            Debug.LogWarning($"[{SystemName}] Already initialized");
+            return;
+        }
+
+        progress?.Report(0f);
+
+        await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+
+        progress?.Report(0.3f);
+
+        await LoadDataAsync(cancellationToken);
+
+        progress?.Report(1f);
+
+        _isInitialized = true;
+        OnSystemInitialized?.Invoke();
+
+        Debug.Log($"[{SystemName}] Initialization complete");
+    }
+
+    public async UniTask LoadDataAsync(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+
+            CurrentGameData = _saveSystem.Load();
+            ValidateLoadedData();
+
+            Debug.Log($"[{SystemName}] Data loaded successfully");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[{SystemName}] Failed to load data: {e.Message}, using default data");
+            CurrentGameData = new GameData();
+        }
+
+        OnDataChanged?.Invoke();
     }
 
     public void AddPoints(BigDouble amount)
     {
         if (amount <= 0) return;
-        CurrentGameData.points += amount;
-        CurrentGameData.totalPoints += amount;
-        OnDataChanged?.Invoke();
+
+        ModifyData(() =>
+        {
+            CurrentGameData.points += amount;
+            CurrentGameData.totalPoints += amount;
+        });
     }
 
     private void Update()
@@ -46,24 +101,29 @@ public class DataController : PersistentSingleton<DataController>
     public bool SpendPoints(BigDouble amount)
     {
         if (CurrentGameData.points < amount) return false;
-        CurrentGameData.points -= amount;
-        OnDataChanged?.Invoke();
+
+        ModifyData(() => CurrentGameData.points -= amount);
         return true;
     }
 
     public bool SpendPrestigePoints(BigDouble amount)
     {
         if (CurrentGameData.prestigePoints < amount) return false;
-        CurrentGameData.prestigePoints -= amount;
-        OnDataChanged?.Invoke();
+
+        ModifyData(() => CurrentGameData.prestigePoints -= amount);
         return true;
     }
 
     public void PrestigeGame()
     {
         _flyweightRuntimeSet.ReturnAllFlyweightsToPool();
-        CurrentGameData.prestigePoints += CalculatePrestige();
-        CurrentGameData.points = 0;
+
+        ModifyData(() =>
+        {
+            CurrentGameData.prestigePoints += CalculatePrestige();
+            CurrentGameData.points = 0;
+        });
+
         OnPrestige?.Invoke();
         ResetGameDataOnPrestige();
         OnGameReset?.Invoke();
@@ -83,33 +143,41 @@ public class DataController : PersistentSingleton<DataController>
     {
         UpgradeManager.Instance.ResetUpgradesExceptPrestige();
 
-        CurrentGameData.points = 0;
-        CurrentGameData.totalPoints = 0;
-        OnDataChanged?.Invoke();
+        ModifyData(() =>
+        {
+            CurrentGameData.points = 0;
+            CurrentGameData.totalPoints = 0;
+        });
     }
     public void ResetAllData()
     {
         PlayerPrefs.DeleteAll();
         _flyweightRuntimeSet.ReturnAllFlyweightsToPool();
+
         CurrentGameData = new GameData();
         UpgradeManager.Instance.ResetAllUpgrades();
+
+        _saveSystem.ClearCache();
+
         OnGameReset?.Invoke();
         OnDataChanged?.Invoke();
     }
 
-    private void LoadData()
+    public void Shutdown()
     {
-        try
-        {
-            CurrentGameData = _saveSystem.Load();
-            ValidateLoadedData();
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed to load data: {e.Message}, using default data");
-            CurrentGameData = new GameData();
-        }
-        OnDataChanged?.Invoke();
+        if (!_isInitialized) return;
+
+        SaveData();
+        _isInitialized = false;
+        OnShutdown?.Invoke();
+
+        Debug.Log($"[{SystemName}] Shutdown complete");
+    }
+
+    public void Reset()
+    {
+        ResetAllData();
+        OnReset?.Invoke();
     }
 
     private void ValidateLoadedData()
@@ -119,9 +187,16 @@ public class DataController : PersistentSingleton<DataController>
         CurrentGameData.upgradeLevels ??= new Dictionary<string, BigDouble>();
     }
 
+    private void ModifyData(Action modification)
+    {
+        modification?.Invoke();
+        OnDataChanged?.Invoke();
+    }
+
     public void SaveData()
     {
         if (_isSaving) return;
+
         try
         {
             _isSaving = true;
@@ -129,7 +204,7 @@ public class DataController : PersistentSingleton<DataController>
         }
         catch (Exception e)
         {
-            Debug.LogError($"Failed to save data: {e.Message}");
+            Debug.LogError($"[{SystemName}] Failed to save data: {e.Message}");
         }
         finally
         {
@@ -137,8 +212,33 @@ public class DataController : PersistentSingleton<DataController>
         }
     }
 
-    void OnApplicationQuit()
+    public async UniTask SaveDataAsync(CancellationToken cancellationToken = default)
     {
-        _saveSystem.Save(CurrentGameData);
+        if (_isSaving) return;
+
+        try
+        {
+            _isSaving = true;
+
+            // Move to background thread for serialization if needed
+            await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+
+            _saveSystem.Save(CurrentGameData);
+
+            Debug.Log($"[{SystemName}] Data saved successfully");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[{SystemName}] Failed to save data: {e.Message}");
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        Shutdown();
     }
 }

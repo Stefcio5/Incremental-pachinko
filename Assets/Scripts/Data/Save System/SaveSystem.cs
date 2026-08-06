@@ -3,6 +3,8 @@ public class SaveSystem
 {
     private readonly IDataRepository _dataRepository;
 
+    public IDataRepository Repository => _dataRepository;
+
     public SaveSystem(IDataRepository repository)
     {
         _dataRepository = repository;
@@ -16,5 +18,10 @@ public class SaveSystem
     public GameData Load()
     {
         return _dataRepository.Load();
+    }
+
+    public void ClearCache()
+    {
+        _dataRepository.ClearCache();
     }
 }

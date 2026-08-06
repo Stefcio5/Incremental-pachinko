@@ -1,17 +1,19 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class PowerUpController : PersistentSingleton<PowerUpController>
 {
-    [SerializeField] private List<PowerUpConfig> _powerUps = new List<PowerUpConfig>();
+    [SerializeField] private List<PowerUpConfig> _powerUps = new();
     [SerializeField] private PowerUpPickup _powerUpPrefab;
     [SerializeField] private float _spawnChance = 0.1f;
     [SerializeField] private PowerUpSpawnPositionFinder _spawnPositionFinder;
 
-    private readonly Dictionary<PowerUpConfig, Coroutine> _durationCoroutines = new();
+    /// <summary>Active powerup modifiers keyed by config. Each config can have multiple effects.</summary>
+    private readonly Dictionary<PowerUpConfig, List<(BigDoubleSO target, StatModifier modifier)>> _activePowerUps = new();
+    private readonly Dictionary<PowerUpConfig, CancellationTokenSource> _durationTokens = new();
 
     public event Action<PowerUpConfig> OnPowerUpActivated;
     public event Action<PowerUpConfig> OnPowerUpDeactivated;
@@ -34,100 +36,102 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
         }
     }
 
+    /// <summary>
+    /// Try to spawn a random PowerUp pickup in the world.
+    /// Returns true when a pickup was successfully instantiated.
+    /// </summary>
     public bool TrySpawnPowerUpPrefab()
     {
-        float roll = UnityEngine.Random.Range(0f, 1f);
-        if (roll > _spawnChance) return false;
-
-        if (_powerUps.Count == 0) return false;
-        if (_spawnPositionFinder is null) return false;
-        if (_powerUpPrefab is null) return false;
+        if (UnityEngine.Random.Range(0f, 1f) > _spawnChance) return false;
+        if (_powerUps.Count == 0 || _spawnPositionFinder is null || _powerUpPrefab is null) return false;
 
         int index = UnityEngine.Random.Range(0, _powerUps.Count);
         PowerUpConfig selectedPowerUp = _powerUps[index];
         Vector3 spawnPosition = _spawnPositionFinder.GetPowerUpSpawnPosition();
-        Quaternion rotation = Quaternion.Euler(0, 0, 90);
-        Instantiate(_powerUpPrefab, spawnPosition, rotation)
+        Instantiate(_powerUpPrefab, spawnPosition, Quaternion.Euler(0, 0, 90))
             .Init(selectedPowerUp);
+
         return true;
     }
 
-
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.P))
-    //     {
-    //         if (_powerUps.Count > 0)
-    //         {
-    //             int index = UnityEngine.Random.Range(0, _powerUps.Count);
-    //             ActivatePowerUp(_powerUps[index]);
-    //         }
-    //     }
-    // }
-
+    /// <summary>
+    /// Activate a PowerUp, registering all its stat modifiers.
+    /// If already active, the duration is refreshed.
+    /// </summary>
     public void ActivatePowerUp(PowerUpConfig config)
     {
         if (config is null) return;
-        if (config.Target is null) return;
-        // Only one instance of each power-up type can be active at a time
-        //if (config.Target.HasPowerUp(config)) return;
 
-        if (config.Target.HasPowerUp(config))
+        if (_activePowerUps.ContainsKey(config))
         {
             RefreshDuration(config);
             OnPowerUpActivated?.Invoke(config);
             return;
         }
 
-        config.Target.AddPowerUp(config);
-        Debug.Log($"Activated PowerUp: {config.Name}");
-        Debug.Log($"New Target Value: {config.Target.FinalValue}");
+        var registered = new List<(BigDoubleSO target, StatModifier modifier)>();
 
+        foreach (var effect in config.Effects)
+        {
+            if (effect.Target is null) continue;
+
+            var modifier = new StatModifier(effect.ModifierType, ModifierSource.PowerUp, config.Name, effect.Value);
+            effect.Target.AddModifier(modifier);
+            registered.Add((effect.Target, modifier));
+        }
+
+        _activePowerUps[config] = registered;
+        Debug.Log($"[PowerUpController] Activated: {config.Name}");
         OnPowerUpActivated?.Invoke(config);
-        StartDurationCoroutine(config);
+        StartDurationTask(config);
     }
 
-    private IEnumerator PowerUpDurationCoroutine(PowerUpConfig config)
+    private async UniTask PowerUpDurationTask(PowerUpConfig config, CancellationToken cancellationToken)
     {
-        yield return new WaitForSeconds(config.Duration);
+        await UniTask.WaitForSeconds(config.Duration, cancellationToken: cancellationToken);
         RemovePowerUp(config);
     }
 
+    /// <summary>Deactivate a PowerUp and unregister all its stat modifiers.</summary>
     private void RemovePowerUp(PowerUpConfig config)
     {
-        if (config is null || config.Target is null) return;
-        StopDurationCoroutine(config);
-        config.Target.RemovePowerUp(config);
-        Debug.Log($"Deactivated PowerUp: {config.Name}");
-        Debug.Log($"New Target Value: {config.Target.FinalValue}");
+        if (config is null || !_activePowerUps.TryGetValue(config, out var registered)) return;
 
+        StopDurationTask(config);
+
+        foreach (var (target, modifier) in registered)
+        {
+            target.RemoveModifier(modifier);
+        }
+
+        _activePowerUps.Remove(config);
+        Debug.Log($"[PowerUpController] Deactivated: {config.Name}");
         OnPowerUpDeactivated?.Invoke(config);
     }
 
-    private void StartDurationCoroutine(PowerUpConfig config)
+    private void StartDurationTask(PowerUpConfig config)
     {
-        StopDurationCoroutine(config);
-        Coroutine coroutine = StartCoroutine(PowerUpDurationCoroutine(config));
-        _durationCoroutines[config] = coroutine;
+        StopDurationTask(config);
+        var cts = new CancellationTokenSource();
+        _ = PowerUpDurationTask(config, cts.Token);
+        _durationTokens[config] = cts;
     }
 
-    private void StopDurationCoroutine(PowerUpConfig config)
+    private void StopDurationTask(PowerUpConfig config)
     {
         if (config is null) return;
 
-        if (_durationCoroutines.TryGetValue(config, out Coroutine coroutine))
+        if (_durationTokens.TryGetValue(config, out var cts))
         {
-            if (coroutine is not null)
-            {
-                StopCoroutine(coroutine);
-            }
-            _durationCoroutines.Remove(config);
+            cts?.Cancel();
+            cts?.Dispose();
+            _durationTokens.Remove(config);
         }
     }
 
     private void RefreshDuration(PowerUpConfig config)
     {
-        StartDurationCoroutine(config);
+        StartDurationTask(config);
     }
 
     private void HandleGameReset()
@@ -138,7 +142,7 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
 
     private void ClearActivePowerUps()
     {
-        var activeConfigs = new List<PowerUpConfig>(_durationCoroutines.Keys);
+        var activeConfigs = new List<PowerUpConfig>(_activePowerUps.Keys);
         foreach (var config in activeConfigs)
         {
             RemovePowerUp(config);
@@ -157,7 +161,14 @@ public class PowerUpController : PersistentSingleton<PowerUpController>
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        StopAllCoroutines();
-        _durationCoroutines.Clear();
+
+        foreach (var cts in _durationTokens.Values)
+        {
+            cts?.Cancel();
+            cts?.Dispose();
+        }
+
+        _durationTokens.Clear();
+        _activePowerUps.Clear();
     }
 }

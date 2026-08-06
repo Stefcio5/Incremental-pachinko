@@ -8,75 +8,87 @@ public class Spawner : UpgradeReceiver
     [SerializeField] private BallSpawnCounterSO _ballSpawnCounter;
     [SerializeField] private Transform _holder;
     [SerializeField] private SpawnRange _spawnRangeGO;
+    [SerializeField] private float _spawnInterval = 0.1f;
+
+    private ColorfulBalls _colorfulBalls;
     private float _timer;
     private float _manualSpawnTimer;
     private bool _isManualSpawning;
-    [SerializeField] private float _spawnInterval;
-    private ColorfulBalls _colorfulBalls;
+    private bool _isReady;
 
     protected override void Awake()
     {
+        base.Awake();
         _colorfulBalls = GetComponent<ColorfulBalls>();
+
+        if (_colorfulBalls is null)
+        {
+            Debug.LogWarning($"[{nameof(Spawner)}] {nameof(ColorfulBalls)} component not found.");
+        }
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        _inputReader.SpawnBallEvent += OnSpawnBall;
-        _inputReader.SpawnBallCancelEvent += OnSpawnBallCancel;
+        base.OnEnable();
+
+        if (_inputReader is not null)
+        {
+            _inputReader.SpawnBallEvent += HandleSpawnBallInput;
+            _inputReader.SpawnBallCancelEvent += HandleSpawnBallCancel;
+        }
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        _inputReader.SpawnBallEvent -= OnSpawnBall;
-        _inputReader.SpawnBallCancelEvent -= OnSpawnBallCancel;
+        base.OnDisable();
+
+        if (_inputReader is not null)
+        {
+            _inputReader.SpawnBallEvent -= HandleSpawnBallInput;
+            _inputReader.SpawnBallCancelEvent -= HandleSpawnBallCancel;
+        }
     }
 
     protected override void OnUpgradeInitialized()
     {
         base.OnUpgradeInitialized();
+        _isReady = true;
     }
 
-    void Update()
+    private void Update()
     {
-        if (UpgradeManager.Instance.Initialized)
+        if (!_isReady || _colorfulBalls is null)
         {
-            _timer += Time.deltaTime;
-            if (_timer >= GetUpgradeValue() && _ballSpawnCounter.Add())
+            return;
+        }
+
+        // Automatic spawn timer
+        _timer += Time.deltaTime;
+        if (_timer >= GetUpgradeValue() && _ballSpawnCounter.Add())
+        {
+            SpawnBall(_spawnRangeGO.GetUpgradeValue());
+            _timer = 0f;
+        }
+
+        // Manual spawn timer (on hold)
+        if (_isManualSpawning)
+        {
+            _manualSpawnTimer += Time.deltaTime;
+            if (_manualSpawnTimer >= _spawnInterval && _ballSpawnCounter.Add())
             {
                 SpawnBall(_spawnRangeGO.GetUpgradeValue());
-                _timer = 0f;
+                _manualSpawnTimer = 0f;
             }
-
-            if (_isManualSpawning)
-            {
-                _manualSpawnTimer += Time.deltaTime;
-                if (_manualSpawnTimer >= _spawnInterval && _ballSpawnCounter.Add())
-                {
-                    SpawnBall(_spawnRangeGO.GetUpgradeValue());
-                    _manualSpawnTimer = 0f;
-                }
-            }
-
-            // Obsolete
-            // if (Input.GetKey(KeyCode.Space))
-            // {
-            //     _manualSpawnTimer += Time.deltaTime;
-            //     if (_manualSpawnTimer >= _spawnInterval)
-            //     {
-            //         SpawnBall(_spawnRangeGO.GetUpgradeValue());
-            //         _manualSpawnTimer = 0f;
-            //     }
-            // }
         }
     }
 
-    private void OnSpawnBall()
+    private void HandleSpawnBallInput()
     {
         _isManualSpawning = true;
         _manualSpawnTimer = 0f;
     }
 
-    private void OnSpawnBallCancel()
+    private void HandleSpawnBallCancel()
     {
         _isManualSpawning = false;
         _manualSpawnTimer = 0f;
@@ -84,12 +96,12 @@ public class Spawner : UpgradeReceiver
 
     private void SpawnBall(BigDouble position)
     {
-        BallFlyweightSettings ballFlyweightSettings = _colorfulBalls.GetRandomBallFlyweightSettings();
+        BallFlyweightSettings ballSettings = _colorfulBalls.GetRandomBallFlyweightSettings();
 
-        _spawnRangeGO.ChangeSpawnRangeColor(ballFlyweightSettings.color);
-        _spawnRangeGO.DoPunchScale(ballFlyweightSettings.ID);
+        _spawnRangeGO.ChangeSpawnRangeColor(ballSettings.color);
+        _spawnRangeGO.DoPunchScale(ballSettings.ID);
 
-        var flyweight = FlyweightFactory.Spawn(ballFlyweightSettings);
+        var flyweight = FlyweightFactory.Spawn(ballSettings);
         flyweight.gameObject.transform.position = new Vector3(0, 35.5f, Random.Range((float)-position, (float)position));
         flyweight.transform.SetParent(_holder);
         flyweight.transform.rotation = Quaternion.identity;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BreakInfinity;
 using UnityEngine;
 
@@ -24,11 +25,10 @@ public class UpgradeConfig : ScriptableObject
     public BuyAmountStrategy buyAmountStrategy;
 
     [Header("Upgrade Effects")]
-    public BigDouble basePower;
-    public BigDoubleSO upgradePower;
-    public UpgradeFormula powerFormula;
+    [Tooltip("Each entry modifies one stat. Multiple effects let a single upgrade affect several stats simultaneously.")]
+    public List<UpgradeEffect> Effects = new();
 
-    [Header("Optional Power Multiplier")]
+    [Header("Optional Step Multiplier")]
     public bool useStepMultiplier = false;
     public BigDouble multiplierInterval = 50;
     public BigDouble multiplierBase = 2;

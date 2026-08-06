@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13ffed52c15bfa4b929b708e804ed71, type: 3}
   m_Name: P_PointsMultiplierValue
   m_EditorClassIdentifier: 
-  baseValue:
-    mantissa: 9
+  _baseValue:
+    mantissa: 1
     exponent: 0
-  cachedFinalValue:
-    mantissa: 9
-    exponent: 0
-  isDirty: 0
-  modifiers: []
+  _soModifiers: []

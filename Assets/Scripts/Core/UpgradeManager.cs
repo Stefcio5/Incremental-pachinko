@@ -1,30 +1,70 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using BreakInfinity;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class UpgradeManager : PersistentSingleton<UpgradeManager>
+public class UpgradeManager : PersistentSingleton<UpgradeManager>, IGameSystem
 {
     [SerializeField] private List<UpgradeConfig> _upgradeConfigs = new();
+
     private readonly Dictionary<UpgradeType, List<Upgrade>> _upgrades = new();
     public Dictionary<string, Upgrade> upgradeMap = new();
+
     public event Action OnInitialized;
+    public event Action OnSystemInitialized;
 
     private bool _initialized;
     public bool Initialized => _initialized;
+
+    public string SystemName => "UpgradeManager";
+    public bool IsInitialized => _initialized;
 
     protected override void Awake()
     {
         base.Awake();
     }
 
-    private void Start()
+
+    public async UniTask InitializeAsync(IProgress<float> progress = null, CancellationToken cancellationToken = default)
     {
-        Initialize(_upgradeConfigs, DataController.Instance);
+        if (_initialized)
+        {
+            Debug.LogWarning($"[{SystemName}] Already initialized");
+            return;
+        }
+
+        progress?.Report(0f);
+
+        try
+        {
+            // Wait for DataController to be initialized
+            await UniTask.WaitUntil(() => DataController.Instance != null && DataController.Instance.IsInitialized,
+                PlayerLoopTiming.Update, cancellationToken);
+            progress?.Report(0.5f);
+
+            // Initialize with configurations and data
+            Initialize(_upgradeConfigs, DataController.Instance);
+            progress?.Report(1f);
+
+            OnSystemInitialized?.Invoke();
+            Debug.Log($"[{SystemName}] Async initialization complete");
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.LogWarning($"[{SystemName}] Initialization cancelled");
+            throw;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[{SystemName}] Initialization failed: {e.Message}");
+            throw;
+        }
     }
 
-    public void Initialize(IEnumerable<UpgradeConfig> configs, DataController data)
+    private void Initialize(IEnumerable<UpgradeConfig> configs, DataController data)
     {
         if (configs == null || data == null)
         {
@@ -55,8 +95,9 @@ public class UpgradeManager : PersistentSingleton<UpgradeManager>
             _upgrades[config.upgradeType].Add(upgrade);
             upgradeMap[config.upgradeName] = upgrade;
         }
+
         _initialized = true;
-        Debug.Log("Upgrade Manager Initialized");
+        Debug.Log($"[{SystemName}] Initialized with {upgradeMap.Count} upgrades");
         OnInitialized?.Invoke();
     }
 

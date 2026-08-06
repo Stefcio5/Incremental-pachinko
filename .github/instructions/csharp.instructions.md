@@ -15,6 +15,7 @@ applyTo: '**/*.cs'
 - Favor maintainability: small focused types, clear separation of concerns, and explanatory comments when a choice is non-obvious.
 - Handle edge cases explicitly; prefer defensive programming at boundaries and avoid throwing exceptions in per-frame code paths.
 - When adding libraries or external dependencies, mention their purpose and how they integrate (e.g., BreakInfinity.BigDouble for large-number arithmetic, DOTween for tweening).
+- Do not create summary documents or markdown files to document changes made to source files. Let the code and its comments speak for themselves.
 
 ## Naming conventions
 - PascalCase for public types, methods, properties, and events.

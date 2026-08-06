@@ -1,8 +1,11 @@
 using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class PowerUpPickup : MonoBehaviour
 {
+    private const int MillisecondsDelay = 30000;
     [SerializeField] private PowerUpConfig _powerUpConfig;
 
     public void Init(PowerUpConfig config)
@@ -12,7 +15,7 @@ public class PowerUpPickup : MonoBehaviour
 
     void OnEnable()
     {
-        StartCoroutine(SelfDestructCoroutine());
+        _ = SelfDestructTask(this.GetCancellationTokenOnDestroy());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,14 +27,12 @@ public class PowerUpPickup : MonoBehaviour
         }
     }
 
-    private IEnumerator SelfDestructCoroutine()
+    private async UniTask SelfDestructTask(CancellationToken cancellationToken)
     {
-        yield return new WaitForSeconds(30f);
-        Destroy(gameObject);
-    }
-
-    void OnDestroy()
-    {
-        StopAllCoroutines();
+        await UniTask.Delay(MillisecondsDelay, cancellationToken: cancellationToken);
+        if (this != null) // Still valid?
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -16,17 +16,22 @@ MonoBehaviour:
   upgradeDescription: Increases points per ball
   descriptionPrefix: x
   descriptionSuffix: 
+  _startingLevel:
+    mantissa: 0
+    exponent: 0
   upgradeType: 0
   baseCost:
     mantissa: 2
     exponent: 1
   costFormula: {fileID: 11400000, guid: cd264eebfde5c9744885a4e2c420b6e2, type: 2}
   buyAmountStrategy: {fileID: 11400000, guid: cbd7679096823514283285ea5819cb33, type: 2}
-  basePower:
-    mantissa: 1
-    exponent: 0
-  upgradePower: {fileID: 11400000, guid: 6cb1ad2909e0cbf4e9e96965f3214544, type: 2}
-  powerFormula: {fileID: 11400000, guid: fcfcd06f7293211458780c9bfb0048af, type: 2}
+  Effects:
+  - Target: {fileID: 11400000, guid: 6cb1ad2909e0cbf4e9e96965f3214544, type: 2}
+    Formula: {fileID: 11400000, guid: 60c59f5a81ed87e4682b007207e807bf, type: 2}
+    BasePower:
+      mantissa: 1
+      exponent: 0
+    ModifierType: 0
   useStepMultiplier: 1
   multiplierInterval:
     mantissa: 5

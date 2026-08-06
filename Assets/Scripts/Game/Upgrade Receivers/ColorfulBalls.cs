@@ -8,6 +8,7 @@ public class ColorfulBalls : UpgradeReceiver
     [SerializeField] private List<BallFlyweightSettings> _ballFlyweightSettings;
     [SerializeField] private BallFlyweightSettings _defaultBallFlyweightSettings;
     [SerializeField] private TooltipText _tooltipText;
+
     private int _buyAmount = 1;
 
     protected override void OnUpgradeInitialized()
@@ -15,67 +16,64 @@ public class ColorfulBalls : UpgradeReceiver
         base.OnUpgradeInitialized();
         ApplyUpgrade();
         upgradePower.onValueChanged += ApplyUpgrade;
-        BuyAmountController.OnBuyAmountStrategyChanged += GetBuyAmount;
+        BuyAmountController.OnBuyAmountStrategyChanged += HandleBuyAmountChanged;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        upgradePower.onValueChanged -= ApplyUpgrade;
+        BuyAmountController.OnBuyAmountStrategyChanged -= HandleBuyAmountChanged;
     }
 
     private void ApplyUpgrade()
     {
-        foreach (var ballFlyweightSetting in _ballFlyweightSettings)
+        foreach (var ballSetting in _ballFlyweightSettings)
         {
-            ballFlyweightSetting.spawnChance = ballFlyweightSetting.spawnChanceincrement * (float)upgradePower.DisplayValue;
+            ballSetting.spawnChance = ballSetting.spawnChanceincrement * (float)upgradePower.DisplayValue;
         }
         UpdateTooltip();
     }
 
     private void UpdateTooltip()
     {
-        var orderedBallFlyweightSettings = _ballFlyweightSettings.OrderBy(x => x.ID).ToList();
-        string result = "Spawn Chances:\n";
-        foreach (var ballFlyweightSetting in orderedBallFlyweightSettings)
-        {
-            if (ballFlyweightSetting.spawnChance > 100) continue;
-            float spawnChance = Mathf.Round(ballFlyweightSetting.spawnChance * 1000f) / 1000f;
-            float increment = ballFlyweightSetting.spawnChanceincrement * _buyAmount;
-            result += $"<color=#{ColorUtility.ToHtmlStringRGB(ballFlyweightSetting.color)}>{ballFlyweightSetting.name} (x{ballFlyweightSetting.multiplier}): {spawnChance:G}% (+{increment:G}%)</color>\n";
-        }
-        _tooltipText.SetTooltipText(result);
-    }
+        var orderedSettings = _ballFlyweightSettings.OrderBy(x => x.ID).ToList();
+        var tooltipBuilder = new System.Text.StringBuilder("Spawn Chances:\n");
 
+        foreach (var ballSetting in orderedSettings)
+        {
+            if (ballSetting.spawnChance > 100)
+            {
+                continue;
+            }
+
+            float spawnChance = Mathf.Round(ballSetting.spawnChance * 1000f) / 1000f;
+            float increment = ballSetting.spawnChanceincrement * _buyAmount;
+            string colorHex = ColorUtility.ToHtmlStringRGB(ballSetting.color);
+
+            tooltipBuilder.AppendLine($"<color=#{colorHex}>{ballSetting.name} (x{ballSetting.multiplier}): {spawnChance:G}% (+{increment:G}%)</color>");
+        }
+
+        _tooltipText.SetTooltipText(tooltipBuilder.ToString().TrimEnd());
+    }
 
     public BallFlyweightSettings GetRandomBallFlyweightSettings()
     {
         float randomValue = Random.Range(0f, 100f);
 
-        foreach (var ballFlyweightSetting in _ballFlyweightSettings)
+        foreach (var ballSetting in _ballFlyweightSettings)
         {
-            if (randomValue < ballFlyweightSetting.spawnChance)
+            if (randomValue < ballSetting.spawnChance)
             {
-                return ballFlyweightSetting;
+                return ballSetting;
             }
         }
 
         return _defaultBallFlyweightSettings;
     }
-    private void GetBuyAmount(BuyAmountStrategy buyAmountStrategy)
+
+    private void HandleBuyAmountChanged(BuyAmountStrategy buyAmountStrategy)
     {
-        if (buyAmountStrategy == null)
-        {
-            _buyAmount = 1;
-        }
-        else
-        {
-            _buyAmount = (int)buyAmountStrategy.GetBuyAmount();
-        }
+        _buyAmount = (int)buyAmountStrategy.GetBuyAmount();
         UpdateTooltip();
-    }
-
-    private void OnDisable()
-    {
-        upgradePower.onValueChanged -= ApplyUpgrade;
-    }
-
-    private void OnDestroy()
-    {
-        BuyAmountController.OnBuyAmountStrategyChanged -= GetBuyAmount;
     }
 }

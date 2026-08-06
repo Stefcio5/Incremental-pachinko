@@ -13,10 +13,7 @@ MonoBehaviour:
   m_Name: BallValue
   m_EditorClassIdentifier: 
   _baseValue:
-    mantissa: 2
+    mantissa: 1
     exponent: 0
-  _finalValue:
-    mantissa: 4
-    exponent: 0
-  _modifiers:
+  _soModifiers:
   - {fileID: 11400000, guid: de9e2e2965921e444a7bdaef098aeb26, type: 2}
